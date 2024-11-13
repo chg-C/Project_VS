@@ -231,6 +231,9 @@
     <ClInclude Include="PlayerManager.h">
       <Filter>Custom\Game\GameManager\SubManagers</Filter>
     </ClInclude>
+    <ClInclude Include="UISprite.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="key.cpp">
@@ -352,6 +355,9 @@
     </ClCompile>
     <ClCompile Include="EffectManager.cpp">
       <Filter>Custom\Game\GameManager\SubManagers</Filter>
+    </ClCompile>
+    <ClCompile Include="UISprite.cpp">
+      <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
