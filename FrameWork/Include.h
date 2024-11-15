@@ -65,7 +65,7 @@
 
 #include "Bird.h"
 #include "Player.h"
-#include "Player2.h"
+#include "Camera.h"
 #include "Collider.h"
 
 #include "GameManager.h"
@@ -90,3 +90,7 @@ inline int KeyUp	( int vk )
 { 
 	return ( (GetAsyncKeyState(vk) & 0x8000) ? 0:1 ); 
 }
+
+////
+#include "Character.h"
+#include "Enemy.h"

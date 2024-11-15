@@ -48,19 +48,19 @@ void Bird::Update()
 
 void Bird::Draw()
 {
-	if (Gmanager.m_GameStart == true)
-	{
-		Bdimg[m_BirdCount].SetColor(255, 255, 255, 100);
-		Bdimg[m_BirdCount].Draw(100, 100);
+	//if (Gmanager.m_GameStart == true)
+	//{
+	//	Bdimg[m_BirdCount].SetColor(255, 255, 255, 100);
+	//	Bdimg[m_BirdCount].Draw(100, 100);
 
-		Bdimg[m_BirdCount].SetColor(0, 255, 0, 255);
-		Bdimg[m_BirdCount].Draw(500, 500, 20, 20, 40, 40, 0, 0);
+	//	Bdimg[m_BirdCount].SetColor(0, 255, 0, 255);
+	//	Bdimg[m_BirdCount].Draw(500, 500, 20, 20, 40, 40, 0, 0);
 
-		Bdimg[m_BirdCount].SetColor(0, 255, 0, 255); // 미적용
-		Bdimg[m_BirdCount].Render(250, 250, rot, -2, 2, 1);
+	//	Bdimg[m_BirdCount].SetColor(0, 255, 0, 255); // 미적용
+	//	Bdimg[m_BirdCount].Render(250, 250, rot, -2, 2, 1);
 
-		Bdimg[m_BirdCount].SetColor(0, 255, 0, 255); // 미적용
-		Bdimg[m_BirdCount].Render(x, y, 0, 2*dir, 2, 1);
-	}
+	//	Bdimg[m_BirdCount].SetColor(0, 255, 0, 255); // 미적용
+	//	Bdimg[m_BirdCount].Render(x, y, 0, 2*dir, 2, 1);
+	//}
 
 }

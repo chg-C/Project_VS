@@ -1,28 +1,38 @@
 #pragma once
 #include "Include.h"
+#include "Sprite2.h"
+#include "Character.h"
 
-class Player
+#include <vector>
+using std::vector;
+
+
+class Player : public Character
 {
+	float speed;
 	float gravity;
+
 	bool grounded;
 
+	bool moving;
+	int idx = 0;
 
+	int dir = 1;
 public :
 	Player();
 	~Player();
 
-	Sprite playerimg;
+	vector<Sprite2*>  idlingSprites;
+	vector<Sprite2*>  movingSprites;
 
-	D3DXIMAGE_INFO imagesinfo;
-	RECT m_rc;
-	D3DXVECTOR2 pos;
+	Sprite2* currentSprite;
 
 	DWORD m_PlayerTime;
+	DWORD m_PlayerAnimTime;
 
-	void Init();
-	void Update();
-	void Draw();
+	virtual void Init();
+	virtual void Update();
+	virtual void Draw();
 
+	virtual void Move(float x, float y);
 };
-
-extern Player player;

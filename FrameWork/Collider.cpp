@@ -28,10 +28,10 @@ void Collider::Update()
 
 void Collider::Draw()
 {
-	if (Gmanager.m_GameStart == true)
+	/*if (Gmanager.m_GameStart == true)
 	{
 		dv_font.DrawString("¡º ", m_rc.left, m_rc.top, D3DCOLOR_ARGB(255, 0, 255, 0));
 		dv_font.DrawString(" ¡»", m_rc.right, m_rc.bottom, D3DCOLOR_ARGB(255, 0, 255, 0));
-	}
+	}*/
 
 }

@@ -10,6 +10,7 @@ g_DeviceFont::g_DeviceFont(void)
 
 g_DeviceFont::~g_DeviceFont(void)
 {
+	Fonts->Release();
 }
 
 bool g_DeviceFont::Create( HWND g_hWnd )

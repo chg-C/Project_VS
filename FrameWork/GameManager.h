@@ -1,5 +1,13 @@
 #pragma once
+
 #include "Include.h"
+#include "Singleton.h"
+
+#include "Enemy.h"
+
+#include <list>
+using std::list;
+
 struct SysTem
 {
 	int m_Save1;
@@ -7,9 +15,9 @@ struct SysTem
 
 };
 
-class GameManager
+class GameManager : public Singleton<GameManager>
 {
-	Sprite Menuimg[2];
+	friend class Singleton<GameManager>;
 public:
 	GameManager(void);
 	~GameManager(void);
@@ -25,8 +33,15 @@ public:
 
 	bool m_Collision;
 
-	std::list<Player2*>	myList;
 	bool Respawn;
+
+
+	Map* map;
+	Player* player;
+	list<Enemy*> enemies;
+
+	D3DXVECTOR2 CheckEnemyCollision(Enemy* enemy);
+	bool IsColliding(RECT& rectA, RECT& rectB);
 
 
 	void GameReset(void);
@@ -35,8 +50,4 @@ public:
 	void Draw();
 	void Save();
 	void Delete();
-	
-	
 };
-
-extern GameManager Gmanager;

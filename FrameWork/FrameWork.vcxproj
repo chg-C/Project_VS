@@ -147,12 +147,16 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="Bird.h" />
+    <ClInclude Include="Camera.h" />
     <ClInclude Include="Chap.h" />
+    <ClInclude Include="Character.h" />
     <ClInclude Include="CMng.h" />
     <ClInclude Include="Collider.h" />
+    <ClInclude Include="CustomDefine.h" />
     <ClInclude Include="Define.h" />
     <ClInclude Include="DXUTsound.h" />
     <ClInclude Include="DeviceFont.h" />
+    <ClInclude Include="Enemy.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="GameManager.h" />
     <ClInclude Include="Include.h" />
@@ -163,10 +167,11 @@
     <ClInclude Include="Mysql.h" />
     <ClInclude Include="Over.h" />
     <ClInclude Include="Player.h" />
-    <ClInclude Include="Player2.h" />
+    <ClInclude Include="Singleton.h" />
     <ClInclude Include="SelectArrow.h" />
     <ClInclude Include="Sound.h" />
     <ClInclude Include="Sprite.h" />
+    <ClInclude Include="Sprite2.h" />
     <ClInclude Include="UIButton.h" />
     <ClInclude Include="UISprite.h" />
   </ItemGroup>
@@ -176,6 +181,7 @@
     <ClCompile Include="Collider.cpp" />
     <ClCompile Include="DXUTsound.cpp" />
     <ClCompile Include="DeviceFont.cpp" />
+    <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="GameManager.cpp" />
     <ClCompile Include="key.cpp" />
@@ -186,9 +192,10 @@
     <ClCompile Include="Mysql.cpp" />
     <ClCompile Include="Over.cpp" />
     <ClCompile Include="Player.cpp" />
-    <ClCompile Include="Player2.cpp" />
     <ClCompile Include="SelectArrow.cpp" />
     <ClCompile Include="Sound.cpp" />
+    <ClCompile Include="Sprite.cpp" />
+    <ClCompile Include="Sprite2.cpp" />
     <ClCompile Include="Sprite.cpp" />
     <ClCompile Include="UIButton.cpp" />
     <ClCompile Include="UISprite.cpp" />

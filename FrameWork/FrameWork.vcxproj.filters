@@ -25,9 +25,6 @@
     <Filter Include="소스 파일\Sound">
       <UniqueIdentifier>{61d52f9b-efee-4445-a052-f6c4ab5227fc}</UniqueIdentifier>
     </Filter>
-    <Filter Include="소스 파일\GameManager">
-      <UniqueIdentifier>{cebaf1a7-eceb-4a76-b89b-546059c9a4bf}</UniqueIdentifier>
-    </Filter>
     <Filter Include="소스 파일\Mysql">
       <UniqueIdentifier>{8f36a8e7-495b-493c-9a78-ed4359633356}</UniqueIdentifier>
     </Filter>
@@ -40,11 +37,35 @@
     <Filter Include="소스 파일\플레이어1">
       <UniqueIdentifier>{f8c8a3c6-05dd-4a47-a445-8abeecaf107f}</UniqueIdentifier>
     </Filter>
-    <Filter Include="소스 파일\플레이어2">
-      <UniqueIdentifier>{d3a3e326-2847-465b-9737-da3607ab746a}</UniqueIdentifier>
-    </Filter>
     <Filter Include="소스 파일\Map">
       <UniqueIdentifier>{cec1e42a-12c0-4cf8-9cca-8fc295a432ae}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Custom">
+      <UniqueIdentifier>{2c9f0b26-77d7-4f95-bcbc-7eaf2e0e1c9c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Custom\Patterns">
+      <UniqueIdentifier>{39b4f4e7-92c9-4593-b040-ff17aa951223}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Custom\Render">
+      <UniqueIdentifier>{89c3fc16-fb3d-4013-9a01-ed67fd7c4c4f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Custom\CustomDefine">
+      <UniqueIdentifier>{bac3cc1a-b8cc-415a-9585-f94b0311a4d4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Custom\Game">
+      <UniqueIdentifier>{40d85b13-b0bc-4fb4-8b58-25665905f842}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Custom\Game\Map">
+      <UniqueIdentifier>{89ac9024-5c35-483f-b6b1-40e46caf0e9f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Custom\Game\Camera">
+      <UniqueIdentifier>{b22a67f6-a677-4533-82e5-b294b2e88e81}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Custom\Game\Objects">
+      <UniqueIdentifier>{812ec6e5-295d-4bef-8d8c-ad7d0485b932}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Custom\Game\GameManager">
+      <UniqueIdentifier>{cebaf1a7-eceb-4a76-b89b-546059c9a4bf}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -82,7 +103,7 @@
       <Filter>소스 파일\Sound</Filter>
     </ClInclude>
     <ClInclude Include="GameManager.h">
-      <Filter>소스 파일\GameManager</Filter>
+      <Filter>Custom\Game\GameManager</Filter>
     </ClInclude>
     <ClInclude Include="DeviceFont.h">
       <Filter>D3D Core\코어 헤더파일</Filter>
@@ -99,14 +120,29 @@
     <ClInclude Include="Collider.h">
       <Filter>소스 파일\콜라이더</Filter>
     </ClInclude>
-    <ClInclude Include="Player.h">
-      <Filter>소스 파일\플레이어1</Filter>
+    <ClInclude Include="Singleton.h">
+      <Filter>Custom\Patterns</Filter>
     </ClInclude>
-    <ClInclude Include="Player2.h">
-      <Filter>소스 파일\플레이어2</Filter>
+    <ClInclude Include="Sprite2.h">
+      <Filter>Custom\Render</Filter>
+    </ClInclude>
+    <ClInclude Include="Camera.h">
+      <Filter>Custom\Game\Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="CustomDefine.h">
+      <Filter>Custom\CustomDefine</Filter>
     </ClInclude>
     <ClInclude Include="Map.h">
-      <Filter>소스 파일\Map</Filter>
+      <Filter>Custom\Game\Map</Filter>
+    </ClInclude>
+    <ClInclude Include="Character.h">
+      <Filter>Custom\Game\Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="Enemy.h">
+      <Filter>Custom\Game\Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="Player.h">
+      <Filter>Custom\Game\Objects</Filter>
     </ClInclude>
     <ClInclude Include="UISprite.h">
       <Filter>소스 파일</Filter>
@@ -144,7 +180,7 @@
       <Filter>소스 파일\Sound</Filter>
     </ClCompile>
     <ClCompile Include="GameManager.cpp">
-      <Filter>소스 파일\GameManager</Filter>
+      <Filter>Custom\Game\GameManager</Filter>
     </ClCompile>
     <ClCompile Include="DeviceFont.cpp">
       <Filter>D3D Core\코어 소스</Filter>
@@ -164,14 +200,17 @@
     <ClCompile Include="Collider.cpp">
       <Filter>소스 파일\콜라이더</Filter>
     </ClCompile>
-    <ClCompile Include="Player.cpp">
-      <Filter>소스 파일\플레이어1</Filter>
-    </ClCompile>
-    <ClCompile Include="Player2.cpp">
-      <Filter>소스 파일\플레이어2</Filter>
+    <ClCompile Include="Sprite2.cpp">
+      <Filter>Custom\Render</Filter>
     </ClCompile>
     <ClCompile Include="Map.cpp">
-      <Filter>소스 파일\Map</Filter>
+      <Filter>Custom\Game\Map</Filter>
+    </ClCompile>
+    <ClCompile Include="Enemy.cpp">
+      <Filter>Custom\Game\Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="Player.cpp">
+      <Filter>Custom\Game\Objects</Filter>
     </ClCompile>
     <ClCompile Include="UISprite.cpp">
       <Filter>소스 파일</Filter>
