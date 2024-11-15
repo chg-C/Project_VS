@@ -1,5 +1,8 @@
 class g_DeviceFont
 {
+	int fontHeight;
+	int fontWidth;
+	int fontWeight;
 public:
 	IDirect3D9* Direct3D;
 	IDirect3DDevice9* Device9;
@@ -14,7 +17,7 @@ public:
 	~g_DeviceFont(void);
 
 	bool Create(HWND g_hWnd);
-	bool DrawString( const char* msg , int x , int y , D3DCOLOR color = D3DCOLOR_ARGB( 255,255,255,255) );
+	bool DrawString( const char* msg , int x , int y ,int _fontHeight=25,int _fontWidth=12, int fontWeight=500 ,D3DCOLOR color = D3DCOLOR_ARGB( 255,255,255,255) );
 
 };
 

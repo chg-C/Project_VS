@@ -38,7 +38,7 @@ void Key::Update()
 	{
 		if(GetTickCount64() - KeyTime > 200)
 		{
-			Gmanager.m_Collision = true;
+			GameManager::GetInstance().m_Collision = true;
 			KeyTime = GetTickCount64();
 		}
 		
@@ -57,7 +57,7 @@ void Key::Update()
 	{
 		if(GetTickCount64() - KeyTime > 200)
 		{
-			Gmanager.Respawn = true;
+			GameManager::GetInstance().m_Collision = true;
 			KeyTime = GetTickCount64();
 		}
 	
@@ -67,7 +67,6 @@ void Key::Update()
 	{
 		if(GetTickCount64() - KeyTime > 200)
 		{
-			Gmanager.myList.clear();
 			KeyTime = GetTickCount64();
 		}
 	}
