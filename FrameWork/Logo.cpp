@@ -7,7 +7,7 @@ Logo::Logo()
 	// 데이타 베이스 관련
 	sql.mysql_Success = false;
 	// 데이타 베이스 테스트 관련
-	count = 0; g_Mng.n_Chap = GAME;
+	//count = 0; g_Mng.n_Chap = GAME;
 }
 
 Logo::~Logo()
@@ -16,7 +16,7 @@ Logo::~Logo()
 
 void Logo::Init()
 {
-	speed = 400;
+	speed = 2000;
 	alpha = 0;
 
 	loadimg.Create("./resource/Img/Load/tree.png", false, D3DCOLOR_XRGB(0, 0, 0));

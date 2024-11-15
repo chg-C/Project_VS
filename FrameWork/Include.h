@@ -69,6 +69,7 @@
 #include "Collider.h"
 
 #include "GameManager.h"
+
 // 데이타 베이스///////////////////
 #include "Mysql.h"
 

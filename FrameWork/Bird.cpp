@@ -35,11 +35,11 @@ void Bird::Update()
 	if(GetTickCount() - m_BirdAniTime > 1000)
 	{
 		m_BirdCount++;
-		if(m_BirdCount >1) m_BirdCount = 0;
+		m_BirdCount %= 2;
 		m_BirdAniTime = GetTickCount();
 
-		rot += 0.1f;
-		if (rot >= 6.0f) rot = 0;
+		//rot += 0.1f;
+		//if (rot >= 6.0f) rot = 0;
 	}
 
 

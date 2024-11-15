@@ -108,6 +108,15 @@
     <ClInclude Include="Map.h">
       <Filter>소스 파일\Map</Filter>
     </ClInclude>
+    <ClInclude Include="UISprite.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="UIButton.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="SelectArrow.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="key.cpp">
@@ -163,6 +172,15 @@
     </ClCompile>
     <ClCompile Include="Map.cpp">
       <Filter>소스 파일\Map</Filter>
+    </ClCompile>
+    <ClCompile Include="UISprite.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="UIButton.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="SelectArrow.cpp">
+      <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

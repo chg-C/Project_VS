@@ -38,9 +38,9 @@ bool g_DeviceFont::Create( HWND g_hWnd )
 	D3DXCreateSprite( Device9 , &Sprite ) ;
 
 	ZeroMemory( &fdesc , sizeof(fdesc) ) ;
-	fdesc.Height = 25 ;
-	fdesc.Width = 12 ;
-	fdesc.Weight = 500 ;
+	fdesc.Height = fontHeight ;
+	fdesc.Width = fontWidth ;
+	fdesc.Weight = fontWeight ;
 	fdesc.Italic = FALSE ;
 	fdesc.CharSet = DEFAULT_CHARSET ;
 	//fdesc.FaceName[LF_FACESIZE];
@@ -53,7 +53,7 @@ bool g_DeviceFont::Create( HWND g_hWnd )
 
 }
 
-bool g_DeviceFont::DrawString( const char* msg , int x , int y , D3DCOLOR color)
+bool g_DeviceFont::DrawString( const char* msg , int x , int y ,int _fontHeight,int _Width,int fontWeight, D3DCOLOR color)
 {
 	RECT rect = { x , y , fdesc.Width*strlen(msg) , fdesc.Height } ;
 
