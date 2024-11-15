@@ -158,9 +158,6 @@
     <ClCompile Include="key.cpp">
       <Filter>D3D Core\코어 소스</Filter>
     </ClCompile>
-    <ClCompile Include="Sprite.cpp">
-      <Filter>D3D Core\코어 소스</Filter>
-    </ClCompile>
     <ClCompile Include="CMng.cpp">
       <Filter>D3D Core\코어 소스</Filter>
     </ClCompile>
@@ -220,6 +217,9 @@
     </ClCompile>
     <ClCompile Include="SelectArrow.cpp">
       <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Sprite.cpp">
+      <Filter>D3D Core\코어 소스</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

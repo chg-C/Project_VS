@@ -109,7 +109,7 @@ void Menu::OnMessage(MSG* msg)
 						if (buttonIdx == 0)
 						{
 							g_Mng.n_Chap = GAME;
-							sound.m_Bk1->Play(0, DSBPLAY_LOOPING);
+							//sound.m_Bk1->Play(0, DSBPLAY_LOOPING);
 						}
 					}
 				}

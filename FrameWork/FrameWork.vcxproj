@@ -196,7 +196,6 @@
     <ClCompile Include="Sound.cpp" />
     <ClCompile Include="Sprite.cpp" />
     <ClCompile Include="Sprite2.cpp" />
-    <ClCompile Include="Sprite.cpp" />
     <ClCompile Include="UIButton.cpp" />
     <ClCompile Include="UISprite.cpp" />
   </ItemGroup>
