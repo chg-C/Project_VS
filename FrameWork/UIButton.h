@@ -4,6 +4,8 @@
 #include <vector>
 class UIButton
 {
+	static int Id;
+	int buttonId;
 	int spriteCount;
 	bool isSelected;
 	bool isActivated;

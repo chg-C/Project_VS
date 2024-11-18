@@ -3,6 +3,8 @@
 #define BTNRESOURCE "./resource/Img/Button/"
 UIButton::UIButton(int spriteCount,bool _isSelected)
 {
+	Id++;
+	buttonId = Id;
 	isSelected = _isSelected;
 	this->spriteCount = spriteCount;
 	buttonSprite.resize(spriteCount);
