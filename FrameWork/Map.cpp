@@ -12,11 +12,11 @@ Map::~Map()
 }
 
 
-void Map::Init()
+void Map::Init(const char* fileName)
 {
 	char FileName[256];
 	
-	sprintf_s(FileName, "./resource/Img/map1/map_bg.png");
+	sprintf_s(FileName, fileName);
 
 	map.Create(FileName, false, 0);
 	/*for (int i = 0; i < 4; ++i)

@@ -1,5 +1,8 @@
 #pragma once
-#include <math.h>
+#include <d3dx9.h>
+#include "SpriteAnimator.h"
+
+enum CharacterState {CS_IDLE, CS_MOVE, CS_DYING, CS_DEAD, CS_END};
 
 /// <summary>
 /// 캐릭터 베이스 클래스
@@ -8,12 +11,13 @@
 class Character
 {
 protected:
-	Character() : pos(0, 0), dir(1), scale(1) {}
-	Character(float x, float y, float scale = 1) : pos(x, y), dir(1), scale(scale) {}
+	Character() : pos(0, 0), dir(1), scale(1), currentState(CS_IDLE), currentHP(100), maxHP(100), animator(nullptr) {}
+	Character(float x, float y, float scale = 1) : pos(x, y), dir(1), scale(scale), currentState(CS_IDLE), currentHP(100), maxHP(100), animator(nullptr) {}
 protected:
+	const float STANDARD_SPEED = 25;
+
 	D3DXVECTOR2 pos;
 	D3DXVECTOR2 size;
-
 	D3DXVECTOR2 velocity;
 
 	int dir;
@@ -21,19 +25,28 @@ protected:
 
 	float maxHP;
 	float currentHP;
+
+	SpriteAnimator* animator;
+	CharacterState currentState;
 public:
-	virtual ~Character() {}
+	virtual ~Character() { if (animator != nullptr) { delete animator; animator = nullptr; } }
 public:
 	virtual void Init() = 0;
 	virtual void Update() = 0;
 	virtual void Draw() = 0;
+	virtual void LateUpdate() {}
 public:
 	virtual void Move(float x, float y)
 	{
 		pos.x += x;
 		pos.y += y;
 	}
-	D3DXVECTOR2 GetPos()
+	void SetPos(float x, float y)
+	{
+		pos.x = x;
+		pos.y = y;
+	}
+	D3DXVECTOR2 GetPos() const
 	{
 		return pos;
 	}
@@ -52,6 +65,10 @@ public:
 
 	float Distance(Character& other)
 	{
-		
+		return D3DXVec2Length(&(other.pos - this->pos));
 	}
+	bool IsAlive() { return !(currentState == CS_DYING || currentState == CS_DEAD); }
+	CharacterState GetState() { return currentState; }
+
+	virtual void Damage(float dmg) { currentHP -= dmg; }
 };

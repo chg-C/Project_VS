@@ -147,6 +147,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="Bird.h" />
+    <ClInclude Include="Cache.h" />
     <ClInclude Include="Camera.h" />
     <ClInclude Include="Chap.h" />
     <ClInclude Include="Character.h" />
@@ -156,23 +157,39 @@
     <ClInclude Include="Define.h" />
     <ClInclude Include="DXUTsound.h" />
     <ClInclude Include="DeviceFont.h" />
+    <ClInclude Include="Effect.h" />
+    <ClInclude Include="EffectManager.h" />
     <ClInclude Include="Enemy.h" />
+    <ClInclude Include="EnemyManager.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="GameManager.h" />
     <ClInclude Include="Include.h" />
+    <ClInclude Include="Item.h" />
     <ClInclude Include="key.h" />
     <ClInclude Include="Logo.h" />
     <ClInclude Include="Map.h" />
     <ClInclude Include="Menu.h" />
     <ClInclude Include="Mysql.h" />
+    <ClInclude Include="OptionPopUp.h" />
     <ClInclude Include="Over.h" />
     <ClInclude Include="Player.h" />
+    <ClInclude Include="PowerPopUp.h" />
+    <ClInclude Include="PlayerManager.h" />
+    <ClInclude Include="Projectile.h" />
+    <ClInclude Include="resource.h" />
     <ClInclude Include="Singleton.h" />
     <ClInclude Include="SelectArrow.h" />
     <ClInclude Include="Sound.h" />
     <ClInclude Include="Sprite.h" />
     <ClInclude Include="Sprite2.h" />
+    <ClInclude Include="SpriteAnimation.h" />
+    <ClInclude Include="SpriteAnimator.h" />
+    <ClInclude Include="SpriteEffect.h" />
+    <ClInclude Include="TextEffect.h" />
+    <ClInclude Include="Time.h" />
     <ClInclude Include="UIButton.h" />
+    <ClInclude Include="UIManager.h" />
+    <ClInclude Include="UIPopUp.h" />
     <ClInclude Include="UISprite.h" />
   </ItemGroup>
   <ItemGroup>
@@ -181,7 +198,9 @@
     <ClCompile Include="Collider.cpp" />
     <ClCompile Include="DXUTsound.cpp" />
     <ClCompile Include="DeviceFont.cpp" />
+    <ClCompile Include="EffectManager.cpp" />
     <ClCompile Include="Enemy.cpp" />
+    <ClCompile Include="EnemyManager.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="GameManager.cpp" />
     <ClCompile Include="key.cpp" />
@@ -190,14 +209,26 @@
     <ClCompile Include="Map.cpp" />
     <ClCompile Include="Menu.cpp" />
     <ClCompile Include="Mysql.cpp" />
+    <ClCompile Include="OptionPopUp.cpp" />
     <ClCompile Include="Over.cpp" />
     <ClCompile Include="Player.cpp" />
+    <ClCompile Include="PowerPopUp.cpp" />
+    <ClCompile Include="Projectile.cpp" />
     <ClCompile Include="SelectArrow.cpp" />
     <ClCompile Include="Sound.cpp" />
     <ClCompile Include="Sprite.cpp" />
     <ClCompile Include="Sprite2.cpp" />
+    <ClCompile Include="SpriteAnimation.cpp" />
+    <ClCompile Include="SpriteAnimator.cpp" />
+    <ClCompile Include="SpriteEffect.cpp" />
+    <ClCompile Include="TextEffect.cpp" />
+    <ClCompile Include="Time.cpp" />
     <ClCompile Include="UIButton.cpp" />
+    <ClCompile Include="UIPopUp.cpp" />
     <ClCompile Include="UISprite.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="FrameWork.rc" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

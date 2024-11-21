@@ -7,74 +7,122 @@ Enemy::Enemy(float x, float y, float scale)
 
 Enemy::~Enemy()
 {
-	for (auto& sprite : movingSprites)
-	{
-		if (sprite != nullptr)
-		{
-			delete sprite;
-			sprite = nullptr;
-		}
-	}
-	movingSprites.clear();
-
-
-	for (auto& sprite : dyingSprites)
-	{
-		if (sprite != nullptr)
-		{
-			delete sprite;
-			sprite = nullptr;
-		}
-	}
-	dyingSprites.clear();
+	SAFE_DELETE(animator);
 }
 
 void Enemy::Init()
 {
+	animator = new SpriteAnimator();
+
 	char FileName[256];
 
+	SpriteData* data;
 	Sprite2* sprite;
+
+	SpriteAnimation* anim = new SpriteAnimation(true);
 	for (int i = 0; i < 4; ++i)
 	{
+		data = new SpriteData();
 		sprite = new Sprite2();
 
-		sprintf_s(FileName, "./resource/Img/monster/bat/Bat3_Color_i%02d.png", (i + 1));
+		sprintf_s(FileName, "./resource/Img/Game/monster/bat/Bat3_Color_i%02d.png", (i + 1));
 		sprite->Create(FileName, false, D3DCOLOR_XRGB(0, 0, 0));
 
-		movingSprites.push_back(sprite);
+		data->sprite = sprite;
+		data->willCollide = true;
+		data->nextAnimDelay = 0.25f;
+		data->color = 0xffffffff;
+		data->SetWH();
+
+		anim->Push(data);
 	}
+	animator->Insert(CS_IDLE, anim);
+
+
+	anim = new SpriteAnimation(false);
 	for (int i = 0; i < 14; ++i)
 	{
+		data = new SpriteData();
 		sprite = new Sprite2();
-		sprintf_s(FileName, "./resource/Img/monster/bat/Bat1_%d.png", i);
+		sprintf_s(FileName, "./resource/Img/Game/monster/bat/Bat1_%d.png", i);
 		sprite->Create(FileName, false, D3DCOLOR_XRGB(0, 0, 0));
 
-		dyingSprites.push_back(sprite);
+		data->sprite = sprite;
+		data->willCollide = true;
+		data->nextAnimDelay = 0.035f;
+		data->color = 0xffffffff;
+		data->SetWH();
+
+		anim->Push(data);
 	}
+	animator->Insert(CS_DYING, anim);
 
-	currentSprite = movingSprites[0];
+	damageDelay = 0;
 
-	size.x = currentSprite->imagesinfo.Width * scale;
-	size.y = currentSprite->imagesinfo.Height * scale;
+	currentHP = 15;
+	maxHP = 15;
 }
 
 void Enemy::Update()
 {
-	velocity.x = 0;
-	velocity.y = 0;
+	damageDelay -= TIME;
+	if (damaging && damageDelay <= 0)
+	{
+		damaging = false;
+	}
 
-	//이동 방향 계산
-	D3DXVECTOR2 dir = GameManager::GetInstance().player->GetPos() - pos;
-	D3DXVec2Normalize(&dir, &dir);
-	dir *= moveSpeed;
-	
-	//이동 거리 저장
-	velocity = dir;
+	if (IsAlive())
+	{
+		if (!damaging)
+		{
+			velocity.x = 0;
+			velocity.y = 0;
+
+			//이동 방향 계산
+			D3DXVECTOR2 dir = GameManager::GetInstance().GetPlayer()->GetPos() - pos;
+			D3DXVec2Normalize(&dir, &dir);
+			dir *= moveSpeed;
+
+			//이동 거리 저장
+			velocity = dir;
+		}
+		else
+		{
+			velocity.x = 0;
+			velocity.y = 0;
+		}
+	}
+	else
+	{
+		if (animator->IsEnd())
+		{
+			currentState = CS_DEAD;
+		}
+	}
+
+	switch (currentState)
+	{
+	case CS_IDLE:
+	case CS_MOVE:
+		animator->ChangeAnimation((int)CS_IDLE);
+		break;
+	case CS_DYING:
+	case CS_DEAD:
+		animator->ChangeAnimation((int)CS_DYING);
+		break;
+	}
+
+	animator->Update();
+	size.x = animator->GetCurrentSpriteData()->width * scale;
+	size.y = animator->GetCurrentSpriteData()->height * scale;
 }
 
 void Enemy::Draw()
 {
-	currentSprite->RenderStretch(pos.x, pos.y, size.x, size.y, dir * 1, 1);
+	DWORD color = 0xffffffff;
+	if (damaging)
+		color = 0xffff0000;
+	animator->GetCurrentSpriteData()->sprite->RenderStretch(pos.x, pos.y, size.x, size.y, dir * 1, 1, color);
 }
 void Enemy::Move(float x, float y)
 {
@@ -86,4 +134,19 @@ void Enemy::Move(float x, float y)
 
 	pos.x += x;
 	pos.y += y;
+}
+
+void Enemy::Damage(float dmg)
+{
+	currentHP -= dmg;
+	if (currentHP <= 0)
+	{
+		currentState = CS_DYING;
+		animator->Reset();
+	}
+	else
+	{
+		damaging = true;
+		damageDelay = 0.5f;
+	}
 }

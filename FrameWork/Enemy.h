@@ -1,22 +1,26 @@
 #pragma once
+
+#include "Character.h"
+#include "Sprite2.h"
+
 #include <vector>
 using std::vector;
 
 class Enemy : public Character
 {
 private:
+	bool damaging;
+	float damageDelay;
+
 	//Status
 	float moveSpeed;
 	float attackDamage;
 	
 	// Rendering
 	int spriteIdx;
+
+	float enemyAnimTime;
 	float animSpeed;
-
-	Sprite2* currentSprite;
-
-	vector<Sprite2*> movingSprites;
-	vector<Sprite2*> dyingSprites;
 public:
 	Enemy(float x, float y, float scale = 1);
 	~Enemy();
@@ -25,5 +29,9 @@ public:
 	virtual void Update();
 	virtual void Draw();
 	virtual void Move(float x, float y);
+
+	virtual void Damage(float dmg);
+public:
+	float GetDamage() { return attackDamage; }
 };
 

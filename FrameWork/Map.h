@@ -4,7 +4,7 @@
 
 class Map
 {
-public :
+public:
 	Map();
 	~Map();
 
@@ -23,7 +23,7 @@ public :
 
 	int m_Stage;
 
-	void Init();
+	void Init(const char* fileName);
 	void Update();
 	void Draw();
 

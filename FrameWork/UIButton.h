@@ -6,11 +6,11 @@ class UIButton
 {
 	int spriteCount;
 	bool isSelected;
+	bool isActivated;
 	std::vector<UISprite> buttonSprite;
 	UISprite curSprite;
 	SelectArrow selectArrow1;
 	SelectArrow selectArrow2;
-
 public:
 	UIButton(int spriteCount,bool _isSelected);
 	~UIButton();
@@ -23,4 +23,6 @@ public:
 	bool IsSelected(bool isSelected);
 	bool SetIsSelected(bool);
 	bool GetIsSelected();
+	bool GetActivated();
+	void SetActivated(bool active);
 };

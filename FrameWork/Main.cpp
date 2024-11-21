@@ -95,6 +95,8 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPTSTR lpCmdL
 	for(int i=0; i<TOTALCHAP; i++)
 		g_Mng.chap[i]->Init();
 
+	UIManager::GetInstance().Init();
+
 	while( msg.message != WM_QUIT )
 	{
 		if(PeekMessage(&msg,NULL,0,0,PM_NOREMOVE))
@@ -121,7 +123,7 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPTSTR lpCmdL
 			while( GetTickCount64() > next_game_tick && loops < MAX_FRAMESKIP) 
 			{
 				interpolation = float(GetTickCount64() + SKIP_TICKS - next_game_tick ) / float( SKIP_TICKS );
-				if(GameManager::GetInstance().m_Pause == false) g_Mng.chap[g_Mng.n_Chap]->Update(interpolation);
+				/*if(GameManager::GetInstance().IsPause() == false) */g_Mng.chap[g_Mng.n_Chap]->Update(interpolation);
 				//if(b == false)
 				//{
 				//	aa = interpolation;
@@ -167,7 +169,14 @@ LRESULT CALLBACK WndProc( HWND g_hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam )
 		 {
 			 if (GetTickCount64() - key.KeyTime > 200)
 			 {
-				 GameManager::GetInstance().m_Pause = !GameManager::GetInstance().m_Pause;
+				 if (GameManager::GetInstance().IsPause())
+				 {
+					 GameManager::GetInstance().Resume();
+				 }
+				 else
+				 {
+					 GameManager::GetInstance().Pause();
+				 }
 
 				 key.KeyTime = GetTickCount64();
 			 }

@@ -69,7 +69,7 @@
 #include "Collider.h"
 
 #include "GameManager.h"
-
+#include "UIManager.h"
 // 데이타 베이스///////////////////
 #include "Mysql.h"
 
@@ -92,5 +92,8 @@ inline int KeyUp	( int vk )
 }
 
 ////
+#include "Time.h"
+
 #include "Character.h"
 #include "Enemy.h"
+#include "Projectile.h"
