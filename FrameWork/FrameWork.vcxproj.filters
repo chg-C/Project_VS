@@ -67,6 +67,12 @@
     <Filter Include="Custom\Game\GameManager">
       <UniqueIdentifier>{cebaf1a7-eceb-4a76-b89b-546059c9a4bf}</UniqueIdentifier>
     </Filter>
+    <Filter Include="소스 파일\UI">
+      <UniqueIdentifier>{3c9384c3-1a6b-4d02-9c55-aed5368ec81b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\UI\PopUP">
+      <UniqueIdentifier>{8f8e3f69-cd0c-4425-b211-1a9c5ec84f46}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Define.h">
@@ -144,14 +150,35 @@
     <ClInclude Include="Player.h">
       <Filter>Custom\Game\Objects</Filter>
     </ClInclude>
-    <ClInclude Include="UISprite.h">
+    <ClInclude Include="SelectArrow.h">
       <Filter>소스 파일</Filter>
     </ClInclude>
     <ClInclude Include="UIButton.h">
-      <Filter>소스 파일</Filter>
+      <Filter>소스 파일\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="UIPopUp.h">
+      <Filter>소스 파일\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="UISprite.h">
+      <Filter>소스 파일\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="UIManager.h">
+      <Filter>소스 파일\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="UISprite.h">
+      <Filter>소스 파일\UI</Filter>
     </ClInclude>
     <ClInclude Include="SelectArrow.h">
-      <Filter>소스 파일</Filter>
+      <Filter>소스 파일\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="UIButton.h">
+      <Filter>소스 파일\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="OptionPopUp.h">
+      <Filter>소스 파일\UI\PopUP</Filter>
+    </ClInclude>
+    <ClInclude Include="PowerPopUp.h">
+      <Filter>소스 파일\UI\PopUP</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -209,17 +236,35 @@
     <ClCompile Include="Player.cpp">
       <Filter>Custom\Game\Objects</Filter>
     </ClCompile>
-    <ClCompile Include="UISprite.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="UIButton.cpp">
-      <Filter>소스 파일</Filter>
+    <ClCompile Include="Sprite.cpp">
+      <Filter>D3D Core\코어 소스</Filter>
     </ClCompile>
     <ClCompile Include="SelectArrow.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="Sprite.cpp">
-      <Filter>D3D Core\코어 소스</Filter>
+    <ClCompile Include="UIButton.cpp">
+      <Filter>소스 파일\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="UIPopUp.cpp">
+      <Filter>소스 파일\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="UISprite.cpp">
+      <Filter>소스 파일\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="SelectArrow.cpp">
+      <Filter>소스 파일\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="UIButton.cpp">
+      <Filter>소스 파일\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="UISprite.cpp">
+      <Filter>소스 파일\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="OptionPopUp.cpp">
+      <Filter>소스 파일\UI\PopUP</Filter>
+    </ClCompile>
+    <ClCompile Include="PowerPopUp.cpp">
+      <Filter>소스 파일\UI\PopUP</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

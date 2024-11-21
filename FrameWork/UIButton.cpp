@@ -6,7 +6,7 @@ UIButton::UIButton(int spriteCount,bool _isSelected)
 	isSelected = _isSelected;
 	this->spriteCount = spriteCount;
 	buttonSprite.resize(spriteCount);
-	
+	isActivated = true;
 }
 
 UIButton::~UIButton()
@@ -25,12 +25,7 @@ void UIButton::Init(const char* _filename)
 	}
 	curSprite = buttonSprite[0];
 }
-void UIButton::Update()
-{
-	selectArrow1.Update();
-	selectArrow2.Update();
-	IsSelected(isSelected);
-}
+
 
 void UIButton::Clicked()
 {
@@ -49,13 +44,19 @@ void UIButton::ButtonMouseOver()
 
 void UIButton::ButtonRender(float x, float y, float radian, float sx, float sy, int pivotMode, const char* _text,float tx,float ty,DWORD setColor)
 {
-	curSprite.UIRender(x,y,radian,sx,sy,pivotMode,setColor);
-	selectArrow1.Render(x - 20 - (sx / 2), y,0,1,1);
-	selectArrow2.Render(x + 20 + (sx / 2), y,0,-1,1);
+	if (isActivated)
+	{
+		curSprite.UIRender(x,y,radian,sx,sy,pivotMode,setColor);
+		selectArrow1.Render(x - 20 - (sx / 2), y - 5, 0, 1, 1);
+		selectArrow2.Render(x + 20 + (sx / 2), y - 5, 0, -1, 1);
 
-	char text[20];
-	sprintf(text, _text);
-	dv_font.DrawString(text, tx, ty);
+		char text[20];
+		sprintf(text, _text);
+		dv_font.DrawString(text, tx, ty);
+		selectArrow1.Update();
+		selectArrow2.Update();
+		IsSelected(isSelected);
+	}
 }
 
 bool UIButton::IsSelected(bool _isSelected)
@@ -81,4 +82,14 @@ bool UIButton::SetIsSelected(bool value)
 bool UIButton::GetIsSelected()
 {
 	return isSelected;
+}
+
+bool UIButton::GetActivated()
+{
+	return isActivated;
+}
+
+void UIButton::SetActivated(bool active)
+{
+	isActivated = active;
 }

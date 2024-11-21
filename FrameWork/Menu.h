@@ -3,33 +3,49 @@
 #include"UISprite.h"
 #include"UIButton.h"
 #include"SelectArrow.h"
+#include <unordered_map>
+#include"OptionPopUp.h"
+#include"PowerPopUp.h"
+struct MenuUI
+{
+	std::vector<UIButton> menuBtn;
+	std::unordered_map<int, std::tuple<int, int, int, int>> buttonMap;//buttonIdx,ÁÂ¿ì»óÇÏ
+	MenuUI() {};
+};
 class Menu : public Chap
 {
 	int buttonIdx;
+	bool isPopUpOpen;
+
+	MenuUI UI;
 	UISprite introBG;
+	UISprite title;
 	UISprite introillust00;
 	UISprite introillust01;
 	UISprite introillust02;
+
+	UIButton optionBtn;
 	UIButton startBtn;
 	UIButton collectBtn;
+	UIButton powerupBtn;
 	UIButton achievementsBtn;
+	UIButton creditsBtn;
 	SelectArrow selectArrow;
 
-	std::vector<UIButton> menuBtn;
+	UIPopUp* curPopUp;
+
 public:
 	Menu();
 	~Menu();
 
-
+	void AllButtonActivated(bool value);
 	int count, alpha;
-
 
 	virtual void Init();
 	virtual void Update(double frame);
 	virtual void Draw();
-
 	virtual void OnMessage(MSG* msg);
 
+	void OpenPopUp(int id);
 };
-
 #endif

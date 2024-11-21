@@ -54,8 +54,12 @@ bool g_DeviceFont::Create( HWND g_hWnd )
 
 }
 
-bool g_DeviceFont::DrawString( const char* msg , int x , int y ,int _fontHeight,int _Width,int fontWeight, D3DCOLOR color)
+bool g_DeviceFont::DrawString( const char* msg , int x , int y ,int _fontHeight,int _Width,int _fontWeight, D3DCOLOR color)
 {
+	fontHeight = _fontHeight;
+	fontWidth = _Width;
+	fontWeight = _fontWeight;
+
 	RECT rect = { x , y , fdesc.Width*strlen(msg) , fdesc.Height } ;
 
 	Sprite->Begin( D3DXSPRITE_ALPHABLEND ) ;

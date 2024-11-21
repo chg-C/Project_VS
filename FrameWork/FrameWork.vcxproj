@@ -165,14 +165,18 @@
     <ClInclude Include="Map.h" />
     <ClInclude Include="Menu.h" />
     <ClInclude Include="Mysql.h" />
+    <ClInclude Include="OptionPopUp.h" />
     <ClInclude Include="Over.h" />
     <ClInclude Include="Player.h" />
+    <ClInclude Include="PowerPopUp.h" />
     <ClInclude Include="Singleton.h" />
     <ClInclude Include="SelectArrow.h" />
     <ClInclude Include="Sound.h" />
     <ClInclude Include="Sprite.h" />
     <ClInclude Include="Sprite2.h" />
     <ClInclude Include="UIButton.h" />
+    <ClInclude Include="UIManager.h" />
+    <ClInclude Include="UIPopUp.h" />
     <ClInclude Include="UISprite.h" />
   </ItemGroup>
   <ItemGroup>
@@ -190,13 +194,16 @@
     <ClCompile Include="Map.cpp" />
     <ClCompile Include="Menu.cpp" />
     <ClCompile Include="Mysql.cpp" />
+    <ClCompile Include="OptionPopUp.cpp" />
     <ClCompile Include="Over.cpp" />
     <ClCompile Include="Player.cpp" />
+    <ClCompile Include="PowerPopUp.cpp" />
     <ClCompile Include="SelectArrow.cpp" />
     <ClCompile Include="Sound.cpp" />
     <ClCompile Include="Sprite.cpp" />
     <ClCompile Include="Sprite2.cpp" />
     <ClCompile Include="UIButton.cpp" />
+    <ClCompile Include="UIPopUp.cpp" />
     <ClCompile Include="UISprite.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

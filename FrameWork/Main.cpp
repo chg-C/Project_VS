@@ -95,6 +95,8 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPTSTR lpCmdL
 	for(int i=0; i<TOTALCHAP; i++)
 		g_Mng.chap[i]->Init();
 
+	UIManager::GetInstance().Init();
+
 	while( msg.message != WM_QUIT )
 	{
 		if(PeekMessage(&msg,NULL,0,0,PM_NOREMOVE))
