@@ -1,12 +1,15 @@
 #include "Include.h"
 #include "UIButton.h"
 #define BTNRESOURCE "./resource/Img/Button/"
-UIButton::UIButton(int spriteCount,bool _isSelected)
+UIButton::UIButton(int spriteCount,bool _isSelected,bool _isToggle)
 {
+	isToggle = _isToggle;
 	isSelected = _isSelected;
 	this->spriteCount = spriteCount;
 	buttonSprite.resize(spriteCount);
 	isActivated = true;
+	isClicked = false;
+	spriteIdx = 0;
 }
 
 UIButton::~UIButton()
@@ -17,29 +20,67 @@ void UIButton::Init(const char* _filename)
 {
 	for (int i = 0; i < spriteCount; i++)
 	{
-		char filename[100];
+		char filename[50];
 		sprintf(filename, "%s%s_%02d.png", BTNRESOURCE,_filename, i);
 
 		// 생성한 파일 이름을 사용하여 버튼 이미지를 생성합니다.
 		buttonSprite[i].Create(filename, false, D3DCOLOR_XRGB(0, 0, 0));
 	}
-	curSprite = buttonSprite[0];
+	curSprite = buttonSprite[spriteIdx];
 }
-
 
 void UIButton::Clicked()
 {
-	curSprite = buttonSprite[2];
+	if (!isToggle)
+	{
+		if (spriteCount > 2)
+		{
+			spriteIdx = 2;
+			curSprite = buttonSprite[spriteIdx]; // 클릭 시 클릭된 스프라이트로 변경
+			isClicked = true;           // 클릭 상태 활성화
+		}
+	}
+	else if (isToggle)
+	{
+		if (spriteCount > 1)
+		{
+			if (spriteIdx == 0)
+			{
+				spriteIdx = 1;
+				curSprite = buttonSprite[spriteIdx];
+			}
+			else
+			{
+				spriteIdx = 0;
+				curSprite = buttonSprite[spriteIdx];
+			}
+		}
+	}
 }
 
-void UIButton::Unclicked()
+void UIButton::UnSelected()
 {
-	curSprite = buttonSprite[0];
+	isClicked = false;
+	if (!isToggle)
+	{
+		if (!isClicked) // 클릭 상태가 아니면 기본 상태로 변경
+		{
+			spriteIdx = 0;
+			curSprite = buttonSprite[spriteIdx];
+		}
+	}
 }
 
-void UIButton::ButtonMouseOver()
+void UIButton::Selected()
 {
-	curSprite = buttonSprite[1];
+	if (!isToggle)
+	{
+		if (spriteCount > 1 && !isClicked) // 클릭된 상태가 아니면 선택 상태로 변경
+		{
+			spriteIdx = 1;
+			curSprite = buttonSprite[spriteIdx];
+		}
+	}
 }
 
 void UIButton::ButtonRender(float x, float y, float radian, float sx, float sy, int pivotMode, const char* _text,float tx,float ty,DWORD setColor)
@@ -53,9 +94,8 @@ void UIButton::ButtonRender(float x, float y, float radian, float sx, float sy, 
 		char text[20];
 		sprintf(text, _text);
 		dv_font.DrawString(text, tx, ty);
-		selectArrow1.Update();
-		selectArrow2.Update();
 		IsSelected(isSelected);
+
 	}
 }
 
@@ -66,11 +106,11 @@ bool UIButton::IsSelected(bool _isSelected)
 	selectArrow2.Activate(isSelected);
 	if (isSelected)
 	{
-		curSprite = buttonSprite[1];
+		Selected();
 	}
 	else
 	{
-		curSprite = buttonSprite[0];
+		UnSelected();
 	}
 	return isSelected;
 }
@@ -92,4 +132,20 @@ bool UIButton::GetActivated()
 void UIButton::SetActivated(bool active)
 {
 	isActivated = active;
+}
+
+void UIButton::SetClicked(bool value)
+{
+	isClicked = value;
+
+	// 클릭 상태가 해제되면 스프라이트 초기화
+	if (!isClicked)
+	{
+		curSprite = buttonSprite[isSelected ? 1 : 0];
+	}
+}
+
+bool UIButton::GetIsToggle()
+{
+	return isToggle;
 }

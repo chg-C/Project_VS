@@ -2,6 +2,7 @@
 #define __Menu_H__
 #include"UISprite.h"
 #include"UIButton.h"
+#include"UIPopUp.h"
 #include"SelectArrow.h"
 #include <unordered_map>
 #include"OptionPopUp.h"
@@ -14,6 +15,7 @@ struct MenuUI
 };
 class Menu : public Chap
 {
+	int curPopUpIdx;
 	int buttonIdx;
 	bool isPopUpOpen;
 
@@ -47,5 +49,8 @@ public:
 	virtual void OnMessage(MSG* msg);
 
 	void OpenPopUp(int id);
+	void ClosePopUp();
+	void MenuInput();
+	void OptionInput();
 };
 #endif

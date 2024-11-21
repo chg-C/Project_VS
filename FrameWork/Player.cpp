@@ -1,11 +1,26 @@
 #include "Include.h"
 
 
-Player::Player()
-	: Character(0, 0, 1.5f), moving(false), playerColor(0xffffffff), attackCooldown(0)
+Player::Player(PlayerData* data)
+	: Character(0, 0, 1.5f), moving(false), playerColor(0xffffffff), attackCooldown(0), moveSpeed(1.5f), armor(0)
 {
 	pos.x = 0;
 	pos.y = 0;
+
+	maxHP = currentHP = 100;
+
+	int animatorID = 0;
+	if (data != nullptr)
+	{
+		animatorID = data->animatorID;
+		maxHP = data->maxHealth;
+		currentHP = maxHP;
+		moveSpeed = data->moveSpeed;
+		armor = data->defense;
+	}
+	
+	animator = new SpriteAnimator(*ResourceManager::GetInstance().GetAnimator(animatorID));
+	attackEffectTemplate = new SpriteAnimation(*ResourceManager::GetInstance().GetAnimation(0));
 }
 
 Player::~Player()
@@ -16,82 +31,18 @@ Player::~Player()
 
 void Player::Init()
 {
-	animator = new SpriteAnimator();
-	speed = 2;
-
-	char FileName[256];
-
-	SpriteAnimation* anim = new SpriteAnimation(true);
-	SpriteData* data;
-	Sprite2* sprite;
-	for (int i = 0; i < 1; ++i)
-	{
-		data = new SpriteData();
-		sprite = new Sprite2();
-		
-		sprintf_s(FileName, "./resource/Img/Game/player/newAntonio_%02d.png", (i + 1));
-		sprite->Create(FileName, false, D3DCOLOR_XRGB(0, 0, 0));
-
-		data->sprite = sprite;
-		data->willCollide = true;
-		data->nextAnimDelay = 0.5f;
-		data->color = 0xffffffff;
-		data->SetWH();
-		
-		anim->Push(data);
-	}
-	animator->Insert(CS_IDLE, anim);
-
-	anim = new SpriteAnimation(true);
-	for (int i = 0; i < 8; ++i)
-	{
-		data = new SpriteData();
-		sprite = new Sprite2();
-
-		sprintf_s(FileName, "./resource/Img/Game/player/newAntonio_%02d.png", (i + 1));
-		sprite->Create(FileName, false, D3DCOLOR_XRGB(0, 0, 0));
-
-		data->sprite = sprite;
-		data->willCollide = true;
-		data->nextAnimDelay = 0.15f;
-		data->color = 0xffffffff;
-		data->SetWH();
-
-		anim->Push(data);
-	}
-	animator->Insert(CS_MOVE, anim);
-
-
-	attackEffectTemplate = new SpriteAnimation();
-	for (int i = 0; i < 4; ++i)
-	{
-		data = new SpriteData();
-		sprite = new Sprite2();
-		sprintf_s(FileName, "./resource/Img/Game/effects/attack/War_Spr_Attack2Slash_000%d.png", i+1);
-		sprite->Create(FileName, false, D3DCOLOR_XRGB(0, 0, 0));
-
-		data->sprite = sprite;
-		data->willCollide = true;
-		data->color = 0xffffffff;
-		data->nextAnimDelay = 0.05f;
-		data->SetWH();
-
-		attackEffectTemplate->Push(data);
-	}
-
+	char FileName[256] = {};
 	sprintf_s(FileName, "./resource/Img/Etc/Square.png");
 	squareSprite = new Sprite2();
 	squareSprite->Create(FileName, false, D3DCOLOR_XRGB(0, 0, 0));
-
-	
 }
 
 void Player::Update()
 {
-	invTime -= TIME;
+	dmgTime -= TIME;
 	attackCooldown -= TIME;
 
-	if (damaging && invTime <= 0)
+	if (damaging && dmgTime <= 0)
 	{
 		playerColor |= 0xffff;
 		damaging = false;
@@ -104,41 +55,44 @@ void Player::Update()
 		if (KeyDown(VK_LEFT) || KeyDown('A'))
 		{
 			dir = -1;
-			velocity.x = -speed;
+			velocity.x = -moveSpeed;
 
 			moving = true;
 		}
 		else if (KeyDown(VK_RIGHT) || KeyDown('D'))
 		{
 			dir = 1;
-			velocity.x = speed;
+			velocity.x = moveSpeed;
 
 			moving = true;
 		}
 		if (KeyDown(VK_UP) || KeyDown('W'))
 		{
-			velocity.y = -speed;
+			velocity.y = -moveSpeed;
 			moving = true;
 		}
 		else if (KeyDown(VK_DOWN) || KeyDown('S'))
 		{
-			velocity.y = speed;
+			velocity.y = moveSpeed;
 			moving = true;
 		}
 
 		if (KeyDown(VK_SPACE))
 		{
-			if (attackCooldown <= 0)
-			{
-				attackCooldown = 1;
-				Projectile* proj = new Projectile(attackEffectTemplate, pos.x + (100 * dir), pos.y, dir, 0.5f);
-				proj->Init();
-				proj->damage = 10;
-				projectiles.push_back(proj);
-			}
+			attackCooldown = 1;
+			Projectile* proj = new Projectile(attackEffectTemplate, pos.x + (100 * dir), pos.y, dir, 0.5f);
+			proj->Init();
+			projectiles.push_back(proj);
 		}
 
 
+		if (attackCooldown <= 0)
+		{
+			attackCooldown = 1;
+			Projectile* proj = new Projectile(attackEffectTemplate, pos.x + (100 * dir), pos.y, dir, 0.5f);
+			proj->Init();
+			projectiles.push_back(proj);
+		}
 		if (moving == false)
 		{
 			currentState = CS_IDLE;
@@ -190,7 +144,7 @@ void Player::Update()
 		break;
 	}
 
-	animator->Update(speed);
+	animator->Update(moveSpeed);
 	size.x = animator->GetCurrentSpriteData()->width * scale;
 	size.y = animator->GetCurrentSpriteData()->height * scale;
 }
@@ -229,21 +183,25 @@ void Player::Move(float x, float y)
 
 void Player::Damage(float dmg)
 {
-	if (invTime > 0)
-		return;
-
-	currentHP -= dmg;
-
-	if (currentHP <= 0)
+	//if (invTime > 0)
+	//	return;
+	if (IsAlive())
 	{
-		currentState = CS_DYING;
+		float dmgCal = dmg - armor;
+		if (dmgCal < 0) dmgCal = 0;
+		currentHP -= dmgCal;
 
-		velocity.x = 0;
-		velocity.y = 0;
+		if (currentHP <= 0)
+		{
+			currentState = CS_DYING;
+
+			velocity.x = 0;
+			velocity.y = 0;
+		}
+
+		damaging = true;
+		playerColor &= 0xffff0000;
+
+		dmgTime = 0.15f;
 	}
-
-	damaging = true;
-	playerColor &= 0xffff0000;
-	
-	invTime = 0.15f;
 }

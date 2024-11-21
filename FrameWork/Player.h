@@ -2,6 +2,7 @@
 #include "Include.h"
 #include "Character.h"
 #include "Projectile.h"
+#include "ResourceManager.h"
 
 #include <vector>
 using std::vector;
@@ -10,9 +11,10 @@ using std::vector;
 class Player : public Character
 {
 	bool damaging;
-	float invTime;
+	float dmgTime;
 
-	float speed;
+	float moveSpeed;
+	float armor;
 
 	bool moving;
 
@@ -27,7 +29,7 @@ class Player : public Character
 
 	Sprite2* squareSprite;
 public :
-	Player();
+	Player(PlayerData* data);
 	~Player();
 
 	std::list<Projectile*> projectiles;

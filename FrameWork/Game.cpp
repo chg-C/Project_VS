@@ -1,4 +1,5 @@
 #include "Include.h"
+#include "ResourceManager.h"
 
 Game::Game()
 {
@@ -10,6 +11,8 @@ Game::~Game()
 
 void Game::Init()
 {
+	ResourceManager::GetInstance().InitResources();
+
 	/*map.Init();
 	bird.Init();
 	player.Init();

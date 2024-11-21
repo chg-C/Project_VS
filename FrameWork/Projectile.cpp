@@ -2,7 +2,7 @@
 #include "Projectile.h"
 
 Projectile::Projectile(SpriteAnimation* sprites, float x, float y, int dir, float scale)
-	: SpriteEffect(sprites, x, y, scale), dir(dir), damage(0)
+	: SpriteEffect(sprites, x, y, scale), dir(dir), damage(8)
 {
 	this->sprites = new SpriteAnimation(*sprites);
 }

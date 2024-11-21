@@ -93,6 +93,7 @@ inline int KeyUp	( int vk )
 
 ////
 #include "Time.h"
+#include "Option.h"
 
 #include "Character.h"
 #include "Enemy.h"
