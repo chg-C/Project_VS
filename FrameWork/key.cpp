@@ -41,6 +41,15 @@ void Key::Update()
 		if(GetTickCount64() - KeyTime > 200)
 		{
 			KeyTime = GetTickCount64();
+
+			if (Option::GetInstance().WillDamageEffect())
+			{
+				Option::GetInstance().DeactiveDamageEffect();
+			}
+			else
+			{
+				Option::GetInstance().ActiveDamageEffect();
+			}
 		}
 		
 	}
@@ -127,7 +136,7 @@ void Key::Update()
 		if(GetTickCount64() - KeyTime > 200)
 		{	
 			KeyTime = GetTickCount64();
-
+			GameManager::GetInstance().showDebug = !GameManager::GetInstance().showDebug;
 		}
 	
 	}

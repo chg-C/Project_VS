@@ -1,13 +1,14 @@
 #define _CRT_NONSTDC_NO_DEPRECATE
 #include "Include.h"
-
 #include "EnemyManager.h"
 #include "EffectManager.h"
+
 
 GameManager::GameManager(void)
 	:map(nullptr), player(nullptr), gameOver(nullptr), timeFlew(0), pause(false), respawn(true), doCollision(true)
 {
 	m_GameStart = true;
+	showDebug = true;
 }
 
 GameManager::~GameManager(void)
@@ -17,8 +18,10 @@ GameManager::~GameManager(void)
 
 void GameManager::Init()
 {
+	PlayerData* data = ResourceManager::GetInstance().GetPlayerData(0);
+
 	map = new Map();
-	player = new Player();
+	player = new Player(data);
 	enemyManager = new EnemyManager();
 	effectManager = new EffectManager();
 	gameOver = new Sprite2();
@@ -41,6 +44,7 @@ void GameManager::Init()
 	gameOver->Create("./resource/Img/lobby/introBG.png", false, D3DCOLOR_XRGB(0, 0, 0));
 	
 	Time::GetInstance().InitTime();
+	Option::GetInstance().Init();
 }
 
 void GameManager::Update()
@@ -99,25 +103,31 @@ void GameManager::Draw()
 		{
 			dv_font.DrawString("ON PAUSE", 420, 300, 0xffff0000);
 		}
-		else
-		{
-			dv_font.DrawString("WASD 혹은 방향키 - 이동", 20, 550, 0xffffffff);
-			dv_font.DrawString("SPACEBAR - (임시)공격", 20, 600, 0xffffffff);
-		}
+
 		int minute = timeFlew / 60;
 		int second = ((int)timeFlew) % 60;
 		
 		char timeFlew[16] = {};
 		sprintf_s(timeFlew, "%d:%02d", minute, second);
 		int len = strlen(timeFlew) / 2;
+		dv_font.DrawString(timeFlew, (SCREEN_WITH / 2) - (len * 12), 100);
+		//
 
-		dv_font.DrawString(timeFlew, (SCREEN_WITH / 2) - (len*12), 100);
+		if (showDebug)
+		{
+			//
+			char debug[64] = {};
+			sprintf_s(debug, "충돌 처리(1): %s", doCollision ? "TRUE" : "FALSE");
+			dv_font.DrawString(debug, 15, 15);
+			sprintf_s(debug, "적 생성중(2): %s", respawn ? "TRUE" : "FALSE");
+			dv_font.DrawString(debug, 15, 45);
+			sprintf_s(debug, "대미지 숫자 출력(3): %s", Option::GetInstance().WillDamageEffect() ? "TRUE" : "FALSE");
+			dv_font.DrawString(debug, 15, 75);
 
-		char debug[32] = {};
-		sprintf_s(debug, "충돌 처리: %s", doCollision ? "TRUE" : "FALSE");
-		dv_font.DrawString(debug, 15, 15);
-		sprintf_s(debug, "적 생성중: %s", respawn ? "TRUE" : "FALSE");
-		dv_font.DrawString(debug, 15, 45);
+
+			dv_font.DrawString("WASD 혹은 방향키 - 이동", 15, 550, 0xffffffff);
+			dv_font.DrawString("SPACEBAR - (임시)공격", 15, 600, 0xffffffff);
+		}
 	}
 	else
 	{

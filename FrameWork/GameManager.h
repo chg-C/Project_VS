@@ -48,4 +48,5 @@ public:
 public:
 	void RegisterEffect(Effect* effect);
 	const Player* GetPlayer() const { return player; }
+	bool showDebug;
 };

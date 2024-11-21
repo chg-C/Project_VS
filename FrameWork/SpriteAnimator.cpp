@@ -8,6 +8,16 @@ SpriteAnimator::SpriteAnimator()
 {
 }
 
+SpriteAnimator::SpriteAnimator(const SpriteAnimator& other)
+    :currentKey(other.currentKey)
+{
+    for (auto& iter : other.animations)
+    {
+        SpriteAnimation* anim = new SpriteAnimation(*iter.second);
+        animations[iter.first] = anim;
+    }
+}
+
 SpriteAnimator::~SpriteAnimator()
 {
     for (auto& iter : animations)

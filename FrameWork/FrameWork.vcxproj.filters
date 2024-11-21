@@ -94,6 +94,12 @@
     <Filter Include="Custom\Game\Time">
       <UniqueIdentifier>{b405c88f-619e-4fb4-b540-d2cf7c8afd81}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Global">
+      <UniqueIdentifier>{568bea4e-1ae3-4c44-ad9d-5509a26bf5d0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Custom\Resources">
+      <UniqueIdentifier>{5e3957ef-cdf3-43e1-93a6-9d29acf1249e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Define.h">
@@ -162,7 +168,7 @@
     <ClInclude Include="Map.h">
       <Filter>Custom\Game\Map</Filter>
     </ClInclude>
-     <ClInclude Include="Character.h">
+    <ClInclude Include="Character.h">
       <Filter>Custom\Game\Objects</Filter>
     </ClInclude>
     <ClInclude Include="Enemy.h">
@@ -299,6 +305,12 @@
     </ClInclude>
     <ClInclude Include="PlayerManager.h">
       <Filter>Custom\Game\GameManager\SubManagers</Filter>
+    </ClInclude>
+    <ClInclude Include="Option.h">
+      <Filter>Global</Filter>
+    </ClInclude>
+    <ClInclude Include="ResourceManager.h">
+      <Filter>Custom\Resources</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -454,6 +466,9 @@
     </ClCompile>
     <ClCompile Include="EffectManager.cpp">
       <Filter>Custom\Game\GameManager\SubManagers</Filter>
+    </ClCompile>
+    <ClCompile Include="ResourceManager.cpp">
+      <Filter>Custom\Resources</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
