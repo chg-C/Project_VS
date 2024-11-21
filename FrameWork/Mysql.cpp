@@ -16,7 +16,7 @@ Mysql::~Mysql()
 
 void Mysql::Init()
 {
-
+	
 }
 
 // 사용 안함

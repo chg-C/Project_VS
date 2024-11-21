@@ -92,5 +92,8 @@ inline int KeyUp	( int vk )
 }
 
 ////
+#include "Time.h"
+
 #include "Character.h"
 #include "Enemy.h"
+#include "Projectile.h"

@@ -46,7 +46,7 @@ void Game::Update(double frame)
 
 	if (GetTickCount64() - a > frame)
 	{
-		//key.Update();
+		key.Update();
 		//bird.Update();
 		//player.Update();
 		//coll.Update();

@@ -22,6 +22,7 @@ void Key::Update()
 		if(GetTickCount64() - KeyTime > 200)
 		{
 			KeyTime = GetTickCount64();
+			GameManager::GetInstance().ToggleCollision();
 		}
 	}
 
@@ -30,6 +31,7 @@ void Key::Update()
 		if(GetTickCount64() - KeyTime > 200)
 		{
 			KeyTime = GetTickCount64();
+			GameManager::GetInstance().ToggleSpawn();
 		}
 		
 	}
@@ -38,7 +40,6 @@ void Key::Update()
 	{
 		if(GetTickCount64() - KeyTime > 200)
 		{
-			GameManager::GetInstance().m_Collision = true;
 			KeyTime = GetTickCount64();
 		}
 		
@@ -57,7 +58,6 @@ void Key::Update()
 	{
 		if(GetTickCount64() - KeyTime > 200)
 		{
-			GameManager::GetInstance().m_Collision = true;
 			KeyTime = GetTickCount64();
 		}
 	
@@ -127,6 +127,7 @@ void Key::Update()
 		if(GetTickCount64() - KeyTime > 200)
 		{	
 			KeyTime = GetTickCount64();
+
 		}
 	
 	}
