@@ -141,7 +141,7 @@
     <ClInclude Include="Map.h">
       <Filter>Custom\Game\Map</Filter>
     </ClInclude>
-     <ClInclude Include="Character.h">
+    <ClInclude Include="Character.h">
       <Filter>Custom\Game\Objects</Filter>
     </ClInclude>
     <ClInclude Include="Enemy.h">
@@ -151,9 +151,6 @@
       <Filter>Custom\Game\Objects</Filter>
     </ClInclude>
     <ClInclude Include="SelectArrow.h">
-      <Filter>소스 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="UISprite.h">
       <Filter>소스 파일</Filter>
     </ClInclude>
     <ClInclude Include="UIButton.h">
@@ -183,15 +180,6 @@
     <ClInclude Include="PowerPopUp.h">
       <Filter>소스 파일\UI\PopUP</Filter>
     </ClInclude>
-    <ClInclude Include="Cache.h">
-      <Filter>Custom\Container</Filter>
-    </ClInclude>
-    <ClInclude Include="TextEffect.h">
-      <Filter>Custom\Game\Objects\Effect</Filter>
-    </ClInclude>
-    <ClInclude Include="Effect.h">
-      <Filter>Custom\Game\Objects\Effect</Filter>
-    </ClInclude>
     <ClInclude Include="Character.h">
       <Filter>Custom\Game\Objects\Character</Filter>
     </ClInclude>
@@ -201,35 +189,8 @@
     <ClInclude Include="Player.h">
       <Filter>Custom\Game\Objects\Character</Filter>
     </ClInclude>
-    <ClInclude Include="Projectile.h">
-      <Filter>Custom\Game\Objects\Effect</Filter>
-    </ClInclude>
-    <ClInclude Include="SpriteEffect.h">
-      <Filter>Custom\Game\Objects\Effect</Filter>
-    </ClInclude>
     <ClInclude Include="resource.h">
       <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="EnemyManager.h">
-      <Filter>Custom\Game\GameManager\SubManagers</Filter>
-    </ClInclude>
-    <ClInclude Include="Item.h">
-      <Filter>Custom\Game\Objects\Items</Filter>
-    </ClInclude>
-    <ClInclude Include="SpriteAnimation.h">
-      <Filter>Custom\Render\Animation</Filter>
-    </ClInclude>
-    <ClInclude Include="SpriteAnimator.h">
-      <Filter>Custom\Render\Animation</Filter>
-    </ClInclude>
-    <ClInclude Include="Time.h">
-      <Filter>Custom\Game\Time</Filter>
-    </ClInclude>
-    <ClInclude Include="EffectManager.h">
-      <Filter>Custom\Game\GameManager\SubManagers</Filter>
-    </ClInclude>
-    <ClInclude Include="PlayerManager.h">
-      <Filter>Custom\Game\GameManager\SubManagers</Filter>
     </ClInclude>
     <ClInclude Include="UISprite.h">
       <Filter>소스 파일</Filter>
@@ -239,6 +200,45 @@
     </ClInclude>
     <ClInclude Include="SelectArrow.h">
       <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Cache.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Effect.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="EffectManager.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="EnemyManager.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Item.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerManager.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Projectile.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="SpriteAnimation.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="SpriteAnimator.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="SpriteEffect.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="TextEffect.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Time.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="UISprite.h">
+      <Filter>소스 파일\UI</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -296,12 +296,6 @@
     <ClCompile Include="Sprite.cpp">
       <Filter>D3D Core\코어 소스</Filter>
     </ClCompile>
-    <ClCompile Include="UISprite.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="UIButton.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
     <ClCompile Include="SelectArrow.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
@@ -329,38 +323,14 @@
     <ClCompile Include="PowerPopUp.cpp">
       <Filter>소스 파일\UI\PopUP</Filter>
     </ClCompile>
-    <ClCompile Include="TextEffect.cpp">
-      <Filter>Custom\Game\Objects\Effect</Filter>
-    </ClCompile>
     <ClCompile Include="Enemy.cpp">
       <Filter>Custom\Game\Objects\Character</Filter>
     </ClCompile>
     <ClCompile Include="Player.cpp">
       <Filter>Custom\Game\Objects\Character</Filter>
     </ClCompile>
-    <ClCompile Include="Projectile.cpp">
-      <Filter>Custom\Game\Objects\Effect</Filter>
-    </ClCompile>
-    <ClCompile Include="EnemyManager.cpp">
-      <Filter>Custom\Game\GameManager\SubManagers</Filter>
-    </ClCompile>
-    <ClCompile Include="SpriteAnimation.cpp">
-      <Filter>Custom\Render\Animation</Filter>
-    </ClCompile>
-    <ClCompile Include="SpriteAnimator.cpp">
-      <Filter>Custom\Render\Animation</Filter>
-    </ClCompile>
     <ClCompile Include="GameManager.cpp">
       <Filter>Custom\Game\GameManager</Filter>
-    </ClCompile>
-    <ClCompile Include="SpriteEffect.cpp">
-      <Filter>Custom\Game\Objects\Effect</Filter>
-    </ClCompile>
-    <ClCompile Include="Time.cpp">
-      <Filter>Custom\Game\Time</Filter>
-    </ClCompile>
-    <ClCompile Include="EffectManager.cpp">
-      <Filter>Custom\Game\GameManager\SubManagers</Filter>
     </ClCompile>
     <ClCompile Include="UISprite.cpp">
       <Filter>소스 파일</Filter>
@@ -370,6 +340,36 @@
     </ClCompile>
     <ClCompile Include="SelectArrow.cpp">
       <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="EffectManager.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="EnemyManager.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Projectile.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="SpriteAnimation.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="SpriteAnimator.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="SpriteEffect.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="TextEffect.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Time.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="UIButton.cpp">
+      <Filter>소스 파일\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="UISprite.cpp">
+      <Filter>소스 파일\UI</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -4,9 +4,11 @@
 #include <vector>
 class UIButton
 {
-	static int Id;
 	int buttonId;
 	int spriteCount;
+
+	bool isToggle;
+
 	bool isSelected;
 	bool isActivated;
 	std::vector<UISprite> buttonSprite;
@@ -14,12 +16,12 @@ class UIButton
 	SelectArrow selectArrow1;
 	SelectArrow selectArrow2;
 public:
-	UIButton(int spriteCount,bool _isSelected);
+	UIButton(int spriteCount, bool _isSelected, bool isToggle = false);
 	~UIButton();
 	void Init(const char* _filename);
 	void Clicked();
-	void Unclicked();
-	void ButtonMouseOver();
+	void UnSelected();
+	void Selected();
 	void Update();
 	void ButtonRender(float x, float y, float radian, float sx, float sy, int pivotMode,const char* _text ,float tx,float ty,DWORD setColor = 0xffffffff);
 	bool IsSelected(bool isSelected);

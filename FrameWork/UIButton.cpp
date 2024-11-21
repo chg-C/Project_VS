@@ -1,14 +1,14 @@
 #include "Include.h"
 #include "UIButton.h"
 #define BTNRESOURCE "./resource/Img/Button/"
-UIButton::UIButton(int spriteCount,bool _isSelected)
+UIButton::UIButton(int spriteCount,bool _isSelected,bool _isToggle)
 {
-	Id++;
-	buttonId = Id;
+	isToggle = _isToggle;
 	isSelected = _isSelected;
 	this->spriteCount = spriteCount;
 	buttonSprite.resize(spriteCount);
 	isActivated = true;
+
 }
 
 UIButton::~UIButton()
@@ -31,17 +31,36 @@ void UIButton::Init(const char* _filename)
 
 void UIButton::Clicked()
 {
-	curSprite = buttonSprite[2];
+	if(!isToggle)
+	if (spriteCount > 1)
+	{
+		curSprite = buttonSprite[2];
+	}
+
+	else if (isToggle)
+	{
+		if (spriteCount > 1)
+		{
+			curSprite = buttonSprite[1];
+		}
+	}
 }
 
-void UIButton::Unclicked()
+void UIButton::UnSelected()
 {
-	curSprite = buttonSprite[0];
+	if (!isToggle)
+	{
+		curSprite = buttonSprite[0];
+	}
 }
 
-void UIButton::ButtonMouseOver()
+void UIButton::Selected()
 {
-	curSprite = buttonSprite[1];
+	if(!isToggle)
+	if (spriteCount > 1)
+	{
+		curSprite = buttonSprite[1];
+	}
 }
 
 void UIButton::ButtonRender(float x, float y, float radian, float sx, float sy, int pivotMode, const char* _text,float tx,float ty,DWORD setColor)
@@ -55,9 +74,9 @@ void UIButton::ButtonRender(float x, float y, float radian, float sx, float sy, 
 		char text[20];
 		sprintf(text, _text);
 		dv_font.DrawString(text, tx, ty);
+		IsSelected(isSelected);
 		selectArrow1.Update();
 		selectArrow2.Update();
-		IsSelected(isSelected);
 	}
 }
 
@@ -68,11 +87,11 @@ bool UIButton::IsSelected(bool _isSelected)
 	selectArrow2.Activate(isSelected);
 	if (isSelected)
 	{
-		curSprite = buttonSprite[1];
+		Selected();
 	}
 	else
 	{
-		curSprite = buttonSprite[0];
+		UnSelected();
 	}
 	return isSelected;
 }

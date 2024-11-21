@@ -4,7 +4,7 @@ static DWORD KeyTime = GetTickCount();
 Menu::Menu():optionBtn(3,false), startBtn(3, true), collectBtn(3, false),powerupBtn(3,false), achievementsBtn(3, false),creditsBtn(3,false)
 {
 	isPopUpOpen = false;
-
+	curPopUpIdx = 0;
 	UI.buttonMap = {
 		{0,{-1,-1,-1,1}},//option: 왼쪽 없음 오른쪽 없음
 		{1,{2,4,0,3}},//start: 왼쪽 없음 오른쪽 없음
@@ -21,9 +21,6 @@ Menu::Menu():optionBtn(3,false), startBtn(3, true), collectBtn(3, false),powerup
 	UI.menuBtn.push_back(powerupBtn);		//buttonIdx 3
 	UI.menuBtn.push_back(achievementsBtn);	//buttonIdx 4
 	UI.menuBtn.push_back(creditsBtn);		//buttonIdx 5
-
-	UIManager::GetInstance().SetButtonMap(UI.buttonMap);
-	UIManager::GetInstance().SetButtons(UI.menuBtn);
 }
 
 Menu::~Menu()
@@ -45,13 +42,16 @@ void Menu::Init()
 	//UI.menuBtn[3].Init("button_c5");
 	//UI.menuBtn[4].Init("button_c9");
 	//UI.menuBtn[5].Init("button_c9");
-	UIManager::GetInstance().GetButtons()[0].Init("button_c9");
-	UIManager::GetInstance().GetButtons()[1].Init("button_c9");
-	UIManager::GetInstance().GetButtons()[2].Init("button_c9");
-	UIManager::GetInstance().GetButtons()[3].Init("button_c5");
-	UIManager::GetInstance().GetButtons()[4].Init("button_c9");
-	UIManager::GetInstance().GetButtons()[5].Init("button_c9");
 	
+	UI.menuBtn[0].Init("button_c9");
+	UI.menuBtn[1].Init("button_c9");
+	UI.menuBtn[2].Init("button_c9");
+	UI.menuBtn[3].Init("button_c5");
+	UI.menuBtn[4].Init("button_c9");
+	UI.menuBtn[5].Init("button_c9");
+
+	UIManager::GetInstance().SetButtonMap(UI.buttonMap);
+	UIManager::GetInstance().SetButtons(UI.menuBtn);
 }	
 
 // Chap, 재정의 함수 호출
@@ -73,24 +73,26 @@ void Menu::Draw()
 	//UI.menuBtn[3].ButtonRender(480, 520, 0, 200, 50, 1, "POWERUP", 435, 510);
 	//UI.menuBtn[4].ButtonRender(720, 520, 0, 200, 50, 1, "ACHIEVEMENTS", 650, 510);
 	//UI.menuBtn[5].ButtonRender(480, 600, 0, 190, 30, 1, "CREDITS", 435, 595);
-	UIManager::GetInstance().GetButtons()[0].ButtonRender(700, 25, 0, 100, 50, 1, "OPTIONS", 660, 15,0xffffffff);
-	UIManager::GetInstance().GetButtons()[1].ButtonRender(480, 450, 0, 200, 70, 1, "START", 450, 440);
-	UIManager::GetInstance().GetButtons()[2].ButtonRender(250, 520, 0, 200, 50, 1, "COLLECTION", 195, 510);
-	UIManager::GetInstance().GetButtons()[3].ButtonRender(480, 520, 0, 200, 50, 1, "POWERUP", 435, 510);
-	UIManager::GetInstance().GetButtons()[4].ButtonRender(720, 520, 0, 200, 50, 1, "ACHIEVEMENTS", 650, 510);
-	UIManager::GetInstance().GetButtons()[5].ButtonRender(480, 600, 0, 190, 30, 1, "CREDITS", 435, 595);
-
-
-	for (int i = 1; i <= UIManager::GetInstance().GetPopUPCount(); i++)
+	if (!isPopUpOpen)
 	{
-		if (UIManager::GetInstance().GetPopUp(i)->GetIsOpen())
-		{
-			curPopUp->Draw();
-			curPopUp->RenderElement();
-		}
+		UIManager::GetInstance().GetButtons()[0].ButtonRender(700, 25, 0, 100, 50, 1, "OPTIONS", 660, 15,0xffffffff);
+		UIManager::GetInstance().GetButtons()[1].ButtonRender(480, 450, 0, 200, 70, 1, "START", 450, 440);
+		UIManager::GetInstance().GetButtons()[2].ButtonRender(250, 520, 0, 200, 50, 1, "COLLECTION", 195, 510);
+		UIManager::GetInstance().GetButtons()[3].ButtonRender(480, 520, 0, 200, 50, 1, "POWERUP", 435, 510);
+		UIManager::GetInstance().GetButtons()[4].ButtonRender(720, 520, 0, 200, 50, 1, "ACHIEVEMENTS", 650, 510);
+		UIManager::GetInstance().GetButtons()[5].ButtonRender(480, 600, 0, 190, 30, 1, "CREDITS", 435, 595);
 	}
-}
 
+	if (UIManager::GetInstance().GetPopUp(1)->GetIsOpen())
+	{
+		curPopUp->Draw();
+		UIManager::GetInstance().GetButtons()[0].ButtonRender(680, 35, 0, 80, 50, 1, "BACK", 655, 25);
+		UIManager::GetInstance().GetButtons()[1].ButtonRender(550, 200, 0, 50, 50, 1, "Sounds", 300, 200);
+		UIManager::GetInstance().GetButtons()[2].ButtonRender(550, 350, 0, 50, 50, 1, "Music", 300, 350);
+		UIManager::GetInstance().GetButtons()[3].ButtonRender(550, 500, 0, 50, 50, 1, "Damage Numbers", 300, 500);
+	}
+	
+}
 
 void Menu::OnMessage(MSG* msg)
 {
@@ -102,16 +104,18 @@ void Menu::OnMessage(MSG* msg)
 			{
 			case VK_DOWN:
 				if (UIManager::GetInstance().GetButtons()[buttonIdx].GetActivated())
-				if (UIManager::GetInstance().GetButtonMap().count(buttonIdx) > 0 && GetTickCount64() - KeyTime > 100) {
+				if (UIManager::GetInstance().GetButtonMap().count(buttonIdx) > 0 && GetTickCount64() - KeyTime > 200) {
 					KeyTime = GetTickCount64();
 					int newIdx = std::get<3>(UIManager::GetInstance().GetButtonMap()[buttonIdx]); // 아래쪽 버튼 인덱스 가져오기
 					if (newIdx >= 0) {
 						UIManager::GetInstance().GetButtons()[buttonIdx].SetIsSelected(false);
 						buttonIdx = newIdx;
 						UIManager::GetInstance().GetButtons()[buttonIdx].SetIsSelected(true);
+						break;
 					}
 				}
 				break;
+
 			case VK_UP:
 				if (UIManager::GetInstance().GetButtons()[buttonIdx].GetActivated())
 				if (UIManager::GetInstance().GetButtonMap().count(buttonIdx) > 0 && GetTickCount64() - KeyTime > 100) {
@@ -124,6 +128,7 @@ void Menu::OnMessage(MSG* msg)
 					}
 				}
 				break;
+
 			case VK_LEFT:  // 좌 방향키 처리
 				if (UIManager::GetInstance().GetButtons()[buttonIdx].GetActivated())
 				if (UIManager::GetInstance().GetButtonMap().count(buttonIdx) > 0 && GetTickCount64() - KeyTime > 100) {
@@ -136,6 +141,7 @@ void Menu::OnMessage(MSG* msg)
 					}
 				}
 				break;
+
 			case VK_RIGHT:  // 우 방향키 처리
 				if (UIManager::GetInstance().GetButtons()[buttonIdx].GetActivated())
 				if (UIManager::GetInstance().GetButtonMap().count(buttonIdx) > 0 && GetTickCount64() - KeyTime > 100) {
@@ -149,36 +155,17 @@ void Menu::OnMessage(MSG* msg)
 				}
 				break;
 			case VK_RETURN:
-				if (UIManager::GetInstance().GetButtons()[buttonIdx].GetActivated())
-					for (int i = 0; i < UI.menuBtn.size(); i++)
-					{
-						if (UIManager::GetInstance().GetButtons()[i].GetActivated() && UIManager::GetInstance().GetButtons()[i].GetIsSelected())
-						{
-							UIManager::GetInstance().GetButtons()[i].Clicked();
-							if (buttonIdx == 1)
-							{
-								g_Mng.n_Chap = GAME;
-							}
-							else if (buttonIdx == 0)
-							{
-								OpenPopUp(1);
-							}
-							else if (buttonIdx == 3)
-							{
-								OpenPopUp(2);
-							}
-						}
-					}
+				switch (curPopUpIdx)
+				{
+				case 0:
+					MenuInput();
+				case 1:
+					OptionInput();
+				}
+				
 				break;
 			case VK_ESCAPE:
-				for (int i = 1; i <= UIManager::GetInstance().GetPopUPCount(); i++)
-				{
-					if (UIManager::GetInstance().GetPopUp(i)->GetIsOpen())
-					{
-						UIManager::GetInstance().ClosePopUp(i);
-						AllButtonActivated(true);
-					}
-				}
+				ClosePopUp();
 				break;
 			}
 	}
@@ -190,7 +177,6 @@ void Menu::AllButtonActivated(bool value)
 	{
 		button.SetActivated(value);
 	}
-	isPopUpOpen = false;
 }
 
 void Menu::OpenPopUp(int id)
@@ -202,4 +188,74 @@ void Menu::OpenPopUp(int id)
 		AllButtonActivated(false);
 		curPopUp = UIManager::GetInstance().GetPopUp(id);
 	}
+	curPopUpIdx = id;
+}
+
+void Menu::ClosePopUp()
+{
+	for (int i = 1; i <= UIManager::GetInstance().GetPopUPCount(); i++)
+	{
+		if (UIManager::GetInstance().GetPopUp(i)->GetIsOpen())
+		{
+			UIManager::GetInstance().ClosePopUp(i);
+			UIManager::GetInstance().SetButtonMap(UI.buttonMap);
+			UIManager::GetInstance().SetButtons(UI.menuBtn);
+			AllButtonActivated(true);
+			isPopUpOpen = false;
+			curPopUpIdx = 0;
+			buttonIdx = 0;
+		}
+	}
+}
+
+void Menu::MenuInput()
+{
+	if (UIManager::GetInstance().GetButtons()[buttonIdx].GetActivated())
+		for (int i = 0; i < UIManager::GetInstance().GetButtons().size(); i++)
+		{
+			if (UIManager::GetInstance().GetButtons()[i].GetActivated() && UIManager::GetInstance().GetButtons()[i].GetIsSelected())
+			{
+				UIManager::GetInstance().GetButtons()[buttonIdx].Clicked();
+				if (buttonIdx == 0)
+				{
+					OpenPopUp(1);
+					UIManager::GetInstance().SetButtonMap(*curPopUp->GetButtonMap());
+					UIManager::GetInstance().SetButtons(*curPopUp->GetButtons());
+					break;
+				}
+				else if (buttonIdx == 1)
+				{
+					g_Mng.n_Chap = GAME;
+				}
+				else if (buttonIdx == 3)
+				{
+					OpenPopUp(2);
+				}
+			}
+		}
+}
+
+void Menu::OptionInput()
+{
+	if (UIManager::GetInstance().GetButtons()[buttonIdx].GetActivated())
+		for (int i = 0; i < UIManager::GetInstance().GetButtons().size(); i++)
+		{
+			if (UIManager::GetInstance().GetButtons()[i].GetActivated() && UIManager::GetInstance().GetButtons()[i].GetIsSelected())
+			{
+				if (buttonIdx == 0)
+				{
+					UIManager::GetInstance().GetButtons()[buttonIdx].Clicked();
+		
+				}
+				else if (buttonIdx == 1)
+				{
+					UIManager::GetInstance().GetButtons()[buttonIdx].Clicked();
+					
+				}
+				else if (buttonIdx == 3)
+				{
+					UIManager::GetInstance().GetButtons()[buttonIdx].Clicked();
+				}
+			}
+		}
 }
