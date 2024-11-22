@@ -191,6 +191,7 @@
     <ClInclude Include="UIManager.h" />
     <ClInclude Include="UIPopUp.h" />
     <ClInclude Include="UISprite.h" />
+    <ClInclude Include="Option.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Bird.cpp" />

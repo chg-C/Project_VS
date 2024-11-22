@@ -12,10 +12,12 @@ class UIButton
 	bool isClicked;
 	bool isSelected;
 	bool isActivated;
+
 	std::vector<UISprite> buttonSprite;
 	UISprite curSprite;
 	SelectArrow selectArrow1;
 	SelectArrow selectArrow2;
+
 public:
 	UIButton(int spriteCount, bool _isSelected, bool isToggle = false);
 	~UIButton();
