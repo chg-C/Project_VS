@@ -18,7 +18,7 @@ GameManager::~GameManager(void)
 
 void GameManager::Init()
 {
-	PlayerData* data = ResourceManager::GetInstance().GetPlayerData(0);
+	PlayerData* data = ResourceManager::GetInstance().GetPlayerData(ID_PLAYER_ANTONIO);
 
 	map = new Map();
 	player = new Player(data);

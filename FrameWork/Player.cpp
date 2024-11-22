@@ -19,8 +19,8 @@ Player::Player(PlayerData* data)
 		armor = data->defense;
 	}
 	
-	animator = new SpriteAnimator(*ResourceManager::GetInstance().GetAnimator(animatorID));
-	attackEffectTemplate = new SpriteAnimation(*ResourceManager::GetInstance().GetAnimation(0));
+	animator = ResourceManager::GetInstance().GetAnimator(animatorID);
+	attackEffectTemplate = ResourceManager::GetInstance().GetAnimation(ID_EFFECT_WHIP);
 }
 
 Player::~Player()

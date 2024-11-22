@@ -184,7 +184,7 @@ LRESULT CALLBACK WndProc( HWND g_hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam )
 		 else if (strstr(buffer, "s") != NULL) 
 		 {
 			 // 데이타 베이스 저장
-			 sql.save();
+			 //sql.save();
 		 }
 
         ZeroMemory( &buffer, sizeof(buffer) );

@@ -21,7 +21,7 @@ void Game::Init()
 	//Gmanager.Init();
 	GameManager::GetInstance().Init();
 	// 데이타 베이스///////////////////
-	sql.Init();
+	//sql.Init();
 }
 
 void Game::Draw()

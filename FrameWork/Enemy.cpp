@@ -5,7 +5,7 @@ Enemy::Enemy(EnemyData* data, float x, float y, float scale)
 {
 	maxHP = currentHP = 15;
 
-	int animatorID = 0;
+	int animatorID = ID_ENEMY_BAT;
 	if (data != nullptr)
 	{
 		animatorID = data->animatorID;
@@ -15,7 +15,7 @@ Enemy::Enemy(EnemyData* data, float x, float y, float scale)
 		attackDamage = data->attackPower;
 	}
 
-	animator = new SpriteAnimator(*ResourceManager::GetInstance().GetAnimator(animatorID));
+	animator = ResourceManager::GetInstance().GetAnimator(animatorID);
 }
 
 Enemy::~Enemy()

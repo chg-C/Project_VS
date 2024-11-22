@@ -90,7 +90,9 @@ void EnemyManager::Spawn()
 			float r1 = 1 + ((rand() % 250) / 1000.0f);
 			float r2 = 1 + ((rand() % 250) / 1000.0f);
 
-			Enemy* enemy = new Enemy(ResourceManager::GetInstance().GetEnemyData(rand()%2), posX + (iter.x * r1), posY + (iter.y * r2), randomScale);
+			int enemyIdx = ID_ENEMY_BEGIN + 1 + (rand() % 2);
+
+			Enemy* enemy = new Enemy(ResourceManager::GetInstance().GetEnemyData(enemyIdx), posX + (iter.x * r1), posY + (iter.y * r2), randomScale);
 			enemy->Init();
 			enemies.push_back(enemy);
 		}

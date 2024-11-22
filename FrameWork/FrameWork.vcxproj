@@ -154,6 +154,7 @@
     <ClInclude Include="CMng.h" />
     <ClInclude Include="Collider.h" />
     <ClInclude Include="CustomDefine.h" />
+    <ClInclude Include="CustomInclude.h" />
     <ClInclude Include="Define.h" />
     <ClInclude Include="DXUTsound.h" />
     <ClInclude Include="DeviceFont.h" />

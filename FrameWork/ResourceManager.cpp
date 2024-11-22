@@ -1,210 +1,292 @@
 #include "Include.h"
 #include "Cache.h"
 #include "ResourceManager.h"
+#include "CustomInclude.h"
 
+#define ClipCache AutoDeleteCache<int, AnimationClip>::GetInstance()
 #define AnimationCache AutoDeleteCache<int, SpriteAnimation>::GetInstance()
 #define AnimatorCache AutoDeleteCache<int, SpriteAnimator>::GetInstance()
 #define PlayerDataCache AutoDeleteCache<int, PlayerData>::GetInstance()
 #define EnemyDataCache AutoDeleteCache<int, EnemyData>::GetInstance()
 
-enum AnimatorIDs { ID_PLAYER_ANTONIO, ID_ENEMY_BAT, ID_ENEMY_MUDMAN };
-enum AnimationIDs { ID_EFFECT_WHIP };
-
 ResourceManager::ResourceManager()
+	: database(nullptr)
 {
 }
 
 ResourceManager::~ResourceManager()
 {
+	if (database != nullptr)
+	{
+		sqlite3_close(database);
+	}
 }
 
 void ResourceManager::InitResources()
+{	
+	if (sqlite3_open("VS_DB.db", &database) != SQLITE_OK)
+	{
+		MessageBox(nullptr, "데이터베이스 연동 실패!", "치명적 오류", 0);
+	}
+	//Loading Animators
+	LoadAnimator(ID_PLAYER_ANTONIO);
+	LoadAnimator(ID_ENEMY_BAT);
+	LoadAnimator(ID_ENEMY_MUDMAN);
+	//Loading Effects
+	LoadAnimation(ID_EFFECT_WHIP);
+	//Loading Player Datas
+	LoadPlayerData(ID_PLAYER_ANTONIO);
+	//Loading Enemy Datas
+	LoadEnemyData(ID_ENEMY_BAT);
+	LoadEnemyData(ID_ENEMY_MUDMAN);
+
+	sqlite3_close(database);
+	database = nullptr;
+}
+
+AnimationClip* ResourceManager::LoadClip(int id)
 {
-	SpriteAnimator* animator = new SpriteAnimator();
-
-	char FileName[256];
-
-	SpriteAnimation* anim = new SpriteAnimation(true);
-	SpriteData* data;
-	Sprite2* sprite;
-	for (int i = 0; i < 1; ++i)
+	//이미 캐시된 클립이라면 그냥 제공
+	AnimationClip* clip = GetClip(id);
+	//없으면 DB에서 꺼내오기
+	if (clip == nullptr)
 	{
-		data = new SpriteData();
-		sprite = new Sprite2();
+		char sql[256] = {};
+		sprintf_s(sql, "SELECT * FROM AnimationClip where ID = %d", id);
+		sqlite3_stmt* stmt;
 
-		sprintf_s(FileName, "./resource/Img/Game/player/newAntonio_%02d.png", (i + 1));
-		sprite->Create(FileName, false, D3DCOLOR_XRGB(0, 0, 0));
+		// SQL 문 준비
+		if (sqlite3_prepare_v2(database, sql, -1, &stmt, 0) != SQLITE_OK)
+		{
+			return nullptr;
+		}
 
-		data->sprite = sprite;
-		data->willCollide = true;
-		data->nextAnimDelay = 0.5f;
-		data->color = 0xffffffff;
-		data->SetWH();
+		if(sqlite3_step(stmt) == SQLITE_ROW)
+		{
+			clip = new AnimationClip();
+			const char* filePath = (const char*)sqlite3_column_text(stmt, 1);
+			clip->sprite = new Sprite2();
+			clip->sprite->Create(filePath, false);
+			clip->SetWH();
 
-		anim->Push(data);
+			clip->hasCollision = sqlite3_column_int(stmt, 2);
+
+			float width = sqlite3_column_double(stmt, 3);
+			float height = sqlite3_column_double(stmt, 4);
+			clip->width *= width;
+			clip->height *= height;
+			
+			clip->nextAnimDelay = sqlite3_column_double(stmt, 5);
+
+			ClipCache.Put(id, clip);
+		}
+
+		sqlite3_finalize(stmt);
 	}
-	animator->Insert(CS_IDLE, anim);
+	return clip;
+}
 
-	anim = new SpriteAnimation(true);
-	for (int i = 0; i < 8; ++i)
+SpriteAnimation* ResourceManager::LoadAnimation(int id)
+{
+	SpriteAnimation* anim = GetAnimation(id);
+	if (anim == nullptr)
 	{
-		data = new SpriteData();
-		sprite = new Sprite2();
+		char sql[256] = {};
+		sprintf_s(sql, "SELECT * FROM Animation where ID = %d", id);
+		sqlite3_stmt* stmt;
 
-		sprintf_s(FileName, "./resource/Img/Game/player/newAntonio_%02d.png", (i + 1));
-		sprite->Create(FileName, false, D3DCOLOR_XRGB(0, 0, 0));
+		// SQL 문 준비
+		if (sqlite3_prepare_v2(database, sql, -1, &stmt, 0) != SQLITE_OK)
+		{
+			return nullptr;
+		}
 
-		data->sprite = sprite;
-		data->willCollide = true;
-		data->nextAnimDelay = 0.15f;
-		data->color = 0xffffffff;
-		data->SetWH();
+		if (sqlite3_step(stmt) == SQLITE_ROW)
+		{
+			char* clipRange = (char*)sqlite3_column_text(stmt, 1);
+			
+			char* clipBegin = strtok_s(clipRange, "~", &clipRange);
+			char* clipEnd = strtok_s(clipRange, "~", &clipRange);
 
-		anim->Push(data);
+			int begin = atoi(clipBegin);
+			int end = begin;
+			if (clipEnd != nullptr)
+			{
+				end = atoi(clipEnd);
+			}
+			
+
+			bool isLoop = sqlite3_column_int(stmt, 2);
+
+			anim = new SpriteAnimation(isLoop);
+			AnimationClip* clip = nullptr;
+
+			for (int i = begin; i <= end; ++i)
+			{
+				
+				if (!ClipCache.Exists(i))
+				{
+					clip = new AnimationClip(*LoadClip(i));
+				}
+				else
+				{
+					clip = GetClip(i);
+				}
+
+				anim->Push(clip);
+			}
+			AnimationCache.Put(id, anim);
+		}
+
+		sqlite3_finalize(stmt);
 	}
-	animator->Insert(CS_MOVE, anim);
+	return anim;
+}
 
-	AnimatorCache.Put((int)ID_PLAYER_ANTONIO, animator);
+SpriteAnimator* ResourceManager::LoadAnimator(int id)
+{
+	SpriteAnimator* animator = GetAnimator(id);
 
-	animator = new SpriteAnimator();
-	anim = new SpriteAnimation(true);
-	for (int i = 0; i < 4; ++i)
+	if (animator == nullptr)
 	{
-		data = new SpriteData();
-		sprite = new Sprite2();
+		char sql[256] = {};
+		sprintf_s(sql, "SELECT * FROM Animator where ID = %d", id);
+		sqlite3_stmt* stmt;
 
-		sprintf_s(FileName, "./resource/Img/Game/monster/bat/Bat3_Color_i%02d.png", (i + 1));
-		sprite->Create(FileName, false, D3DCOLOR_XRGB(0, 0, 0));
+		// SQL 문 준비
+		if (sqlite3_prepare_v2(database, sql, -1, &stmt, 0) != SQLITE_OK)
+		{
+			return nullptr;
+		}
 
-		data->sprite = sprite;
-		data->willCollide = true;
-		data->nextAnimDelay = 0.25f;
-		data->color = 0xffffffff;
-		data->SetWH();
 
-		anim->Push(data);
+		if (sqlite3_step(stmt) == SQLITE_ROW)
+		{
+			animator = new SpriteAnimator();
+
+			char* situationIDs = (char*)sqlite3_column_text(stmt, 1);
+			char* situationID = strtok_s(situationIDs, ",", &situationIDs);
+
+			char* animationIDs = (char*)sqlite3_column_text(stmt, 2);
+			char* animationID = strtok_s(animationIDs, ",", &animationIDs);
+
+			SpriteAnimation* animation = nullptr;
+
+			while (situationID != nullptr && animationID != nullptr)
+			{
+				if (!AnimationCache.Exists(atoi(animationID)))
+				{
+					animation = new SpriteAnimation(*LoadAnimation(atoi(animationID)));
+				}
+				else
+				{
+					animation = GetAnimation(atoi(animationID));
+				}
+
+				animator->Insert(atoi(situationID), animation);
+
+				situationID = strtok_s(situationIDs, ",", &situationIDs);
+				animationID = strtok_s(animationIDs, ",", &animationIDs);
+			}
+
+			AnimatorCache.Put(id, animator);
+		}
+
+		sqlite3_finalize(stmt);
+
 	}
-	animator->Insert(CS_IDLE, anim);
 
+	return animator;
+}
 
-	anim = new SpriteAnimation(false);
-	for (int i = 0; i < 14; ++i)
+PlayerData* ResourceManager::LoadPlayerData(int id)
+{
+	PlayerData* data = GetPlayerData(id);
+	if (data == nullptr)
 	{
-		data = new SpriteData();
-		sprite = new Sprite2();
-		sprintf_s(FileName, "./resource/Img/Game/monster/bat/Bat1_%d.png", i);
-		sprite->Create(FileName, false, D3DCOLOR_XRGB(0, 0, 0));
+		char sql[256] = {};
+		sprintf_s(sql, "SELECT * FROM PlayerData where ID = %d", id);
+		sqlite3_stmt* stmt;
 
-		data->sprite = sprite;
-		data->willCollide = true;
-		data->nextAnimDelay = 0.035f;
-		data->color = 0xffffffff;
-		data->SetWH();
+		// SQL 문 준비
+		if (sqlite3_prepare_v2(database, sql, -1, &stmt, 0) != SQLITE_OK)
+		{
+			return nullptr;
+		}
 
-		anim->Push(data);
+
+		if (sqlite3_step(stmt) == SQLITE_ROW)
+		{
+			data = new PlayerData;
+			data->animatorID = sqlite3_column_int(stmt, 2);
+			data->maxHealth = sqlite3_column_double(stmt, 3);
+			data->attackPower = sqlite3_column_double(stmt, 4);
+			data->moveSpeed = sqlite3_column_double(stmt, 5);
+			data->defense = sqlite3_column_double(stmt, 6);
+
+			PlayerDataCache.Put(id, data);
+		}
+		sqlite3_finalize(stmt);
 	}
-	animator->Insert(CS_DYING, anim);
+	return data;
+}
 
-	AnimatorCache.Put(ID_ENEMY_BAT, animator);
-
-	//Mudman
-	animator = new SpriteAnimator();
-	anim = new SpriteAnimation(true);
-	for (int i = 0; i < 4; ++i)
+EnemyData* ResourceManager::LoadEnemyData(int id)
+{
+	EnemyData* data = GetEnemyData(id);
+	if (data == nullptr)
 	{
-		data = new SpriteData();
-		sprite = new Sprite2();
+		char sql[256] = {};
+		sprintf_s(sql, "SELECT * FROM EnemyData where ID = %d", id);
+		sqlite3_stmt* stmt;
 
-		sprintf_s(FileName, "./resource/Img/Game/monster/mudman/Mudman1_i%02d.png", (i + 1));
-		sprite->Create(FileName, false, D3DCOLOR_XRGB(0, 0, 0));
+		// SQL 문 준비
+		if (sqlite3_prepare_v2(database, sql, -1, &stmt, 0) != SQLITE_OK)
+		{
+			return nullptr;
+		}
 
-		data->sprite = sprite;
-		data->willCollide = true;
-		data->nextAnimDelay = 0.25f;
-		data->color = 0xffffffff;
-		data->SetWH(1.25f);
 
-		anim->Push(data);
+		if (sqlite3_step(stmt) == SQLITE_ROW)
+		{
+			data = new EnemyData;
+			data->animatorID = sqlite3_column_int(stmt, 2);
+			data->maxHealth = sqlite3_column_double(stmt, 3);
+			data->attackPower = sqlite3_column_double(stmt, 4);
+			data->moveSpeed = sqlite3_column_double(stmt, 5);
+
+			EnemyDataCache.Put(id, data);
+		}
+		sqlite3_finalize(stmt);
 	}
-	animator->Insert(CS_IDLE, anim);
+	return data;
+}
 
+AnimationClip* ResourceManager::GetClip(int id)
+{
+	AnimationClip* clip = ClipCache.Get(id);
+	if (clip != nullptr)
+		clip = new AnimationClip(*clip);
 
-	anim = new SpriteAnimation(false);
-	for (int i = 0; i < 14; ++i)
-	{
-		data = new SpriteData();
-		sprite = new Sprite2();
-		sprintf_s(FileName, "./resource/Img/Game/monster/mudman/Mudman1_%d.png", i);
-		sprite->Create(FileName, false, D3DCOLOR_XRGB(0, 0, 0));
-
-		data->sprite = sprite;
-		data->willCollide = true;
-		data->nextAnimDelay = 0.035f;
-		data->color = 0xffffffff;
-		data->SetWH(1.25f);
-
-		anim->Push(data);
-	}
-	animator->Insert(CS_DYING, anim);
-
-	AnimatorCache.Put(ID_ENEMY_MUDMAN, animator);
-	//
-	SpriteAnimation* attackEffectTemplate = new SpriteAnimation();
-	for (int i = 0; i < 4; ++i)
-	{
-		data = new SpriteData();
-		sprite = new Sprite2();
-		sprintf_s(FileName, "./resource/Img/Game/effects/attack/War_Spr_Attack2Slash_000%d.png", i + 1);
-		sprite->Create(FileName, false, D3DCOLOR_XRGB(0, 0, 0));
-
-		data->sprite = sprite;
-		data->willCollide = true;
-		data->color = 0xffffffff;
-		data->nextAnimDelay = 0.05f;
-		data->SetWH();
-
-		attackEffectTemplate->Push(data);
-	}
-	AnimationCache.Put((int)ID_EFFECT_WHIP, attackEffectTemplate);
-
-
-	PlayerData* playerData = new PlayerData;
-	playerData->animatorID = ID_PLAYER_ANTONIO;
-	playerData->playerID = ID_PLAYER_ANTONIO;
-	playerData->maxHealth = 200;
-	playerData->attackPower = 10;	
-	playerData->moveSpeed = 3;
-	playerData->defense = 0;
-	PlayerDataCache.Put(playerData->playerID, playerData);
-
-
-	EnemyData* enemyData = new EnemyData;
-	enemyData->enemyID = 0;
-	enemyData->animatorID = ID_ENEMY_BAT;
-	enemyData->attackPower = 2;
-	enemyData->maxHealth = 8;
-	enemyData->moveSpeed = 1.0f;
-
-	EnemyDataCache.Put(0, enemyData);
-
-	enemyData = new EnemyData;
-	enemyData->enemyID = 1;
-	enemyData->animatorID = ID_ENEMY_MUDMAN;
-	enemyData->attackPower = 3;
-	enemyData->maxHealth = 20;
-	enemyData->moveSpeed = 0.5f;
-
-	EnemyDataCache.Put(1, enemyData);
+	return clip;
 }
 
 SpriteAnimation* ResourceManager::GetAnimation(int id)
 {
-	return AnimationCache.Get(id);
+	SpriteAnimation* animation = AnimationCache.Get(id);
+	if (animation != nullptr)
+		animation = new SpriteAnimation(*animation);
+
+	return animation;
 }
 
 SpriteAnimator* ResourceManager::GetAnimator(int id)
 {
-	return AnimatorCache.Get(id);
+	SpriteAnimator* animator = AnimatorCache.Get(id);
+	if (animator != nullptr)
+		animator = new SpriteAnimator(*animator);
+
+	return animator;
 }
 
 PlayerData* ResourceManager::GetPlayerData(int id)
