@@ -37,3 +37,12 @@ std::vector<UIButton>* UIPopUp::GetButtons()
 {
 	return nullptr;
 }
+
+std::unordered_map<int, std::tuple<int, int, int, int>>* UIPopUp::GetSlotMap()
+{
+	return nullptr;
+}
+std::vector<Slot*>* UIPopUp::GetSlots()
+{
+	return nullptr;
+}

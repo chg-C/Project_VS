@@ -7,6 +7,7 @@
 #include <unordered_map>
 #include"OptionPopUp.h"
 #include"PowerPopUp.h"
+#include"SoundInterface.h"
 struct MenuUI
 {
 	std::vector<UIButton> menuBtn;
@@ -18,6 +19,14 @@ class Menu : public Chap
 	int curPopUpIdx;
 	int buttonIdx;
 	bool isPopUpOpen;
+	std::string test[12];
+
+	int testX[4] = {50,80,110,140};
+	int testY[3] = { 80,100,120 };
+
+	int xidx;
+	int yidx;
+	int testidx;
 
 	MenuUI UI;
 	UISprite introBG;
@@ -35,6 +44,7 @@ class Menu : public Chap
 	SelectArrow selectArrow;
 
 	UIPopUp* curPopUp;
+	SoundInterface sound;
 
 public:
 	Menu();
@@ -52,5 +62,10 @@ public:
 	void ClosePopUp();
 	void MenuInput();
 	void OptionInput();
+	void PowerInput();
+
+	void HandleKeyInput(int direction);
+
+	void PowerHandle(int direction);
 };
 #endif
