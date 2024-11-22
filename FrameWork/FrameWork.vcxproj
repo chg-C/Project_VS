@@ -170,6 +170,7 @@
     <ClInclude Include="Map.h" />
     <ClInclude Include="Menu.h" />
     <ClInclude Include="Mysql.h" />
+    <ClInclude Include="Option.h" />
     <ClInclude Include="OptionPopUp.h" />
     <ClInclude Include="Over.h" />
     <ClInclude Include="Player.h" />
@@ -177,6 +178,7 @@
     <ClInclude Include="PlayerManager.h" />
     <ClInclude Include="Projectile.h" />
     <ClInclude Include="resource.h" />
+    <ClInclude Include="ResourceManager.h" />
     <ClInclude Include="Singleton.h" />
     <ClInclude Include="SelectArrow.h" />
     <ClInclude Include="Sound.h" />
@@ -214,6 +216,7 @@
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="PowerPopUp.cpp" />
     <ClCompile Include="Projectile.cpp" />
+    <ClCompile Include="ResourceManager.cpp" />
     <ClCompile Include="SelectArrow.cpp" />
     <ClCompile Include="Sound.cpp" />
     <ClCompile Include="Sprite.cpp" />

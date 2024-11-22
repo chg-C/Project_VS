@@ -13,6 +13,7 @@ private:
 	int currentKey;
 public:
 	SpriteAnimator();
+	SpriteAnimator(const SpriteAnimator& other);
 	~SpriteAnimator();
 public:
 	void Init();

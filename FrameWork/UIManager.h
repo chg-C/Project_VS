@@ -50,6 +50,7 @@ public:
 	}
 
 	void SetButtons(const std::vector<UIButton>& newButtons) {
+		buttons.clear();
 		buttons = newButtons;
 	}
 
@@ -58,6 +59,7 @@ public:
 	}
 
 	void SetButtonMap(const std::unordered_map<int, std::tuple<int, int, int, int>>& newButtonMap) {
+		buttonMap.clear();
 		buttonMap = newButtonMap;
 	}
 

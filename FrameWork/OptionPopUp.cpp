@@ -1,7 +1,7 @@
 #include "Include.h"
 #include "OptionPopUp.h"
 
-OptionPopUp::OptionPopUp() :backBtn(1, false), soundBtn(2, false), musicBtn(2, false), damageNumbersBtn(2, false)
+OptionPopUp::OptionPopUp() :backBtn(3, true), soundBtn(2, false, true), musicBtn(2, false, true), damageNumbersBtn(2, false, true)
 {
 	id = 1;
 	frame.Create("./resource/Img/Frame/frame1_c4.png", false, D3DCOLOR_XRGB(255, 255, 255));
@@ -44,4 +44,14 @@ void OptionPopUp::RenderElement()
 		UI.optionButton[2].ButtonRender(550, 350, 0, 50, 50, 1, "Music", 300, 350);
 		UI.optionButton[3].ButtonRender(550, 500, 0, 50, 50, 1, "Damage Numbers", 300, 500);
 	}
+}
+
+std::unordered_map<int, std::tuple<int, int, int, int>>* OptionPopUp::GetButtonMap()
+{
+	return &UI.buttonMap;
+}
+
+std::vector<UIButton>* OptionPopUp::GetButtons()
+{
+	return &UI.optionButton;
 }

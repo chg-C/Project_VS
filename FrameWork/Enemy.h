@@ -2,6 +2,7 @@
 
 #include "Character.h"
 #include "Sprite2.h"
+#include "ResourceManager.h"
 
 #include <vector>
 using std::vector;
@@ -18,11 +19,8 @@ private:
 	
 	// Rendering
 	int spriteIdx;
-
-	float enemyAnimTime;
-	float animSpeed;
 public:
-	Enemy(float x, float y, float scale = 1);
+	Enemy(EnemyData* data, float x, float y, float scale = 1);
 	~Enemy();
 public:
 	virtual void Init();

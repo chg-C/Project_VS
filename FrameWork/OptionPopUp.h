@@ -25,4 +25,9 @@ public:
 	~OptionPopUp();
 	void Init();
 	void RenderElement() override;
+	void SwitchButtonMap();
+	std::unordered_map<int, std::tuple<int, int, int, int>>* GetButtonMap() override;
+	std::vector<UIButton>* GetButtons() override;
+
+
 };
