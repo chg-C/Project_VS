@@ -6,9 +6,10 @@ class UIButton
 {
 	int buttonId;
 	int spriteCount;
+	int spriteIdx;
 
 	bool isToggle;
-
+	bool isClicked;
 	bool isSelected;
 	bool isActivated;
 	std::vector<UISprite> buttonSprite;
@@ -22,11 +23,12 @@ public:
 	void Clicked();
 	void UnSelected();
 	void Selected();
-	void Update();
 	void ButtonRender(float x, float y, float radian, float sx, float sy, int pivotMode,const char* _text ,float tx,float ty,DWORD setColor = 0xffffffff);
 	bool IsSelected(bool isSelected);
 	bool SetIsSelected(bool);
 	bool GetIsSelected();
 	bool GetActivated();
 	void SetActivated(bool active);
+	void SetClicked(bool value);
+	bool GetIsToggle();
 };

@@ -1,7 +1,7 @@
 #include "Include.h"
 #include "OptionPopUp.h"
 
-OptionPopUp::OptionPopUp() :backBtn(3, true), soundBtn(2, false,true), musicBtn(2, false,true), damageNumbersBtn(2, false,true)
+OptionPopUp::OptionPopUp() :backBtn(3, true), soundBtn(2, false, true), musicBtn(2, false, true), damageNumbersBtn(2, false, true)
 {
 	id = 1;
 	frame.Create("./resource/Img/Frame/frame1_c4.png", false, D3DCOLOR_XRGB(255, 255, 255));

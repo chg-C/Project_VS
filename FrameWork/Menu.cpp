@@ -82,8 +82,7 @@ void Menu::Draw()
 		UIManager::GetInstance().GetButtons()[4].ButtonRender(720, 520, 0, 200, 50, 1, "ACHIEVEMENTS", 650, 510);
 		UIManager::GetInstance().GetButtons()[5].ButtonRender(480, 600, 0, 190, 30, 1, "CREDITS", 435, 595);
 	}
-
-	if (UIManager::GetInstance().GetPopUp(1)->GetIsOpen())
+	else if (UIManager::GetInstance().GetPopUp(1)->GetIsOpen())
 	{
 		curPopUp->Draw();
 		UIManager::GetInstance().GetButtons()[0].ButtonRender(680, 35, 0, 80, 50, 1, "BACK", 655, 25);
@@ -96,6 +95,7 @@ void Menu::Draw()
 
 void Menu::OnMessage(MSG* msg)
 {
+	static bool wasReturnPressed = false; // VK_RETURN 이전 상태
 	switch (msg->message)
 	{
 		case WM_KEYDOWN:
@@ -155,18 +155,33 @@ void Menu::OnMessage(MSG* msg)
 				}
 				break;
 			case VK_RETURN:
-				switch (curPopUpIdx)
-				{
-				case 0:
-					MenuInput();
-				case 1:
-					OptionInput();
-				}
-				
+					if(UIManager::GetInstance().GetButtons()[buttonIdx].GetIsToggle() == false)
+						UIManager::GetInstance().GetButtons()[buttonIdx].Clicked();
+					wasReturnPressed = true;
 				break;
 			case VK_ESCAPE:
 				ClosePopUp();
 				break;
+			}
+			break;
+		case WM_KEYUP:  // 키를 뗐을 때 처리
+			if (msg->wParam == VK_RETURN)
+			{
+				if (wasReturnPressed)
+				{
+					UIManager::GetInstance().GetButtons()[buttonIdx].SetClicked(false);
+					switch (curPopUpIdx)
+					{
+					case 0:
+						MenuInput();
+						wasReturnPressed = false;
+						break;
+					case 1:
+						OptionInput();
+						wasReturnPressed = false;
+						break;
+					}
+				}
 			}
 	}
 }
@@ -193,6 +208,8 @@ void Menu::OpenPopUp(int id)
 
 void Menu::ClosePopUp()
 {
+	buttonIdx = 1;
+	UIManager::GetInstance().GetButtons()[buttonIdx].SetClicked(false);
 	for (int i = 1; i <= UIManager::GetInstance().GetPopUPCount(); i++)
 	{
 		if (UIManager::GetInstance().GetPopUp(i)->GetIsOpen())
@@ -203,7 +220,6 @@ void Menu::ClosePopUp()
 			AllButtonActivated(true);
 			isPopUpOpen = false;
 			curPopUpIdx = 0;
-			buttonIdx = 0;
 		}
 	}
 }
@@ -215,7 +231,6 @@ void Menu::MenuInput()
 		{
 			if (UIManager::GetInstance().GetButtons()[i].GetActivated() && UIManager::GetInstance().GetButtons()[i].GetIsSelected())
 			{
-				UIManager::GetInstance().GetButtons()[buttonIdx].Clicked();
 				if (buttonIdx == 0)
 				{
 					OpenPopUp(1);
@@ -244,13 +259,16 @@ void Menu::OptionInput()
 			{
 				if (buttonIdx == 0)
 				{
-					UIManager::GetInstance().GetButtons()[buttonIdx].Clicked();
-		
+					ClosePopUp();
 				}
 				else if (buttonIdx == 1)
 				{
 					UIManager::GetInstance().GetButtons()[buttonIdx].Clicked();
 					
+				}
+				else if (buttonIdx == 2)
+				{
+					UIManager::GetInstance().GetButtons()[buttonIdx].Clicked();
 				}
 				else if (buttonIdx == 3)
 				{
