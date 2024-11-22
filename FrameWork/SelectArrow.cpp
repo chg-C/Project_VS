@@ -34,6 +34,12 @@ void SelectArrow::Render(float x, float y, float radian, float sx, float sy, int
 {
 	
 	arrowSprite[arrowCount].Render(x,y,radian,sx,sy,pivotMode);
+	if (GetTickCount() - arrowSpinTime > 100)
+	{
+		arrowCount++;
+		arrowCount %= 8;
+		arrowSpinTime = GetTickCount();
+	}
 }
 
 void SelectArrow::Activate(bool isActivated)
