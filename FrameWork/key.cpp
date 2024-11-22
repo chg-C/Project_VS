@@ -60,7 +60,6 @@ void Key::Update()
 		{
 			KeyTime = GetTickCount64();
 		}
-		
 	}
 
 	if(KeyDown('5'))

@@ -162,7 +162,7 @@
     <ClInclude Include="Map.h">
       <Filter>Custom\Game\Map</Filter>
     </ClInclude>
-     <ClInclude Include="Character.h">
+    <ClInclude Include="Character.h">
       <Filter>Custom\Game\Objects</Filter>
     </ClInclude>
     <ClInclude Include="Enemy.h">
@@ -299,6 +299,15 @@
     </ClInclude>
     <ClInclude Include="PlayerManager.h">
       <Filter>Custom\Game\GameManager\SubManagers</Filter>
+    </ClInclude>
+    <ClInclude Include="Option.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="ResourceManager.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Power.h">
+      <Filter>소스 파일</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -454,6 +463,12 @@
     </ClCompile>
     <ClCompile Include="EffectManager.cpp">
       <Filter>Custom\Game\GameManager\SubManagers</Filter>
+    </ClCompile>
+    <ClCompile Include="ResourceManager.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Power.cpp">
+      <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

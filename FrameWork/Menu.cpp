@@ -90,6 +90,10 @@ void Menu::Draw()
 		UIManager::GetInstance().GetButtons()[2].ButtonRender(550, 350, 0, 50, 50, 1, "Music", 300, 350);
 		UIManager::GetInstance().GetButtons()[3].ButtonRender(550, 500, 0, 50, 50, 1, "Damage Numbers", 300, 500);
 	}
+	else if (UIManager::GetInstance().GetPopUp(2)->GetIsOpen())
+	{
+		curPopUp->Draw();
+	}
 	
 }
 
