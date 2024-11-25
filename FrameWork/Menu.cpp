@@ -85,14 +85,12 @@ void Menu::Draw()
 	else if (UIManager::GetInstance().GetPopUp(1)->GetIsOpen())
 	{
 		curPopUp->Draw();
-		UIManager::GetInstance().GetButtons()[0].ButtonRender(680, 35, 0, 80, 50, 1, "BACK", 655, 25);
-		UIManager::GetInstance().GetButtons()[1].ButtonRender(550, 200, 0, 50, 50, 1, "Sounds", 300, 200);
-		UIManager::GetInstance().GetButtons()[2].ButtonRender(550, 350, 0, 50, 50, 1, "Music", 300, 350);
-		UIManager::GetInstance().GetButtons()[3].ButtonRender(550, 500, 0, 50, 50, 1, "Damage Numbers", 300, 500);
+		curPopUp->RenderElement();
 	}
 	else if (UIManager::GetInstance().GetPopUp(2)->GetIsOpen())
 	{
 		curPopUp->Draw();
+		curPopUp->RenderElement();
 	}
 	
 }
@@ -238,7 +236,7 @@ void Menu::MenuInput()
 				if (buttonIdx == 0)
 				{
 					OpenPopUp(1);
-					UIManager::GetInstance().SetButtonMap(*curPopUp->GetButtonMap());
+					UIManager::GetInstance().SetButtonMap(*curPopUp->GetUIMap());
 					UIManager::GetInstance().SetButtons(*curPopUp->GetButtons());
 					break;
 				}

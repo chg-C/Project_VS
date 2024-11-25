@@ -7,7 +7,7 @@
 struct OptionUI
 {
 	std::vector<UIButton> optionButton;
-	std::unordered_map<int, std::tuple<int, int, int, int>> buttonMap;//buttonIndex, {аб,©Л,╩С,го}
+	std::unordered_map<int, std::tuple<int, int, int, int>> UIMap;//buttonIndex, {аб,©Л,╩С,го}
 	OptionUI() {};;
 };
 
@@ -25,8 +25,7 @@ public:
 	~OptionPopUp();
 	void Init();
 	void RenderElement() override;
-	void SwitchButtonMap();
-	std::unordered_map<int, std::tuple<int, int, int, int>>* GetButtonMap() override;
+	std::unordered_map<int, std::tuple<int, int, int, int>>* GetUIMap() override;
 	std::vector<UIButton>* GetButtons() override;
 
 

@@ -306,9 +306,6 @@
     <ClInclude Include="ResourceManager.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="Power.h">
-      <Filter>소스 파일</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="key.cpp">
@@ -366,9 +363,6 @@
       <Filter>D3D Core\코어 소스</Filter>
     </ClCompile>
     <ClCompile Include="UISprite.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="UIButton.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="SelectArrow.cpp">
@@ -467,8 +461,8 @@
     <ClCompile Include="ResourceManager.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="Power.cpp">
-      <Filter>소스 파일</Filter>
+    <ClCompile Include="UIButton.cpp">
+      <Filter>소스 파일\UI</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

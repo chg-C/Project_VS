@@ -29,7 +29,7 @@ bool UIPopUp::GetIsOpen()
 	return isOpen;
 }
 
-std::unordered_map<int, std::tuple<int, int, int, int>>* UIPopUp::GetButtonMap()
+std::unordered_map<int, std::tuple<int, int, int, int>>* UIPopUp::GetUIMap()
 {
 	return nullptr;
 }
