@@ -43,7 +43,7 @@ void Enemy::Update()
 			velocity.y = 0;
 
 			//이동 방향 계산
-			D3DXVECTOR2 dir = GameManager::GetInstance().GetPlayer()->GetPos() - pos;
+			D3DXVECTOR2 dir = (-Camera::GetInstance().GetCamPos()) - pos;//GameManager::GetInstance().GetPlayer()->GetPos() - pos;
 			D3DXVec2Normalize(&dir, &dir);
 			dir *= moveSpeed;
 
@@ -80,7 +80,7 @@ void Enemy::Update()
 	size.x = animator->GetCurrentSpriteData()->width * scale;
 	size.y = animator->GetCurrentSpriteData()->height * scale;
 
-	if (GameManager::GetInstance().GetPlayer()->GetPos().x - pos.x > 0)
+	if ((-Camera::GetInstance().GetCamX()) - pos.x > 0)
 		dir = -1;
 	else
 		dir = 1;

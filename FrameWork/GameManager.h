@@ -3,6 +3,10 @@
 #include "Include.h"
 #include "Singleton.h"
 
+class Effect;
+
+class Enemy;
+class PlayerManager;
 class EnemyManager;
 class EffectManager;
 
@@ -23,8 +27,9 @@ private:
 
 	//무한 스크롤 맵
 	Map* map;
-	//플레이어
-	Player* player;
+	//플레이어 관리
+	PlayerManager* playerManager;
+	//Player* player;
 	//적 객체 관리
 	EnemyManager* enemyManager;
 	//기본 이펙트 관리
@@ -45,8 +50,8 @@ public:
 	bool IsPause() { return pause; }
 	bool ToggleCollision() { return (doCollision = !doCollision); }
 	bool ToggleSpawn() { return (respawn = !respawn); }
+	Enemy* FindClosestEnemy();
 public:
 	void RegisterEffect(Effect* effect);
-	const Player* GetPlayer() const { return player; }
 	bool showDebug;
 };

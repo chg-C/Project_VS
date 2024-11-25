@@ -1,5 +1,6 @@
 #include "Include.h"
 
+#include "PlayerManager.h"
 #include "EnemyManager.h"
 #include "TextEffect.h"
 
@@ -115,11 +116,11 @@ void EnemyManager::Sort(float x, float y)
 			return distA < distB;
 		});
 }
-void EnemyManager::CheckCollision(Player* player)
+void EnemyManager::CheckCollision(PlayerManager* player)
 {
 	D3DXVECTOR2 velocity;
 	D3DXVECTOR2 enemyPos;
-	D3DXVECTOR2 playerPos = player->GetPos();
+	D3DXVECTOR2 playerPos = player->GetPlayerPos();
 	bool kb = false;
 	float knockbackPower = 10;
 	char dmgText[6] = "";
@@ -127,7 +128,7 @@ void EnemyManager::CheckCollision(Player* player)
 	{
 		enemyPos = iter->GetPos();
 
-		if (Camera::GetInstance().IsOutOfScreen(enemyPos.x, enemyPos.y, 500))
+		if (Camera::GetInstance().IsOutOfScreen(enemyPos.x, enemyPos.y, 500)) //플레이 화면 바깥으로 너무 멀리 갔다면 반대 방향으로
 		{
 			iter->Move(velocity.x, velocity.y);
 
@@ -158,14 +159,14 @@ void EnemyManager::CheckCollision(Player* player)
 		{
 			kb = false;
 			//플레이어 소유 투사체와 충돌 체크
-			for (auto& proj : player->projectiles)
+			for (auto& proj : player->GetProjectiles())
 			{
 				if (!proj->finished && proj->CanCollide(iter))
 				{
 					if (IsColliding(proj->GetCollider(), iter->GetCollider()))
 					{
 						iter->Damage(proj->GetDamage());
-						proj->collidedList.push_back(Collided(500, iter));
+						proj->Collide(iter);
 						//
 						if (Option::GetInstance().WillDamageEffect())
 						{
@@ -186,7 +187,7 @@ void EnemyManager::CheckCollision(Player* player)
 			//넉백중이 아니라면 캐릭터 간 충돌 체크
 			if (!kb)
 			{
-				velocity = CheckEnemyCollision(player, iter);
+				velocity = CheckEnemyCollision(player->GetPlayer(), iter);
 			}
 			//마지막으로 이동 처리
 			iter->Move(velocity.x, velocity.y);
@@ -206,7 +207,6 @@ D3DXVECTOR2 EnemyManager::CheckEnemyCollision(Player* player, Enemy* enemy)
 		//그냥 밀어버리기
 		direction = enemy->GetPos() - player->GetPos();
 		D3DXVec2Normalize(&direction, &direction);
-		direction *= 2;
 		velocity = direction;
 
 		knockback = true;

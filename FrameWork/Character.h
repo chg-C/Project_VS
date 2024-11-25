@@ -14,8 +14,6 @@ protected:
 	Character() : pos(0, 0), dir(1), scale(1), currentState(CS_IDLE), currentHP(100), maxHP(100), animator(nullptr) {}
 	Character(float x, float y, float scale = 1) : pos(x, y), dir(1), scale(scale), currentState(CS_IDLE), currentHP(100), maxHP(100), animator(nullptr) {}
 protected:
-	const float STANDARD_SPEED = 25;
-
 	D3DXVECTOR2 pos;
 	D3DXVECTOR2 size;
 	D3DXVECTOR2 velocity;
@@ -51,12 +49,12 @@ public:
 		return pos;
 	}
 
-	void SetVelocity(D3DXVECTOR2 velocity) { this->velocity = velocity; }
+	virtual void SetVelocity(D3DXVECTOR2 velocity) { this->velocity = velocity; }
 	D3DXVECTOR2 GetVelocity() { return velocity; }
 
 	D3DXVECTOR2 GetSize() { return size; }
 
-	RECT GetCollider(float mp = 1) { return RECT{
+	RECT GetCollider(float mp = 1) const { return RECT{
 								(long)(pos.x - (size.x*mp / 2)),
 								(long)(pos.y - (size.y*mp / 2)),
 								(long)(pos.x + (size.x*mp / 2)),

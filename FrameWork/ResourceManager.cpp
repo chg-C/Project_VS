@@ -67,16 +67,17 @@ AnimationClip* ResourceManager::LoadClip(int id)
 			const char* filePath = (const char*)sqlite3_column_text(stmt, 1);
 			clip->sprite = new Sprite2();
 			clip->sprite->Create(filePath, false);
-			clip->SetWH();
-
 			clip->hasCollision = sqlite3_column_int(stmt, 2);
 
-			float width = sqlite3_column_double(stmt, 3);
-			float height = sqlite3_column_double(stmt, 4);
+			float scale = sqlite3_column_double(stmt, 3);
+			clip->SetWH(scale);
+
+			float width = sqlite3_column_double(stmt, 4);
+			float height = sqlite3_column_double(stmt, 5);
 			clip->width *= width;
 			clip->height *= height;
 			
-			clip->nextAnimDelay = sqlite3_column_double(stmt, 5);
+			clip->nextAnimDelay = sqlite3_column_double(stmt, 6);
 
 			ClipCache.Put(id, clip);
 		}

@@ -13,16 +13,19 @@ struct Collided
 	float time;
 	const Enemy* enemy;
 };
+
+
 class Projectile : public SpriteEffect
 {
 public:
 	Projectile(SpriteAnimation* sprites, float x, float y, int dir, float scale=1);
-	~Projectile();
-public:
+	virtual ~Projectile();
+protected:
 	int dir;
 	std::list<Collided> collidedList;
 
 	float damage;
+	float cooldown;
 public:
 	RECT GetCollider(float mp = 1) {
 		return RECT{
@@ -38,6 +41,7 @@ public:
 	virtual void Draw();
 
 	bool CanCollide(Enemy* enemy);
+	virtual void Collide(Enemy* enemy);
 
 	float GetDamage();
 };

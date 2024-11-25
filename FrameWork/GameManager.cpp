@@ -1,11 +1,13 @@
 #define _CRT_NONSTDC_NO_DEPRECATE
 #include "Include.h"
+
+#include "PlayerManager.h"
 #include "EnemyManager.h"
 #include "EffectManager.h"
 
 
 GameManager::GameManager(void)
-	:map(nullptr), player(nullptr), gameOver(nullptr), timeFlew(0), pause(false), respawn(true), doCollision(true)
+	:map(nullptr), playerManager(nullptr), gameOver(nullptr), timeFlew(0), pause(false), respawn(true), doCollision(true)
 {
 	m_GameStart = true;
 	showDebug = true;
@@ -18,17 +20,17 @@ GameManager::~GameManager(void)
 
 void GameManager::Init()
 {
-	PlayerData* data = ResourceManager::GetInstance().GetPlayerData(ID_PLAYER_ANTONIO);
-
 	map = new Map();
-	player = new Player(data);
+	//player = new Player(data);
+	playerManager = new PlayerManager();
 	enemyManager = new EnemyManager();
 	effectManager = new EffectManager();
 	gameOver = new Sprite2();
 
 	map->Init("./resource/Img/Game/map/map_bg.png");
-	player->Init();
-
+	
+	PlayerData* data = ResourceManager::GetInstance().GetPlayerData(ID_PLAYER_ANTONIO);
+	playerManager->Init(data);
 	enemyManager->Init();
 	effectManager->Init();
 	
@@ -55,24 +57,21 @@ void GameManager::Update()
 		//if(게임 종료시) {g_Mng.n_Chap = OVER; Camera::GetInstance().SetCamX(0); Camera::GetInstance().SetCamY(0);}
 		map->Update();
 
-		if (player->GetState() != CS_DEAD)
+		if (playerManager->IsPlaying())
 		{
 			timeFlew += TIME;
 
-			player->Update();
-			//이동 처리
-			D3DXVECTOR2 velocity = player->GetVelocity();
-			player->Move(velocity.x, velocity.y);
+			playerManager->Update();
 
 			if (respawn)
 				enemyManager->Spawn();
 
-			D3DXVECTOR2 playerPos = player->GetPos();
+			D3DXVECTOR2 playerPos = playerManager->GetPlayerPos();
 			enemyManager->Sort(playerPos.x, playerPos.y);
 			enemyManager->Update();
 
 			if(doCollision)
-				enemyManager->CheckCollision(player);
+				enemyManager->CheckCollision(playerManager);
 
 			effectManager->Update();
 		}
@@ -88,16 +87,13 @@ void GameManager::Update()
 }
 void GameManager::Draw()
 {
-	D3DXVECTOR2 playerPos = player->GetPos();
-	
-
 	map->Draw();
 	enemyManager->Draw();
-	player->Draw();
+	playerManager->Draw();
 	effectManager->Draw();
 
 
-	if (player->GetState() != CS_DEAD)
+	if (playerManager->IsPlaying())
 	{
 		if (IsPause())
 		{
@@ -118,11 +114,11 @@ void GameManager::Draw()
 			//
 			char debug[64] = {};
 			sprintf_s(debug, "충돌 처리(1): %s", doCollision ? "TRUE" : "FALSE");
-			dv_font.DrawString(debug, 15, 15);
+			dv_font.DrawString(debug, 15, 150);
 			sprintf_s(debug, "적 생성중(2): %s", respawn ? "TRUE" : "FALSE");
-			dv_font.DrawString(debug, 15, 45);
+			dv_font.DrawString(debug, 15, 165);
 			sprintf_s(debug, "대미지 숫자 출력(3): %s", Option::GetInstance().WillDamageEffect() ? "TRUE" : "FALSE");
-			dv_font.DrawString(debug, 15, 75);
+			dv_font.DrawString(debug, 15, 180);
 
 
 			dv_font.DrawString("WASD 혹은 방향키 - 이동", 15, 550, 0xffffffff);
@@ -141,11 +137,19 @@ void GameManager::Delete()
 	//	sound.g_pSoundManager->drr  
 	SAFE_DELETE(map);
 
-	SAFE_DELETE(player);
+	SAFE_DELETE(playerManager);
 	SAFE_DELETE(enemyManager);
 	SAFE_DELETE(effectManager);
 
 	SAFE_DELETE(gameOver);
+}
+
+Enemy* GameManager::FindClosestEnemy()
+{
+	if (enemyManager->enemies.size() <= 0)
+		return nullptr;
+	else
+		return (*enemyManager->enemies.begin());
 }
 
 void GameManager::RegisterEffect(Effect* effect)

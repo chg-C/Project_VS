@@ -2,7 +2,7 @@
 
 
 Player::Player(PlayerData* data)
-	: Character(0, 0, 1.5f), moving(false), playerColor(0xffffffff), attackCooldown(0), moveSpeed(1.5f), armor(0)
+	: Character(0, 0, 1.5f), playerColor(0xffffffff), moveSpeed(1.5f), armor(0), damaging(false), dmgTime(0), squareSprite(nullptr)
 {
 	pos.x = 0;
 	pos.y = 0;
@@ -20,12 +20,10 @@ Player::Player(PlayerData* data)
 	}
 	
 	animator = ResourceManager::GetInstance().GetAnimator(animatorID);
-	attackEffectTemplate = ResourceManager::GetInstance().GetAnimation(ID_EFFECT_WHIP);
 }
 
 Player::~Player()
 {
-	SAFE_DELETE(attackEffectTemplate);
 	SAFE_DELETE(squareSprite);	
 }
 
@@ -40,7 +38,6 @@ void Player::Init()
 void Player::Update()
 {
 	dmgTime -= TIME;
-	attackCooldown -= TIME;
 
 	if (damaging && dmgTime <= 0)
 	{
@@ -49,72 +46,16 @@ void Player::Update()
 	}
 	if (IsAlive())
 	{
-		velocity.x = velocity.y = 0;
-		moving = false;
-
-		if (KeyDown(VK_LEFT) || KeyDown('A'))
-		{
-			dir = -1;
-			velocity.x = -moveSpeed;
-
-			moving = true;
-		}
-		else if (KeyDown(VK_RIGHT) || KeyDown('D'))
-		{
-			dir = 1;
-			velocity.x = moveSpeed;
-
-			moving = true;
-		}
-		if (KeyDown(VK_UP) || KeyDown('W'))
-		{
-			velocity.y = -moveSpeed;
-			moving = true;
-		}
-		else if (KeyDown(VK_DOWN) || KeyDown('S'))
-		{
-			velocity.y = moveSpeed;
-			moving = true;
-		}
-
-		if (KeyDown(VK_SPACE))
-		{
-			attackCooldown = 1;
-			Projectile* proj = new Projectile(attackEffectTemplate, pos.x + (100 * dir), pos.y, dir, 0.5f);
-			proj->Init();
-			projectiles.push_back(proj);
-		}
 
 
-		if (attackCooldown <= 0)
-		{
-			attackCooldown = 1;
-			Projectile* proj = new Projectile(attackEffectTemplate, pos.x + (100 * dir), pos.y, dir, 0.5f);
-			proj->Init();
-			projectiles.push_back(proj);
-		}
-		if (moving == false)
-		{
-			currentState = CS_IDLE;
-		}
-		else
-		{
-			currentState = CS_MOVE;
-		}
+		//if (attackCooldown <= 0)
+		//{
+		//	attackCooldown = 1;
+		//	Projectile* proj = new Projectile(attackEffectTemplate, pos.x + (100 * dir), pos.y, dir, 0.5f);
+		//	proj->Init();
+		//	projectiles.push_back(proj);
+		//}
 
-		for (auto& iter = projectiles.begin(); iter != projectiles.end();)
-		{
-			if ((*iter)->finished)
-			{
-				delete (*iter);
-				iter = projectiles.erase(iter);
-			}
-			else
-			{
-				(*iter)->Update();
-				++iter;
-			}
-		}
 	}
 	else if(currentState == CS_DYING)
 	{
@@ -125,7 +66,8 @@ void Player::Update()
 			currentState = CS_DEAD;
 	}
 	
-	
+
+	pos += velocity;
 
 	//카메라 - 위치 동기화
 	Camera::GetInstance().SetCamX(-pos.x);
@@ -148,17 +90,34 @@ void Player::Update()
 	size.x = animator->GetCurrentSpriteData()->width * scale;
 	size.y = animator->GetCurrentSpriteData()->height * scale;
 }
+void Player::SetVelocity(D3DXVECTOR2 velocity)
+{
+	if (!IsAlive())
+		return;
+
+	this->velocity = velocity * moveSpeed;
+	if (D3DXVec2Length(&velocity) > 0)
+	{
+		currentState = CS_MOVE;
+	}
+	else
+	{
+		currentState = CS_IDLE;
+	}
+
+	if (velocity.x > 0)
+	{
+		dir = 1;
+	}
+	else if (velocity.x < 0)
+	{
+		dir = -1;
+	}
+}
 
 void Player::Draw()
 {
 	animator->GetCurrentSpriteData()->sprite->RenderStretch(pos.x, pos.y, size.x, size.y, dir * 1, 1, playerColor);
-
-	for (auto& iter : projectiles)
-	{
-		iter->Draw();
-		//(*iter)->Draw();
-	}
-
 	DrawHealthBar();
 }
 

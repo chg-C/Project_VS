@@ -94,6 +94,9 @@
     <Filter Include="Custom\Game\Time">
       <UniqueIdentifier>{b405c88f-619e-4fb4-b540-d2cf7c8afd81}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Custom\Game\Objects\Projectile">
+      <UniqueIdentifier>{8274ce8c-9733-4b7e-8d15-e8a70b6e596b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Define.h">
@@ -222,9 +225,6 @@
     <ClInclude Include="Player.h">
       <Filter>Custom\Game\Objects\Character</Filter>
     </ClInclude>
-    <ClInclude Include="Projectile.h">
-      <Filter>Custom\Game\Objects\Effect</Filter>
-    </ClInclude>
     <ClInclude Include="SpriteEffect.h">
       <Filter>Custom\Game\Objects\Effect</Filter>
     </ClInclude>
@@ -270,9 +270,6 @@
     <ClInclude Include="Player.h">
       <Filter>Custom\Game\Objects\Character</Filter>
     </ClInclude>
-    <ClInclude Include="Projectile.h">
-      <Filter>Custom\Game\Objects\Effect</Filter>
-    </ClInclude>
     <ClInclude Include="SpriteEffect.h">
       <Filter>Custom\Game\Objects\Effect</Filter>
     </ClInclude>
@@ -308,6 +305,21 @@
     </ClInclude>
     <ClInclude Include="ResourceManager.h">
       <Filter>Custom</Filter>
+    </ClInclude>
+    <ClInclude Include="Projectile.h">
+      <Filter>Custom\Game\Objects\Projectile</Filter>
+    </ClInclude>
+    <ClInclude Include="DroppedItemManager.h">
+      <Filter>Custom\Game\GameManager\SubManagers</Filter>
+    </ClInclude>
+    <ClInclude Include="Projectile.h">
+      <Filter>Custom\Game\Objects\Projectile</Filter>
+    </ClInclude>
+    <ClInclude Include="MovingProjectile.h">
+      <Filter>Custom\Game\Objects\Projectile</Filter>
+    </ClInclude>
+    <ClInclude Include="Weapon.h">
+      <Filter>Custom\Game\Objects\Items</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -407,9 +419,6 @@
     <ClCompile Include="Player.cpp">
       <Filter>Custom\Game\Objects\Character</Filter>
     </ClCompile>
-    <ClCompile Include="Projectile.cpp">
-      <Filter>Custom\Game\Objects\Effect</Filter>
-    </ClCompile>
     <ClCompile Include="EnemyManager.cpp">
       <Filter>Custom\Game\GameManager\SubManagers</Filter>
     </ClCompile>
@@ -440,9 +449,6 @@
     <ClCompile Include="Player.cpp">
       <Filter>Custom\Game\Objects\Character</Filter>
     </ClCompile>
-    <ClCompile Include="Projectile.cpp">
-      <Filter>Custom\Game\Objects\Effect</Filter>
-    </ClCompile>
     <ClCompile Include="EnemyManager.cpp">
       <Filter>Custom\Game\GameManager\SubManagers</Filter>
     </ClCompile>
@@ -466,6 +472,24 @@
     </ClCompile>
     <ClCompile Include="ResourceManager.cpp">
       <Filter>Custom</Filter>
+    </ClCompile>
+    <ClCompile Include="Projectile.cpp">
+      <Filter>Custom\Game\Objects\Projectile</Filter>
+    </ClCompile>
+    <ClCompile Include="Item.cpp">
+      <Filter>Custom\Game\Objects\Items</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerManager.cpp">
+      <Filter>Custom\Game\GameManager\SubManagers</Filter>
+    </ClCompile>
+    <ClCompile Include="Projectile.cpp">
+      <Filter>Custom\Game\Objects\Projectile</Filter>
+    </ClCompile>
+    <ClCompile Include="MovingProjectile.cpp">
+      <Filter>Custom\Game\Objects\Projectile</Filter>
+    </ClCompile>
+    <ClCompile Include="Weapon.cpp">
+      <Filter>Custom\Game\Objects\Items</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

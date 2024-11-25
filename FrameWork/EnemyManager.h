@@ -4,7 +4,7 @@
 using std::list;
 
 class Enemy;
-class Player;
+class PlayerManager;
 
 struct EnemySpawnPoint
 {
@@ -34,7 +34,7 @@ public:
 	void Spawn();
 	void Sort(float x, float y);
 	
-	void CheckCollision(Player* player);
+	void CheckCollision(PlayerManager* playerManager);
 
 	bool IsColliding(RECT& rectA, RECT& rectB) {
 		return (rectA.left < rectB.right && rectB.left < rectA.right && rectA.top < rectB.bottom && rectB.top < rectA.bottom);
