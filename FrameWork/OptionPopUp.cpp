@@ -37,7 +37,7 @@ void OptionPopUp::Init()
 void OptionPopUp::RenderElement()
 {
 
-		dv_font.DrawString("Options", 440,130,30,17,500);
+		dv_font.DrawString("Options", 410,100,30,17,500);
 		UIManager::GetInstance().GetButtons()[0].ButtonRender(680, 35, 0, 80, 50, 1, "BACK", 655, 25);
 		UIManager::GetInstance().GetButtons()[1].ButtonRender(550, 200, 0, 50, 50, 1, "Sounds", 300, 200);
 		UIManager::GetInstance().GetButtons()[2].ButtonRender(550, 350, 0, 50, 50, 1, "Music", 300, 350);

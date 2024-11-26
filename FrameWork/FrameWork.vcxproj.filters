@@ -94,6 +94,9 @@
     <Filter Include="Custom\Game\Time">
       <UniqueIdentifier>{b405c88f-619e-4fb4-b540-d2cf7c8afd81}</UniqueIdentifier>
     </Filter>
+    <Filter Include="소스 파일\UI\UIElement">
+      <UniqueIdentifier>{39baa81c-4f6e-4ede-b0dc-1a8ebd100b84}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Define.h">
@@ -170,18 +173,6 @@
     </ClInclude>
     <ClInclude Include="Player.h">
       <Filter>Custom\Game\Objects</Filter>
-    </ClInclude>
-    <ClInclude Include="SelectArrow.h">
-      <Filter>소스 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="UISprite.h">
-      <Filter>소스 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="UIButton.h">
-      <Filter>소스 파일\UI</Filter>
-    </ClInclude>
-    <ClInclude Include="UIPopUp.h">
-      <Filter>소스 파일\UI</Filter>
     </ClInclude>
     <ClInclude Include="UISprite.h">
       <Filter>소스 파일\UI</Filter>
@@ -306,6 +297,21 @@
     <ClInclude Include="ResourceManager.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
+    <ClInclude Include="UIButton.h">
+      <Filter>소스 파일\UI\UIElement</Filter>
+    </ClInclude>
+    <ClInclude Include="UIPopUp.h">
+      <Filter>소스 파일\UI\PopUP</Filter>
+    </ClInclude>
+    <ClInclude Include="SelectArrow.h">
+      <Filter>소스 파일\UI\UIElement</Filter>
+    </ClInclude>
+    <ClInclude Include="UISprite.h">
+      <Filter>소스 파일\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="Slot.h">
+      <Filter>소스 파일\UI\UIElement</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="key.cpp">
@@ -361,18 +367,6 @@
     </ClCompile>
     <ClCompile Include="Sprite.cpp">
       <Filter>D3D Core\코어 소스</Filter>
-    </ClCompile>
-    <ClCompile Include="UISprite.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="SelectArrow.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="UIButton.cpp">
-      <Filter>소스 파일\UI</Filter>
-    </ClCompile>
-    <ClCompile Include="UIPopUp.cpp">
-      <Filter>소스 파일\UI</Filter>
     </ClCompile>
     <ClCompile Include="UISprite.cpp">
       <Filter>소스 파일\UI</Filter>
@@ -462,6 +456,18 @@
       <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="UIButton.cpp">
+      <Filter>소스 파일\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="UIButton.cpp">
+      <Filter>소스 파일\UI\UIElement</Filter>
+    </ClCompile>
+    <ClCompile Include="UIPopUp.cpp">
+      <Filter>소스 파일\UI\PopUP</Filter>
+    </ClCompile>
+    <ClCompile Include="SelectArrow.cpp">
+      <Filter>소스 파일\UI\UIElement</Filter>
+    </ClCompile>
+    <ClCompile Include="UISprite.cpp">
       <Filter>소스 파일\UI</Filter>
     </ClCompile>
   </ItemGroup>

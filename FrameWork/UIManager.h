@@ -15,6 +15,8 @@ private:
 	std::map<int, UIPopUp*> popupMap;
 	std::vector<UIButton> buttons;
 	std::unordered_map<int, std::tuple<int, int, int, int>> buttonMap;//buttonIndex, {аб,©Л,╩С,го}
+	std::vector<Slot> slots;
+	std::unordered_map<int, std::tuple<int, int, int, int>> slotMap;
 public:
 	void Init()
 	{
@@ -61,6 +63,28 @@ public:
 	void SetButtonMap(const std::unordered_map<int, std::tuple<int, int, int, int>>& newButtonMap) {
 		buttonMap.clear();
 		buttonMap = newButtonMap;
+	}
+
+
+	std::vector<Slot>& GetSlots() {
+		return slots;
+	}
+
+	void SetSlots(const std::vector<Slot>& newSlots)
+	{
+		slots.clear();
+		slots = newSlots;
+	}
+
+	std::unordered_map<int, std::tuple<int, int, int, int>>& GetSlotMap()
+	{
+		return slotMap;
+	}
+
+	void SetSlotMap(const std::unordered_map<int,std::tuple<int,int,int,int>>& newSlotMap)
+	{
+		slotMap.clear();
+		slotMap = newSlotMap;
 	}
 
 };
