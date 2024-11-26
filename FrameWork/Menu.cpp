@@ -236,7 +236,7 @@ void Menu::MenuInput()
 				if (buttonIdx == 0)
 				{
 					OpenPopUp(1);
-					UIManager::GetInstance().SetButtonMap(*curPopUp->GetUIMap());
+					UIManager::GetInstance().SetButtonMap(*curPopUp->GetButtonMap());
 					UIManager::GetInstance().SetButtons(*curPopUp->GetButtons());
 					break;
 				}
@@ -247,6 +247,8 @@ void Menu::MenuInput()
 				else if (buttonIdx == 3)
 				{
 					OpenPopUp(2);
+					UIManager::GetInstance().SetButtonMap(*curPopUp->GetSlotMap());
+					UIManager::GetInstance().SetSlots(*curPopUp->GetSlots());
 				}
 			}
 		}
@@ -278,4 +280,9 @@ void Menu::OptionInput()
 				}
 			}
 		}
+}
+
+void Menu::PowerInput()
+{
+
 }

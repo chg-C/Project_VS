@@ -2,7 +2,6 @@
 #include "UIPopUp.h"
 #include "string"
 #include "unordered_map"
-#include "Slot.h"
 enum PowerType
 {
 	Might,
@@ -27,12 +26,12 @@ struct PowerSlot:public Slot
 	int maxLevel;
 	int baseCost;
 	int increaseCost;
-	bool isSelected;
-
+	std::string spritePath;
 	UISprite powerSprite;
 
-	PowerSlot(const std::string& name = "", int curLevel = 0, int maxLevel = 0, int baseCost = 0, int increaseCost = 0,bool isSelected=false)
-		: name(name), curLevel(curLevel), maxLevel(maxLevel), baseCost(baseCost), increaseCost(increaseCost), isSelected(isSelected) {}
+
+	PowerSlot(const std::string& name = "", int curLevel = 0, int maxLevel = 0, int baseCost = 0, int increaseCost = 0)
+		: name(name), curLevel(curLevel), maxLevel(maxLevel), baseCost(baseCost), increaseCost(increaseCost) {}
 
 
 	bool Upgrade()
@@ -49,14 +48,14 @@ struct PowerSlot:public Slot
 	{
 		return baseCost + (increaseCost * curLevel);
 	}
-
 };
 
 struct PowerUI
 {
 	std::vector<UIButton> buttons;
-	std::unordered_map<int, std::tuple<int, int, int, int>> UImap;
-	PowerSlot slots[TotalSlots];
+	std::vector<Slot*> slots;
+	std::unordered_map<int, std::tuple<int, int, int, int>> buttonMap;
+	std::unordered_map<int, std::tuple<int, int, int, int>> slotMap;
 };
 
 class PowerPopUp:public UIPopUp
@@ -73,4 +72,10 @@ public:
 	PowerPopUp();
 	~PowerPopUp();
 	void RenderElement() override;
+
+	std::unordered_map<int, std::tuple<int, int, int, int>>* GetButtonMap()override;
+	std::vector<UIButton>* GetButtons()override;
+	std::unordered_map<int, std::tuple<int, int, int, int>>* GetSlotMap()override;
+	std::vector<Slot*>* GetSlots()override;
 };
+

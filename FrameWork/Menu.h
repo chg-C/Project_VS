@@ -52,5 +52,6 @@ public:
 	void ClosePopUp();
 	void MenuInput();
 	void OptionInput();
+	void PowerInput();
 };
 #endif

@@ -45,7 +45,7 @@ void OptionPopUp::RenderElement()
 	
 }
 
-std::unordered_map<int, std::tuple<int, int, int, int>>* OptionPopUp::GetUIMap()
+std::unordered_map<int, std::tuple<int, int, int, int>>* OptionPopUp::GetButtonMap()
 {
 	return &UI.UIMap;
 }

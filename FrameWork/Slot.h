@@ -4,9 +4,10 @@ class Slot
 {
 protected:
 	UISprite frame;
-
+	UISprite selectFrame;
+	bool isSelected;
 	friend class PowerPopUp;
 public:
 	Slot() {}
-	~Slot() {}
+	virtual ~Slot() {}
 };

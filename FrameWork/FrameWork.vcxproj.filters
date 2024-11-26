@@ -183,12 +183,6 @@
     <ClInclude Include="UISprite.h">
       <Filter>소스 파일\UI</Filter>
     </ClInclude>
-    <ClInclude Include="SelectArrow.h">
-      <Filter>소스 파일\UI</Filter>
-    </ClInclude>
-    <ClInclude Include="UIButton.h">
-      <Filter>소스 파일\UI</Filter>
-    </ClInclude>
     <ClInclude Include="OptionPopUp.h">
       <Filter>소스 파일\UI\PopUP</Filter>
     </ClInclude>
@@ -312,6 +306,12 @@
     <ClInclude Include="Slot.h">
       <Filter>소스 파일\UI\UIElement</Filter>
     </ClInclude>
+    <ClInclude Include="UIButton.h">
+      <Filter>소스 파일\UI\UIElement</Filter>
+    </ClInclude>
+    <ClInclude Include="SelectArrow.h">
+      <Filter>소스 파일\UI\UIElement</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="key.cpp">
@@ -369,12 +369,6 @@
       <Filter>D3D Core\코어 소스</Filter>
     </ClCompile>
     <ClCompile Include="UISprite.cpp">
-      <Filter>소스 파일\UI</Filter>
-    </ClCompile>
-    <ClCompile Include="SelectArrow.cpp">
-      <Filter>소스 파일\UI</Filter>
-    </ClCompile>
-    <ClCompile Include="UIButton.cpp">
       <Filter>소스 파일\UI</Filter>
     </ClCompile>
     <ClCompile Include="UISprite.cpp">
@@ -469,6 +463,12 @@
     </ClCompile>
     <ClCompile Include="UISprite.cpp">
       <Filter>소스 파일\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="UIButton.cpp">
+      <Filter>소스 파일\UI\UIElement</Filter>
+    </ClCompile>
+    <ClCompile Include="SelectArrow.cpp">
+      <Filter>소스 파일\UI\UIElement</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
