@@ -1,6 +1,7 @@
 #pragma once
 
 class Player;
+class Weapon;
 
 class PlayerManager
 {
@@ -8,10 +9,18 @@ public:
 	PlayerManager();
 	~PlayerManager();
 private:
-	Player* player;
-	std::list<Projectile*> projectiles;
+	int nextLevelXP;
+	int currentXP;
 
-	SpriteAnimation* attackEffectTemplate;
+	Player* player;
+	std::list<Weapon*> weapons;
+
+	Sprite2* squareSprite;
+
+	//Temp Test
+	int tmpIdx;
+	float keyDelay;
+	//
 public:
 	void Init(PlayerData* data);
 	void Update();
@@ -22,5 +31,9 @@ public:
 	Player* GetPlayer();
 	D3DXVECTOR2 GetPlayerPos();
 
-	std::list<Projectile*>& GetProjectiles();
+	const char* GetPlayerName();
+
+	std::list<Weapon*>& GetWeapons();
+
+	void EarnWeapon(WeaponData* data);
 };

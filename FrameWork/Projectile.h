@@ -14,11 +14,10 @@ struct Collided
 	const Enemy* enemy;
 };
 
-
 class Projectile : public SpriteEffect
 {
 public:
-	Projectile(SpriteAnimation* sprites, float x, float y, int dir, float scale=1);
+	Projectile(SpriteAnimation* sprites, float x, float y, int dir, float damage, float cooldown, float scale=1);
 	virtual ~Projectile();
 protected:
 	int dir;

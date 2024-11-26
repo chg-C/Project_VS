@@ -309,7 +309,7 @@
     <ClInclude Include="Projectile.h">
       <Filter>Custom\Game\Objects\Projectile</Filter>
     </ClInclude>
-    <ClInclude Include="DroppedItemManager.h">
+    <ClInclude Include="FieldItemManager.h">
       <Filter>Custom\Game\GameManager\SubManagers</Filter>
     </ClInclude>
     <ClInclude Include="Projectile.h">
@@ -320,6 +320,9 @@
     </ClInclude>
     <ClInclude Include="Weapon.h">
       <Filter>Custom\Game\Objects\Items</Filter>
+    </ClInclude>
+    <ClInclude Include="LoopProjectile.h">
+      <Filter>Custom\Game\Objects\Projectile</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -490,6 +493,9 @@
     </ClCompile>
     <ClCompile Include="Weapon.cpp">
       <Filter>Custom\Game\Objects\Items</Filter>
+    </ClCompile>
+    <ClCompile Include="LoopProjectile.cpp">
+      <Filter>Custom\Game\Objects\Projectile</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

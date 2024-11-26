@@ -6,8 +6,12 @@
 #define ClipCache AutoDeleteCache<int, AnimationClip>::GetInstance()
 #define AnimationCache AutoDeleteCache<int, SpriteAnimation>::GetInstance()
 #define AnimatorCache AutoDeleteCache<int, SpriteAnimator>::GetInstance()
+
 #define PlayerDataCache AutoDeleteCache<int, PlayerData>::GetInstance()
 #define EnemyDataCache AutoDeleteCache<int, EnemyData>::GetInstance()
+
+#define WeaponDataCache AutoDeleteCache<int, WeaponData>::GetInstance()
+#define ProjectileDataCache AutoDeleteCache<int, ProjectileData>::GetInstance()
 
 ResourceManager::ResourceManager()
 	: database(nullptr)
@@ -28,17 +32,32 @@ void ResourceManager::InitResources()
 	{
 		MessageBox(nullptr, "데이터베이스 연동 실패!", "치명적 오류", 0);
 	}
-	//Loading Animators
-	LoadAnimator(ID_PLAYER_ANTONIO);
-	LoadAnimator(ID_ENEMY_BAT);
-	LoadAnimator(ID_ENEMY_MUDMAN);
-	//Loading Effects
-	LoadAnimation(ID_EFFECT_WHIP);
 	//Loading Player Datas
-	LoadPlayerData(ID_PLAYER_ANTONIO);
+	for (int i = ID_PLAYER_BEGIN + 1; i < ID_PLAYER_END; ++i)
+	{
+		LoadPlayerData(i);
+	}
 	//Loading Enemy Datas
-	LoadEnemyData(ID_ENEMY_BAT);
-	LoadEnemyData(ID_ENEMY_MUDMAN);
+	for (int i = ID_ENEMY_BEGIN + 1; i < ID_ENEMY_END; ++i)
+	{
+		LoadEnemyData(i);
+	}
+	//Loading Weapon Datas
+	for (int i = ID_WEAPON_BEGIN + 1; i < ID_WEAPON_END; ++i)
+	{
+		LoadWeaponData(i);
+	}
+	//Loading Projectile Datas
+	//LoadProjectileData(ID_EFFECT_WHIP);
+
+	////Loading Animators
+	//LoadAnimator(ID_PLAYER_ANTONIO);
+	//LoadAnimator(ID_ENEMY_BAT);
+	//LoadAnimator(ID_ENEMY_MUDMAN);
+	//LoadAnimator(ID_ENEMY_MUDMAN + 1);
+	////Loading Effects
+	//LoadAnimation(ID_EFFECT_WHIP);
+	
 
 	sqlite3_close(database);
 	database = nullptr;
@@ -146,7 +165,7 @@ SpriteAnimation* ResourceManager::LoadAnimation(int id)
 
 SpriteAnimator* ResourceManager::LoadAnimator(int id)
 {
-	SpriteAnimator* animator = GetAnimator(id);
+	SpriteAnimator* animator = AnimatorCache.Get(id);
 
 	if (animator == nullptr)
 	{
@@ -219,6 +238,7 @@ PlayerData* ResourceManager::LoadPlayerData(int id)
 		if (sqlite3_step(stmt) == SQLITE_ROW)
 		{
 			data = new PlayerData;
+			strcpy(data->playerName, (const char*)sqlite3_column_text(stmt, 1));
 			data->animatorID = sqlite3_column_int(stmt, 2);
 			data->maxHealth = sqlite3_column_double(stmt, 3);
 			data->attackPower = sqlite3_column_double(stmt, 4);
@@ -226,6 +246,8 @@ PlayerData* ResourceManager::LoadPlayerData(int id)
 			data->defense = sqlite3_column_double(stmt, 6);
 
 			PlayerDataCache.Put(id, data);
+
+			LoadAnimator(data->animatorID);
 		}
 		sqlite3_finalize(stmt);
 	}
@@ -257,9 +279,97 @@ EnemyData* ResourceManager::LoadEnemyData(int id)
 			data->moveSpeed = sqlite3_column_double(stmt, 5);
 
 			EnemyDataCache.Put(id, data);
+
+			LoadAnimator(data->animatorID);
 		}
 		sqlite3_finalize(stmt);
 	}
+	return data;
+}
+
+ProjectileData* ResourceManager::LoadProjectileData(int id)
+{
+	ProjectileData* data = GetProjectileData(id);
+	if (data == nullptr)
+	{
+
+		char sql[256] = {};
+		sprintf_s(sql, "SELECT * FROM ProjectileData where ID = %d", id);
+		sqlite3_stmt* stmt;
+
+		// SQL 문 준비
+		if (sqlite3_prepare_v2(database, sql, -1, &stmt, 0) != SQLITE_OK)
+		{
+			return nullptr;
+		}
+
+
+		if (sqlite3_step(stmt) == SQLITE_ROW)
+		{
+			data = new ProjectileData;
+			data->projectileID = sqlite3_column_int(stmt, 0);
+			data->animationID = sqlite3_column_int(stmt, 1);
+
+			ProjectileDataCache.Put(id, data);
+
+			LoadAnimation(data->animationID);
+		}
+
+		sqlite3_finalize(stmt);
+	}
+
+	return data;
+}
+
+WeaponData* ResourceManager::LoadWeaponData(int id)
+{
+	WeaponData* data = GetWeaponData(id);
+	
+	if (data == nullptr)
+	{
+		char sql[256] = {};
+		sprintf_s(sql, "SELECT * FROM WeaponData where ID = %d", id);
+		sqlite3_stmt* stmt;
+		
+		// SQL 문 준비
+		if (sqlite3_prepare_v2(database, sql, -1, &stmt, 0) != SQLITE_OK)
+		{
+			return nullptr;
+		}
+
+
+		if (sqlite3_step(stmt) == SQLITE_ROW)
+		{
+			WeaponType type = (WeaponType)sqlite3_column_int(stmt, 2);
+			if (type == WEAPON_MOVEDIR || type == WEAPON_FOLLOW)
+			{
+				data = new WeaponData_Move();
+				((WeaponData_Move*)data)->speed = sqlite3_column_double(stmt, 7);
+				((WeaponData_Move*)data)->range = sqlite3_column_double(stmt, 8);
+				((WeaponData_Move*)data)->lifetime = sqlite3_column_int(stmt, 9);
+			}
+			else
+			{
+				data = new WeaponData();
+			}
+			data->type = type;
+			data->weaponIcon = new Sprite2();
+			char c[256] = "";
+			strcpy(c, (const char*)sqlite3_column_text(stmt, 1));
+			data->weaponIcon->Create(c, false);
+			data->projectileID = sqlite3_column_int(stmt, 3);
+			data->damage = sqlite3_column_double(stmt, 4);
+			data->delay = sqlite3_column_double(stmt, 5);
+			data->projectileCount = sqlite3_column_int(stmt, 6);
+
+			LoadProjectileData(data->projectileID);
+
+			WeaponDataCache.Put(id, data);
+		}
+
+		sqlite3_finalize(stmt);
+	}
+
 	return data;
 }
 
@@ -298,4 +408,14 @@ PlayerData* ResourceManager::GetPlayerData(int id)
 EnemyData* ResourceManager::GetEnemyData(int id)
 {
 	return EnemyDataCache.Get(id);
+}
+
+ProjectileData* ResourceManager::GetProjectileData(int id)
+{
+	return ProjectileDataCache.Get(id);
+}
+
+WeaponData* ResourceManager::GetWeaponData(int id)
+{
+	return WeaponDataCache.Get(id);
 }

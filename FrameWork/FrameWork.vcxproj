@@ -156,7 +156,7 @@
     <ClInclude Include="CustomDefine.h" />
     <ClInclude Include="CustomInclude.h" />
     <ClInclude Include="Define.h" />
-    <ClInclude Include="DroppedItemManager.h" />
+    <ClInclude Include="FieldItemManager.h" />
     <ClInclude Include="DXUTsound.h" />
     <ClInclude Include="DeviceFont.h" />
     <ClInclude Include="Effect.h" />
@@ -169,6 +169,7 @@
     <ClInclude Include="Item.h" />
     <ClInclude Include="key.h" />
     <ClInclude Include="Logo.h" />
+    <ClInclude Include="LoopProjectile.h" />
     <ClInclude Include="Map.h" />
     <ClInclude Include="Menu.h" />
     <ClInclude Include="MovingProjectile.h" />
@@ -212,6 +213,7 @@
     <ClCompile Include="Item.cpp" />
     <ClCompile Include="key.cpp" />
     <ClCompile Include="Logo.cpp" />
+    <ClCompile Include="LoopProjectile.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="Map.cpp" />
     <ClCompile Include="Menu.cpp" />

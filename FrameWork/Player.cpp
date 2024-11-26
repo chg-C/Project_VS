@@ -2,7 +2,7 @@
 
 
 Player::Player(PlayerData* data)
-	: Character(0, 0, 1.5f), playerColor(0xffffffff), moveSpeed(1.5f), armor(0), damaging(false), dmgTime(0), squareSprite(nullptr)
+	: Character(0, 0, 1.5f), playerColor(0xffffffff), moveSpeed(1.5f), armor(0), damaging(false), dmgTime(0), squareSprite(nullptr), name("")
 {
 	pos.x = 0;
 	pos.y = 0;
@@ -13,6 +13,7 @@ Player::Player(PlayerData* data)
 	if (data != nullptr)
 	{
 		animatorID = data->animatorID;
+		strcpy(name, data->playerName);
 		maxHP = data->maxHealth;
 		currentHP = maxHP;
 		moveSpeed = data->moveSpeed;
@@ -46,8 +47,6 @@ void Player::Update()
 	}
 	if (IsAlive())
 	{
-
-
 		//if (attackCooldown <= 0)
 		//{
 		//	attackCooldown = 1;

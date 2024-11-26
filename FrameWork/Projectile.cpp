@@ -1,8 +1,8 @@
 #include "Include.h"
 #include "Projectile.h"
 
-Projectile::Projectile(SpriteAnimation* sprites, float x, float y, int dir, float scale)
-	: SpriteEffect(sprites, x, y, scale), dir(dir), damage(8), cooldown(5)
+Projectile::Projectile(SpriteAnimation* sprites, float x, float y, int dir, float damage, float cooldown, float scale)
+	: SpriteEffect(sprites, x, y, scale), dir(dir), damage(damage), cooldown(cooldown)
 {
 	this->sprites = new SpriteAnimation(*sprites);
 }

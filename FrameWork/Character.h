@@ -50,9 +50,9 @@ public:
 	}
 
 	virtual void SetVelocity(D3DXVECTOR2 velocity) { this->velocity = velocity; }
-	D3DXVECTOR2 GetVelocity() { return velocity; }
+	D3DXVECTOR2 GetVelocity() const { return velocity; }
 
-	D3DXVECTOR2 GetSize() { return size; }
+	D3DXVECTOR2 GetSize() const { return size; }
 
 	RECT GetCollider(float mp = 1) const { return RECT{
 								(long)(pos.x - (size.x*mp / 2)),

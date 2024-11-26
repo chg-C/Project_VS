@@ -47,6 +47,9 @@ void GameManager::Init()
 	
 	Time::GetInstance().InitTime();
 	Option::GetInstance().Init();
+
+	timeFlew = 0;
+	pause = false;
 }
 
 void GameManager::Update()
@@ -120,10 +123,10 @@ void GameManager::Draw()
 			sprintf_s(debug, "대미지 숫자 출력(3): %s", Option::GetInstance().WillDamageEffect() ? "TRUE" : "FALSE");
 			dv_font.DrawString(debug, 15, 180);
 
-
-			dv_font.DrawString("WASD 혹은 방향키 - 이동", 15, 550, 0xffffffff);
-			dv_font.DrawString("SPACEBAR - (임시)공격", 15, 600, 0xffffffff);
+			sprintf_s(debug, "현재 캐릭터(4): %s", playerManager->GetPlayerName());
+			dv_font.DrawString(debug, 15, 300);
 		}
+		dv_font.DrawString("WASD 혹은 방향키 - 이동", 15, 550, 0xffffffff);
 	}
 	else
 	{
@@ -157,7 +160,11 @@ void GameManager::RegisterEffect(Effect* effect)
 	effectManager->RegisterEffect(effect);
 }
 
-void GameManager::GameReset(void)  // 여기는 게임상 첨에 한번만  초기화되는 부분만 넣어줌.
+/// <summary>
+/// 게임 초기화
+/// </summary>
+void GameManager::GameReset()
 {
-
+	Delete();
+	Init();
 }

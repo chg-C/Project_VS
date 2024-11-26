@@ -3,6 +3,7 @@
 #include "PlayerManager.h"
 #include "EnemyManager.h"
 #include "TextEffect.h"
+#include "Weapon.h"
 
 #include "ResourceManager.h"
 
@@ -159,28 +160,31 @@ void EnemyManager::CheckCollision(PlayerManager* player)
 		{
 			kb = false;
 			//플레이어 소유 투사체와 충돌 체크
-			for (auto& proj : player->GetProjectiles())
+			for (auto& weapon : player->GetWeapons())
 			{
-				if (!proj->finished && proj->CanCollide(iter))
+				for (auto& proj : weapon->GetProjectiles())
 				{
-					if (IsColliding(proj->GetCollider(), iter->GetCollider()))
+					if (!proj->finished && proj->CanCollide(iter))
 					{
-						iter->Damage(proj->GetDamage());
-						proj->Collide(iter);
-						//
-						if (Option::GetInstance().WillDamageEffect())
+						if (IsColliding(proj->GetCollider(), iter->GetCollider()))
 						{
-							sprintf_s(dmgText, "%d", (int)proj->GetDamage());
-							TextEffect* te = new TextEffect(iter->GetPos().x, iter->GetPos().y, 1, dmgText, 0.5f);
-							GameManager::GetInstance().RegisterEffect(te);
-						}
-						//
-						kb = true;
+							iter->Damage(proj->GetDamage());
+							proj->Collide(iter);
+							//
+							if (Option::GetInstance().WillDamageEffect())
+							{
+								sprintf_s(dmgText, "%d", (int)proj->GetDamage());
+								TextEffect* te = new TextEffect(iter->GetPos().x, iter->GetPos().y, 1, dmgText, 0.5f);
+								GameManager::GetInstance().RegisterEffect(te);
+							}
+							//
+							kb = true;
 
-						velocity.x = iter->GetPos().x - playerPos.x;
-						velocity.y = iter->GetPos().y - playerPos.y;
-						D3DXVec2Normalize(&velocity, &velocity);
-						velocity *= knockbackPower;
+							velocity.x = iter->GetPos().x - playerPos.x;
+							velocity.y = iter->GetPos().y - playerPos.y;
+							D3DXVec2Normalize(&velocity, &velocity);
+							velocity *= knockbackPower;
+						}
 					}
 				}
 			}

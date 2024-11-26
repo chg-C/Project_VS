@@ -22,11 +22,13 @@ class Player : public Character
 	int alpha = 0xff;
 
 	Sprite2* squareSprite;
+
+	char name[64];
 public :
 	Player(PlayerData* data);
 	~Player();
 
-	int GetDirection() { return dir; }
+	int GetDirection() const { return dir; }
 	virtual void SetVelocity(D3DXVECTOR2 velocity);
 
 	virtual void Init();
@@ -37,4 +39,6 @@ public :
 
 	virtual void Move(float x, float y);
 	virtual void Damage(float dmg);
+
+	const char* GetName() { return name; }
 };

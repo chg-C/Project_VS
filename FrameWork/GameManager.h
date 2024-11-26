@@ -37,7 +37,6 @@ private:
 	//게임 오버 스크린
 	Sprite2* gameOver;
 private:
-	void GameReset(void);
 	void Init();
 	void Update();
 	void Draw();
@@ -45,6 +44,7 @@ private:
 public:
 	bool m_GameStart;
 public:
+	void GameReset(void);
 	void Pause() { pause = true; }
 	void Resume() { pause = false; }
 	bool IsPause() { return pause; }
