@@ -1,6 +1,5 @@
 #include "Include.h"
 
-
 Over::Over()
 {
 }
@@ -18,7 +17,7 @@ void Over::Init()
 void Over::Update(double frame)
 {
 	//if(Ã³¸® ÈÄ) g_Mng.n_Chap = MENU; 
-	if (KeyDown(VK_RETURN))
+	if (KeyDown(VK_RETURN) && GetTickCount64() - key.KeyTime > 1000)
 	{
 		g_Mng.n_Chap = MENU;
 		GameManager::GetInstance().GameReset();

@@ -8,7 +8,7 @@ public:
 	Map();
 	~Map();
 
-	Sprite2 map;
+	Sprite2* map;
 
 	float bg_width;
 	float bg_height;

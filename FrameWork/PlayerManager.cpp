@@ -20,6 +20,7 @@ PlayerManager::~PlayerManager()
 	SAFE_DELETE(squareSprite);
 }
 
+
 void PlayerManager::Init(PlayerData* data)
 {
 	player = new Player(data);
@@ -30,13 +31,7 @@ void PlayerManager::Init(PlayerData* data)
 	squareSprite = new Sprite2();
 	squareSprite->Create(FileName, false, D3DCOLOR_XRGB(0, 0, 0));
 
-	Weapon* w = new Weapon(ResourceManager::GetInstance().GetWeaponData(ID_WEAPON_GARLIC_LVL5), player);
-	w->Init();
-	weapons.push_back(w);
-	w = new Weapon(ResourceManager::GetInstance().GetWeaponData(ID_WEAPON_WHIP_LVL1), player);
-	w->Init();
-	weapons.push_back(w);
-	w = new Weapon(ResourceManager::GetInstance().GetWeaponData(ID_WEAPON_STAFF_LVL1), player);
+	Weapon* w = new Weapon(ResourceManager::GetInstance().GetWeaponData(data->defaultWeaponID), player);
 	w->Init();
 	weapons.push_back(w);
 }
@@ -67,7 +62,7 @@ void PlayerManager::Update()
 
 		if (KeyDown('4') && keyDelay <= 0)
 		{
-			keyDelay = 2;
+			keyDelay = 1;
 
 			tmpIdx += 1;
 			if (tmpIdx >= ID_PLAYER_END)
@@ -81,7 +76,79 @@ void PlayerManager::Update()
 
 			for (auto& iter : weapons)
 			{
-				iter->SetPlayer(player);
+				SAFE_DELETE(iter);
+			}
+			weapons.clear();
+
+			Weapon* w = new Weapon(ResourceManager::GetInstance().GetWeaponData(data->defaultWeaponID), player);
+			w->Init();
+			weapons.push_back(w);
+		}
+		if (KeyDown('5') && keyDelay <= 0)
+		{
+			keyDelay = 1;
+
+			bool haveWhip = false;
+			for (auto& iter : weapons)
+			{
+				if (iter->GetWeaponID() == ID_WEAPON_WHIP)
+				{
+					iter->LevelUp();
+					haveWhip = true;
+					break;
+				}
+			}
+
+			if (!haveWhip)
+			{
+				Weapon* w = new Weapon(ResourceManager::GetInstance().GetWeaponData(ID_WEAPON_WHIP), player);
+				w->Init();
+				weapons.push_back(w);
+			}
+		}
+		if (KeyDown('6') && keyDelay <= 0)
+		{
+			keyDelay = 1;
+
+			bool haveGarlic = false;
+			for (auto& iter : weapons)
+			{
+				if (iter->GetWeaponID() == ID_WEAPON_GARLIC)
+				{
+					iter->LevelUp();
+					haveGarlic = true;
+					break;
+				}
+			}
+
+			if (!haveGarlic)
+			{
+				Weapon* w = new Weapon(ResourceManager::GetInstance().GetWeaponData(ID_WEAPON_GARLIC), player);
+				w->Init();
+				weapons.push_back(w);
+			}
+		}
+		if (KeyDown('7') && keyDelay <= 0)
+		{
+			keyDelay = 1;
+
+			bool haveWand = false;
+
+			for (auto& iter : weapons)
+			{
+				if (iter->GetWeaponID() == ID_WEAPON_MAGICWAND)
+				{
+					iter->LevelUp();
+					haveWand = true;
+					break;
+				}
+			}
+
+			if (!haveWand)
+			{
+				Weapon* w = new Weapon(ResourceManager::GetInstance().GetWeaponData(ID_WEAPON_MAGICWAND), player);
+				w->Init();
+				weapons.push_back(w);
 			}
 		}
 
@@ -105,8 +172,15 @@ void PlayerManager::Draw()
 	float xpGauge = 50;
 	squareSprite->DrawStretch(0, 0, xpGauge, 30, 0xff1111ff, false);
 
+
+	//
+	player->Draw();
+
+	DrawInventory();
+}
+void PlayerManager::DrawInventory()
+{
 	//Inventory
-	
 	float x = 0;
 	float y = 32;
 	for (int i = 0; i < 6; ++i)
@@ -114,16 +188,16 @@ void PlayerManager::Draw()
 		squareSprite->DrawStretch(x, y, 30, 30, 0xff000000, false);
 		x += 32;
 	}
-
-	//
-	player->Draw();
-	
 	x = 0;
 
 	for (auto& iter : weapons)
 	{
 		iter->Draw();
 		iter->GetIcon()->DrawStretch(x, y, 30, 30, 0xffffffff, false);
+		char lvl[6];
+		sprintf_s(lvl, "%d", iter->GetLevel());
+
+		dv_font.DrawString(lvl, x, y, 12, 12, 500, 0xffffffff);
 
 		x += 32;
 	}

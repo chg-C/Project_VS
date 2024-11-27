@@ -23,6 +23,7 @@ ResourceManager::~ResourceManager()
 	if (database != nullptr)
 	{
 		sqlite3_close(database);
+		database = nullptr;
 	}
 }
 
@@ -47,17 +48,6 @@ void ResourceManager::InitResources()
 	{
 		LoadWeaponData(i);
 	}
-	//Loading Projectile Datas
-	//LoadProjectileData(ID_EFFECT_WHIP);
-
-	////Loading Animators
-	//LoadAnimator(ID_PLAYER_ANTONIO);
-	//LoadAnimator(ID_ENEMY_BAT);
-	//LoadAnimator(ID_ENEMY_MUDMAN);
-	//LoadAnimator(ID_ENEMY_MUDMAN + 1);
-	////Loading Effects
-	//LoadAnimation(ID_EFFECT_WHIP);
-	
 
 	sqlite3_close(database);
 	database = nullptr;
@@ -244,6 +234,7 @@ PlayerData* ResourceManager::LoadPlayerData(int id)
 			data->attackPower = sqlite3_column_double(stmt, 4);
 			data->moveSpeed = sqlite3_column_double(stmt, 5);
 			data->defense = sqlite3_column_double(stmt, 6);
+			data->defaultWeaponID = sqlite3_column_int(stmt, 7);
 
 			PlayerDataCache.Put(id, data);
 
@@ -337,35 +328,97 @@ WeaponData* ResourceManager::LoadWeaponData(int id)
 			return nullptr;
 		}
 
-
 		if (sqlite3_step(stmt) == SQLITE_ROW)
 		{
-			WeaponType type = (WeaponType)sqlite3_column_int(stmt, 2);
-			if (type == WEAPON_MOVEDIR || type == WEAPON_FOLLOW)
-			{
-				data = new WeaponData_Move();
-				((WeaponData_Move*)data)->speed = sqlite3_column_double(stmt, 7);
-				((WeaponData_Move*)data)->range = sqlite3_column_double(stmt, 8);
-				((WeaponData_Move*)data)->lifetime = sqlite3_column_int(stmt, 9);
-			}
-			else
-			{
-				data = new WeaponData();
-			}
-			data->type = type;
+			//무기 기본 데이터 생성
+			data = new WeaponData();
+
+			data->weaponID = id;
 			data->weaponIcon = new Sprite2();
 			char c[256] = "";
 			strcpy(c, (const char*)sqlite3_column_text(stmt, 1));
 			data->weaponIcon->Create(c, false);
+			WeaponType type = (WeaponType)sqlite3_column_int(stmt, 2);
+			data->type = type;
 			data->projectileID = sqlite3_column_int(stmt, 3);
-			data->damage = sqlite3_column_double(stmt, 4);
-			data->delay = sqlite3_column_double(stmt, 5);
-			data->projectileCount = sqlite3_column_int(stmt, 6);
+			data->maxLevel = sqlite3_column_int(stmt, 4);
 
 			LoadProjectileData(data->projectileID);
 
+			sqlite3_finalize(stmt);
+
+			//무기의 레벨에 따른 데이터 생성
+			sprintf_s(sql, "SELECT * FROM WeaponData_Level where WeaponID = %d", id);
+			if (sqlite3_prepare_v2(database, sql, -1, &stmt, 0) != SQLITE_OK)
+			{
+				SAFE_DELETE(data);
+
+				return nullptr;
+			}
+
+			WeaponStatusData* detailedData = nullptr;
+
+			while (sqlite3_step(stmt) == SQLITE_ROW)
+			{
+				if (data->type == WEAPON_MOVEDIR || data->type == WEAPON_FOLLOW)
+				{
+					detailedData = new WeaponStatusData_Move();
+				}
+				else
+				{
+					detailedData = new WeaponStatusData();
+				}
+
+				detailedData->statID = sqlite3_column_int(stmt, 0);
+				detailedData->baseWeaponID = sqlite3_column_int(stmt, 1);
+				detailedData->level = sqlite3_column_int(stmt, 2);
+				detailedData->damage = sqlite3_column_double(stmt, 3);
+				detailedData->delay = sqlite3_column_double(stmt, 4);
+				detailedData->scale = sqlite3_column_double(stmt, 5);
+				detailedData->projectileCount = sqlite3_column_int(stmt, 6);
+
+				if (data->type == WEAPON_MOVEDIR || data->type == WEAPON_FOLLOW)
+				{
+					((WeaponStatusData_Move*)detailedData)->range = sqlite3_column_double(stmt, 7);
+					((WeaponStatusData_Move*)detailedData)->speed = sqlite3_column_double(stmt, 8);
+					((WeaponStatusData_Move*)detailedData)->lifetime = sqlite3_column_int(stmt, 9);
+				}
+
+				data->stats.push_back(detailedData);
+			}
+
 			WeaponDataCache.Put(id, data);
 		}
+
+
+		//if (sqlite3_step(stmt) == SQLITE_ROW)
+		//{
+		//	WeaponType type = (WeaponType)sqlite3_column_int(stmt, 2);
+		//	if (type == WEAPON_MOVEDIR || type == WEAPON_FOLLOW)
+		//	{
+		//		data = new WeaponStatusData_Move();
+		//		((WeaponStatusData_Move*)data)->speed = sqlite3_column_double(stmt, 7);
+		//		((WeaponStatusData_Move*)data)->range = sqlite3_column_double(stmt, 8);
+		//		((WeaponStatusData_Move*)data)->lifetime = sqlite3_column_int(stmt, 9);
+		//	}
+		//	else
+		//	{
+		//		data = new WeaponData();
+		//	}
+		//	data->type = type;
+		//	data->weaponIcon = new Sprite2();
+		//	char c[256] = "";
+		//	strcpy(c, (const char*)sqlite3_column_text(stmt, 1));
+		//	data->weaponIcon->Create(c, false);
+		//	data->projectileID = sqlite3_column_int(stmt, 3);
+		//	data->damage = sqlite3_column_double(stmt, 4);
+		//	data->delay = sqlite3_column_double(stmt, 5);
+		//	data->projectileCount = sqlite3_column_int(stmt, 6);
+
+		//	LoadProjectileData(data->projectileID);
+
+		//	WeaponDataCache.Put(id, data);
+		//}
 
 		sqlite3_finalize(stmt);
 	}

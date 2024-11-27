@@ -5,6 +5,8 @@
 #include "TextEffect.h"
 #include "Weapon.h"
 
+#include "Score.h"
+
 #include "ResourceManager.h"
 
 EnemyManager::~EnemyManager()
@@ -18,6 +20,8 @@ EnemyManager::~EnemyManager()
 
 void EnemyManager::Init()
 {
+	flagA = true;
+
 	float w = (SCREEN_WITH / 2) * 1.1f;
 	float h = (SCREEN_HEIGHT / 2) * 1.1f;
 
@@ -53,6 +57,8 @@ void EnemyManager::Update()
 		{
 			SAFE_DELETE(*iter);
 			iter = enemies.erase(iter);
+
+			Score::GetInstance().AddKillCount(1);
 
 			continue;
 		}
@@ -99,6 +105,29 @@ void EnemyManager::Spawn()
 			enemies.push_back(enemy);
 		}
 	}
+}
+
+Enemy* EnemyManager::Temp_SpawnBoss()
+{
+	if (flagA)
+	{
+		flagA = false;
+		return SpawnSpecficEnemy(0, 500, ResourceManager::GetInstance().GetEnemyData(ID_ENEMY_MANTIS));
+	}
+	else
+		return nullptr;
+}
+
+Enemy* EnemyManager::SpawnSpecficEnemy(float x, float y, EnemyData* data)
+{
+	float posX = -Camera::GetInstance().GetCamX();
+	float posY = -Camera::GetInstance().GetCamY();
+
+	Enemy* enemy = new Enemy(data, posX + x, posY + y, 1);
+	enemy->Init();
+	enemies.push_back(enemy);
+
+	return enemy;
 }
 
 void EnemyManager::Sort(float x, float y)

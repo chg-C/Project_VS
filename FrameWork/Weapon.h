@@ -10,6 +10,7 @@ class Weapon : public Item
 {
 private:
 	std::list<Projectile*> projectiles;
+
 	const WeaponData* data;
 	const Player* player;
 
@@ -17,6 +18,8 @@ private:
 	float delay;
 
 	bool generating;
+
+	int currentLevel;
 public:
 	Weapon(const WeaponData* data, const Player* player);
 	virtual ~Weapon();
@@ -28,5 +31,9 @@ public:
 	std::list<Projectile*>& GetProjectiles();
 	Sprite2* GetIcon();
 	void SetPlayer(const Player* player);
-};
 
+	void LevelUp();
+	int GetLevel() { return currentLevel; }
+
+	int GetWeaponID() { return data->weaponID; }
+};

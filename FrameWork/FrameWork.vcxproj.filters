@@ -324,6 +324,9 @@
     <ClInclude Include="LoopProjectile.h">
       <Filter>Custom\Game\Objects\Projectile</Filter>
     </ClInclude>
+    <ClInclude Include="Score.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="key.cpp">

@@ -24,7 +24,6 @@ private:
 	bool doCollision;//충돌 처리 여부
 	float timeFlew; //게임 시작후 경과한 시간
 	
-
 	//무한 스크롤 맵
 	Map* map;
 	//플레이어 관리
@@ -36,6 +35,15 @@ private:
 	EffectManager* effectManager;
 	//게임 오버 스크린
 	Sprite2* gameOver;
+	//UI 컴퍼넌트
+	Sprite2* skull;
+	Sprite2* coin;
+
+	//Temp
+	Enemy* temp_Boss;
+
+	bool gameClearing;
+	bool gameClear;
 private:
 	void Init();
 	void Update();

@@ -21,6 +21,8 @@ private:
 	int tmpIdx;
 	float keyDelay;
 	//
+
+	void DrawInventory();
 public:
 	void Init(PlayerData* data);
 	void Update();

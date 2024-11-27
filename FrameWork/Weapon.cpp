@@ -6,7 +6,7 @@
 
 
 Weapon::Weapon(const WeaponData* data, const Player* player)
-	: data(data), player(player), generating(false), projectileCount(0), delay(1)
+	: data(data), player(player), generating(false), projectileCount(0), delay(1), currentLevel(1)
 {
 	
 }
@@ -22,12 +22,12 @@ Weapon::~Weapon()
 
 void Weapon::Init()
 {
-	delay = data->delay;
+	delay = data->stats[(currentLevel - 1)]->delay;//data->delay;
 
 	if (data->type == WEAPON_LOOP)
 	{
 		Projectile* p = new LoopProjectile(ResourceManager::GetInstance().GetAnimation(data->projectileID),
-			data->damage, data->delay, 1.5f, player);
+			data->stats[(currentLevel - 1)]->damage, data->stats[(currentLevel - 1)]->delay, 1.5f * data->stats[(currentLevel - 1)]->scale, player);
 		projectiles.push_back(p);
 	}
 }
@@ -50,16 +50,16 @@ void Weapon::Update(float speed)
 
 					Projectile* proj = new Projectile(ResourceManager::GetInstance().GetAnimation(data->projectileID),
 						player->GetPos().x + (80 * player->GetDirection() * tempDir), player->GetPos().y,
-						player->GetDirection() * tempDir, data->damage, 3.0f, 0.5f);//pos.x + (100 * dir), pos.y, dir, 0.5f);
+						player->GetDirection() * tempDir, data->stats[(currentLevel - 1)]->damage, 3.0f, 0.5f * data->stats[(currentLevel - 1)]->scale);//pos.x + (100 * dir), pos.y, dir, 0.5f);
 					proj->Init();
 					projectiles.push_back(proj);
 					//Projectile* projectile = new Projectile()
 
 					projectileCount++;
 
-					if (projectileCount >= data->projectileCount)
+					if (projectileCount >= data->stats[(currentLevel - 1)]->projectileCount)
 					{
-						delay = data->delay;
+						delay = data->stats[(currentLevel - 1)]->delay;
 						generating = false;
 					}
 					else
@@ -73,20 +73,21 @@ void Weapon::Update(float speed)
 					if (enemy != nullptr)
 					{
 						D3DXVECTOR2 dir = enemy->GetPos() - player->GetPos();
-						if (D3DXVec2Length(&dir) <= ((WeaponData_Move*)data)->range)
+						if (D3DXVec2Length(&dir) <= ((WeaponStatusData_Move*)data->stats[(currentLevel - 1)])->range)
 						{
 
 							Projectile* proj = new MovingProjectile(ResourceManager::GetInstance().GetAnimation(data->projectileID),
-								player->GetPos().x, player->GetPos().y, dir, data->damage,
-								((WeaponData_Move*)data)->range, ((WeaponData_Move*)data)->speed, ((WeaponData_Move*)data)->lifetime);
+								player->GetPos().x, player->GetPos().y, dir, data->stats[(currentLevel - 1)]->damage,
+								((WeaponStatusData_Move*)data->stats[(currentLevel - 1)])->range, ((WeaponStatusData_Move*)data->stats[(currentLevel - 1)])->speed,
+								((WeaponStatusData_Move*)data->stats[(currentLevel - 1)])->lifetime);
 							proj->Init();
 							projectiles.push_back(proj);
 
 							projectileCount++;
 
-							if (projectileCount >= data->projectileCount)
+							if (projectileCount >= data->stats[(currentLevel - 1)]->projectileCount)
 							{
-								delay = data->delay;
+								delay = data->stats[(currentLevel - 1)]->delay;
 								generating = false;
 							}
 							else
@@ -148,4 +149,21 @@ Sprite2* Weapon::GetIcon()
 void Weapon::SetPlayer(const Player* player)
 {
 	this->player = player;
+}
+
+void Weapon::LevelUp()
+{
+	if (currentLevel < data->maxLevel)
+	{
+		++currentLevel;
+
+
+		for (auto& iter : projectiles)
+		{
+			SAFE_DELETE(iter);
+		}
+		projectiles.clear();
+
+		Init();
+	}
 }

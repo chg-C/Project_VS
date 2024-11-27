@@ -145,9 +145,9 @@ void Player::Damage(float dmg)
 	//	return;
 	if (IsAlive())
 	{
-		float dmgCal = dmg - armor;
-		if (dmgCal < 0) dmgCal = 0;
-		currentHP -= dmgCal;
+		float dmgResult = dmg - armor;
+		if (dmgResult < 0) dmgResult = 0;
+		currentHP -= dmgResult;
 
 		if (currentHP <= 0)
 		{
