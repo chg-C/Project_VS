@@ -18,6 +18,14 @@ class Menu : public Chap
 	int curPopUpIdx;
 	int buttonIdx;
 	bool isPopUpOpen;
+	std::string test[12];
+
+	int testX[4] = {50,80,110,140};
+	int testY[3] = { 80,100,120 };
+
+	int xidx;
+	int yidx;
+	int testidx;
 
 	MenuUI UI;
 	UISprite introBG;
@@ -53,5 +61,9 @@ public:
 	void MenuInput();
 	void OptionInput();
 	void PowerInput();
+
+	void HandleKeyInput(int direction);
+
+	void PowerHandle(int direction);
 };
 #endif

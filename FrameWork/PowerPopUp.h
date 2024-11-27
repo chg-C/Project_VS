@@ -28,7 +28,7 @@ struct PowerSlot:public Slot
 	int increaseCost;
 	std::string spritePath;
 	UISprite powerSprite;
-
+	UISprite LevelSprite[2];
 
 	PowerSlot(const std::string& name = "", int curLevel = 0, int maxLevel = 0, int baseCost = 0, int increaseCost = 0)
 		: name(name), curLevel(curLevel), maxLevel(maxLevel), baseCost(baseCost), increaseCost(increaseCost) {}
@@ -54,8 +54,7 @@ struct PowerUI
 {
 	std::vector<UIButton> buttons;
 	std::vector<Slot*> slots;
-	std::unordered_map<int, std::tuple<int, int, int, int>> buttonMap;
-	std::unordered_map<int, std::tuple<int, int, int, int>> slotMap;
+	std::unordered_map<int, std::tuple<int, int, int, int>> UIMap;
 };
 
 class PowerPopUp:public UIPopUp
@@ -68,6 +67,7 @@ class PowerPopUp:public UIPopUp
 
 	UIButton backBtn;
 	PowerUI ui;
+
 public:
 	PowerPopUp();
 	~PowerPopUp();
@@ -75,7 +75,6 @@ public:
 
 	std::unordered_map<int, std::tuple<int, int, int, int>>* GetButtonMap()override;
 	std::vector<UIButton>* GetButtons()override;
-	std::unordered_map<int, std::tuple<int, int, int, int>>* GetSlotMap()override;
 	std::vector<Slot*>* GetSlots()override;
 };
 

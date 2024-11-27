@@ -12,6 +12,8 @@ public:
 	~UIManager() {}
 private:
 	int popupCount=0;
+	bool isButton;
+	bool isSlot;
 	std::map<int, UIPopUp*> popupMap;
 	std::vector<UIButton> buttons;
 	std::unordered_map<int, std::tuple<int, int, int, int>> buttonMap;//buttonIndex, {аб,©Л,╩С,го}
@@ -87,4 +89,24 @@ public:
 		slotMap = newSlotMap;
 	}
 
+
+	bool GetIsButton()
+	{
+		return isButton;
+	}
+	bool GetIsSlot()
+	{
+		return isSlot;
+	}
+
+	void SetIsButton(bool value)
+	{
+		isButton = value;
+		isSlot = !value;
+	}
+	void SetIsSlot(bool value)
+	{
+		isSlot = value;
+		isButton = !value;
+	}
 };
