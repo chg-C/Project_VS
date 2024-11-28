@@ -33,7 +33,7 @@ struct PowerSlot:public Slot
 	PowerSlot(const std::string& name = "", int curLevel = 0, int maxLevel = 0, int baseCost = 0, int increaseCost = 0)
 		: name(name), curLevel(curLevel), maxLevel(maxLevel), baseCost(baseCost), increaseCost(increaseCost) {}
 
-
+	
 	bool Upgrade()
 	{
 		if (curLevel < maxLevel)

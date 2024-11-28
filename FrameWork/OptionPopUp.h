@@ -3,7 +3,6 @@
 #include <unordered_map>
 #include"UIPopUp.h"
 #include"UIButton.h"
-
 struct OptionUI
 {
 	std::vector<UIButton> optionButton;
@@ -23,7 +22,7 @@ class OptionPopUp:public UIPopUp
 public:
 	OptionPopUp();
 	~OptionPopUp();
-	void Init();
+	void Init()override;
 	void RenderElement() override;
 	std::unordered_map<int, std::tuple<int, int, int, int>>* GetButtonMap() override;
 

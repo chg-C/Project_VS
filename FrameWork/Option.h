@@ -4,9 +4,9 @@
 // 옵션 데이터 구조체
 typedef struct {
     float bgmVolume;       // 배경음악 볼륨
-    int isBGMMuted;        // 배경음악 음소거 여부 (0: 해제, 1: 음소거)
-    float soundVolume;     // 사운드 볼륨
-    int isSoundMuted;      // 사운드 음소거 여부 (0: 해제, 1: 음소거)
+    int isBGMMuted;        // 배경음악 음소거 여부 (1: 해제, 0: 음소거)
+    float effectVolume;     // 이펙트 볼륨
+    int isSoundMuted;      // 사운드 음소거 여부 (1: 해제, 0: 음소거)
     int showDamageEffect;  // 대미지 이펙트 출력 여부 (0: 비활성화, 1: 활성화)
 } GameOptions;
 

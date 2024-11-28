@@ -1,14 +1,21 @@
 #include "SoundInterface.h"
-
+#include "Include.h"
 SoundInterface::SoundInterface()
 {
-	m_EffectSound["MenuSelect"] = FmodSoundManager::GetInstance().AddSoundFile("./resource/Sound/MenuSelection.mp3", false);
-	m_EffectSound["Click"] = FmodSoundManager::GetInstance().AddSoundFile("./resource/Sound/Click.mp3", false);
-	m_BackGroundSound["MenuBGM"] = FmodSoundManager::GetInstance().AddSoundFile("./resource/Sound/MenuBGM.mp3", true);
 }
 
 SoundInterface::~SoundInterface()
 {
+}
+
+void SoundInterface::EffectSoundRegister(const char* path,const char* name,bool isLoop)
+{
+	m_EffectSound[name] = FmodSoundManager::GetInstance().AddSoundFile(path, isLoop);
+}
+
+void SoundInterface::BackGroundSoundRegister(const char* path, const char* name, bool isLoop)
+{
+	m_BackGroundSound[name] = FmodSoundManager::GetInstance().AddSoundFile(path, isLoop);
 }
 
 int SoundInterface::GetEffectSoundIndex(const string& soundName)const
@@ -54,4 +61,15 @@ void SoundInterface::StopBackGroundSound(const string& soundName)
 	{
 		FmodSoundManager::GetInstance().BGStop();
 	}
+}
+
+void SoundInterface::Effectmute(bool isMute)
+{
+
+	FmodSoundManager::GetInstance().EffectSetVolum(isMute);
+}
+
+void SoundInterface::BGMute(bool isMute)
+{
+	FmodSoundManager::GetInstance().BGSetVolum(isMute);
 }

@@ -33,7 +33,7 @@ Menu::~Menu()
 
 void Menu::Init()
 {
-	
+
 	count = 0;
 	alpha = 0;
 	introBG.Create("./resource/Img/lobby/introBG.png", false, D3DCOLOR_XRGB(0, 0, 0));
@@ -41,9 +41,6 @@ void Menu::Init()
 	introillust00.Create("./resource/Img/lobby/illustrations_0.png", false, D3DCOLOR_XRGB(0, 0, 0));
 	introillust01.Create("./resource/Img/lobby/illustrations_1.png", false, D3DCOLOR_XRGB(0, 0, 0));
 	introillust02.Create("./resource/Img/lobby/illustrations_2.png", false, D3DCOLOR_XRGB(0, 0, 0));
-
-
-
 
 	UI.menuBtn[0].Init("button_c9");
 	UI.menuBtn[1].Init("button_c9");
@@ -54,8 +51,10 @@ void Menu::Init()
 
 	UIManager::GetInstance().SetButtonMap(UI.buttonMap);
 	UIManager::GetInstance().SetButtons(UI.menuBtn);
-	sound.BackGroundSoundPlay("MenuBGM");
-	
+
+	sound.BackGroundSoundRegister("./resource/Sound/MenuBGM.mp3", "MenuBGM");
+	sound.EffectSoundRegister("./resource/Sound/MenuSelection.mp3", "MenuSelect");
+	//sound.BackGroundSoundPlay("MenuBGM");
 }	
 
 // Chap, 재정의 함수 호출
@@ -84,6 +83,7 @@ void Menu::Draw()
 	}
 	else if (UIManager::GetInstance().GetPopUp(1)->GetIsOpen())
 	{
+		UIManager::GetInstance().GetButtons()[1].SetToggleValue(Option::GetInstance().IsSoundMuted());
 		curPopUp->Draw();
 		curPopUp->RenderElement();
 	}
@@ -200,9 +200,21 @@ void Menu::OnMessage(MSG* msg)
 			case VK_ESCAPE:
 				for (int i = 1; i <= 12; i++)
 					UIManager::GetInstance().GetSlots()[i]->SetSelected(false);
-				ClosePopUp();
+					ClosePopUp();
 				break;
+			case 'a':
+				FmodSoundManager::GetInstance().EffectVolumDown();
+				break;
+			case 's':
+				FmodSoundManager::GetInstance().BGVolumDown();
+				break;
+			case'q':
+				FmodSoundManager::GetInstance().EffectVolumUp();
+				break;
+			case 'w':
+				FmodSoundManager::GetInstance().BGVolumUp();
 			}
+			
 			break;
 		case WM_KEYUP:  // 키를 뗐을 때 처리
 			if (msg->wParam == VK_RETURN)
@@ -311,11 +323,19 @@ void Menu::OptionInput()
 				else if (buttonIdx == 1)
 				{
 					UIManager::GetInstance().GetButtons()[buttonIdx].Clicked();
-					
+					if (Option::GetInstance().IsSoundMuted())
+					{
+						Option::GetInstance().UnmuteSound();
+					}
+					else
+					{
+						Option::GetInstance().MuteSound();
+					}
 				}
 				else if (buttonIdx == 2)
 				{
 					UIManager::GetInstance().GetButtons()[buttonIdx].Clicked();
+					
 				}
 				else if (buttonIdx == 3)
 				{

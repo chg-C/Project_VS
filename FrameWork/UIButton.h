@@ -14,6 +14,8 @@ class UIButton
 	bool isSelected;
 	bool isActivated;
 
+	bool toggleValue;
+
 	std::vector<UISprite> buttonSprite;
 	UISprite curSprite;
 	SelectArrow selectArrow1;
@@ -36,4 +38,6 @@ public:
 	void SetActivated(bool active);
 	void SetClicked(bool value);
 	bool GetIsToggle();
+	bool GetToggleValue();
+	void SetToggleValue(bool value);
 };

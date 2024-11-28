@@ -1,5 +1,5 @@
 #include "FmodSoundManager.h"
-
+#include "Option.h"
 /// <summary>
 /// 사운드 추가
 /// </summary>
@@ -38,13 +38,14 @@ int FmodSoundManager::AddSoundFile(std::string _FullPath, bool _IsLoop)
 /// <param name="_SoundNum"></param>
 void FmodSoundManager::EffectPlay(int _SoundNum)
 {
+	if (Option::GetInstance().IsSoundMuted())
+		return;
 	auto Find = m_SoundList.find(_SoundNum);
 
 	// 만약 이펙트도 볼륨 조절 원하면 클래스 멤버로 빼야함
-	Channel* pChannel = nullptr;
 
 	// playSound(채널그룹, sound, 일시정지니?,채널);
-	m_pSystem->playSound(FMOD_CHANNEL_FREE, Find->second, 0, &pChannel);
+	m_pSystem->playSound(FMOD_CHANNEL_REUSE, Find->second, 0, &m_pEffectChannel);
 }
 
 /// <summary>
@@ -72,30 +73,56 @@ void FmodSoundManager::BGStop()
 /// <summary>
 /// 볼륨 다운
 /// </summary>
-void FmodSoundManager::VolumDown()
+void FmodSoundManager::BGVolumDown()
 {
-	m_volum -= 0.1f;
-	if (m_volum <= 0) m_volum = 0;
-	m_pBGChannel->setVolume(m_volum);
+	m_bgVolum -= 0.1f;
+	if (m_bgVolum <= 0) m_bgVolum = 0;
+	m_pBGChannel->setVolume(m_bgVolum);
 }
 
 /// <summary>
 /// 볼륨 업
 /// </summary>
-void FmodSoundManager::VolumUp()
+void FmodSoundManager::BGVolumUp()
 {
-	m_volum += 0.1f;
-	if (m_volum >= 1.0) m_volum = 1.0;
-	m_pBGChannel->setVolume(m_volum);
+	m_bgVolum += 0.1f;
+	if (m_bgVolum >= 1.0) m_bgVolum = 1.0;
+	m_pBGChannel->setVolume(m_bgVolum);
 }
 
 
-void FmodSoundManager::SetVolum(int volum)
+void FmodSoundManager::BGSetVolum(int volum)
 {
 	if (volum < 0)
-		m_volum = 0;
+		m_bgVolum = 0;
 	else if (volum > 1)
-		m_volum = 1;
+		m_bgVolum = 1;
 	else
-		m_volum = volum;
+		m_bgVolum = volum;
+	m_pBGChannel->setVolume(m_bgVolum);
+}
+
+void FmodSoundManager::EffectVolumDown()
+{
+	m_efVolum -= 0.1f;
+	if (m_efVolum >= 1.0) m_efVolum = 1.0;
+	m_pEffectChannel->setVolume(m_efVolum);
+}
+
+void FmodSoundManager::EffectVolumUp()
+{
+	m_efVolum += 0.1f;
+	if (m_efVolum >= 1.0) m_efVolum = 1.0;
+	m_pEffectChannel->setVolume(m_efVolum);
+}
+
+void FmodSoundManager::EffectSetVolum(int volum)
+{
+	if (volum < 0)
+		m_efVolum = 0;
+	else if (volum > 1)
+		m_efVolum = 1;
+	else
+		m_efVolum = volum;
+	m_pEffectChannel->setVolume(m_efVolum);
 }

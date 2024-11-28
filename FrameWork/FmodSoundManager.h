@@ -19,7 +19,9 @@ private:
 	System* m_pSystem;
 	int			m_Index;
 	Channel* m_pBGChannel;
-	float       m_volum;
+	Channel* m_pEffectChannel;
+	float       m_bgVolum;
+	float		m_efVolum;
 
 	FmodSoundManager()
 	{
@@ -28,8 +30,10 @@ private:
 		m_pSystem->init(10, FMOD_INIT_NORMAL, 0);
 
 		m_Index = 0;
-		m_volum = 1.0f;
-		m_pBGChannel = nullptr;
+		m_bgVolum = 1.0f;
+		m_efVolum = 1.0f;
+ 		m_pBGChannel = nullptr;
+		m_pEffectChannel = nullptr;
 	}
 	~FmodSoundManager()
 	{
@@ -66,10 +70,15 @@ public:
 
 
 	// º¼·ý ´Ù¿î
-	void VolumDown();
+	void BGVolumDown();
 
 	// º¼·ý ¾÷
-	void VolumUp();
+	void BGVolumUp();
 
-	void SetVolum(int volum);
+	void BGSetVolum(int volum);
+
+	void EffectVolumDown();
+	void EffectVolumUp();
+	void EffectSetVolum(int volum);
+
 };

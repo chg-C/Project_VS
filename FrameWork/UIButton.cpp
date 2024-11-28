@@ -9,7 +9,7 @@ UIButton::UIButton(int spriteCount,bool _isSelected,bool _isToggle)
 	buttonSprite.resize(spriteCount);
 	isActivated = true;
 	isClicked = false;
-	spriteIdx = 0;
+	
 }
 
 UIButton::~UIButton()
@@ -18,6 +18,10 @@ UIButton::~UIButton()
 
 void UIButton::Init(const char* _filename)
 {
+	if (!isToggle)
+		spriteIdx = 0;
+	else
+		spriteIdx = toggleValue;
 	for (int i = 0; i < spriteCount; i++)
 	{
 		char filename[50];
@@ -26,38 +30,32 @@ void UIButton::Init(const char* _filename)
 		// 생성한 파일 이름을 사용하여 버튼 이미지를 생성합니다.
 		buttonSprite[i].Create(filename, false, D3DCOLOR_XRGB(0, 0, 0));
 	}
-	curSprite = buttonSprite[spriteIdx];
+	if (!isToggle)
+		curSprite = buttonSprite[spriteIdx];
+	else
+		curSprite = buttonSprite[toggleValue];
+	sound.EffectSoundRegister("./resource/Sound/Click.mp3", "Click");
 }
 
 void UIButton::Clicked()
 {
-	sound.EffectSoundPlay("Click");
+
 	if (!isToggle)
 	{
 		if (spriteCount > 2)
 		{
 			spriteIdx = 2;
-			curSprite = buttonSprite[spriteIdx]; // 클릭 시 클릭된 스프라이트로 변경
 			isClicked = true;           // 클릭 상태 활성화
 		}
 	}
-	else if (isToggle)
-	{
-		if (spriteCount > 1)
-		{
-			if (spriteIdx == 0)
-			{
-				
-				spriteIdx = 1;
-				curSprite = buttonSprite[spriteIdx];
-			}
-			else
-			{
-				spriteIdx = 0;
-				curSprite = buttonSprite[spriteIdx];
-			}
-		}
-	}
+	//else if (isToggle)
+	//{
+	//	if (spriteCount > 1)
+	//	{
+	//		spriteIdx = toggleValue;
+	//	}
+	//}
+	sound.EffectSoundPlay("Click");
 			
 }
 
@@ -69,7 +67,6 @@ void UIButton::UnSelected()
 		if (!isClicked) // 클릭 상태가 아니면 기본 상태로 변경
 		{
 			spriteIdx = 0;
-			curSprite = buttonSprite[spriteIdx];
 		}
 	}
 }
@@ -81,7 +78,6 @@ void UIButton::Selected()
 		if (spriteCount > 1 && !isClicked) // 클릭된 상태가 아니면 선택 상태로 변경
 		{
 			spriteIdx = 1;
-			curSprite = buttonSprite[spriteIdx];
 		}
 	}
 }
@@ -90,6 +86,9 @@ void UIButton::ButtonRender(float x, float y, float radian, float sx, float sy, 
 {
 	if (isActivated)
 	{
+		if (isToggle)
+			spriteIdx = toggleValue;
+		curSprite = buttonSprite[spriteIdx];
 		curSprite.UIRender(x,y,radian,sx,sy,pivotMode,setColor);
 		selectArrow1.Render(x - 20 - (sx / 2), y - 5, 0, 1, 1);
 		selectArrow2.Render(x + 20 + (sx / 2), y - 5, 0, -1, 1);
@@ -151,4 +150,14 @@ void UIButton::SetClicked(bool value)
 bool UIButton::GetIsToggle()
 {
 	return isToggle;
+}
+
+bool UIButton::GetToggleValue()
+{
+	return toggleValue;
+}
+
+void UIButton::SetToggleValue(bool val)
+{
+	toggleValue = val;
 }
