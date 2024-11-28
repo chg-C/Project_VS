@@ -146,13 +146,11 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="Bird.h" />
     <ClInclude Include="Cache.h" />
     <ClInclude Include="Camera.h" />
     <ClInclude Include="Chap.h" />
     <ClInclude Include="Character.h" />
     <ClInclude Include="CMng.h" />
-    <ClInclude Include="Collider.h" />
     <ClInclude Include="CustomDefine.h" />
     <ClInclude Include="CustomInclude.h" />
     <ClInclude Include="Define.h" />
@@ -174,7 +172,6 @@
     <ClInclude Include="Map.h" />
     <ClInclude Include="Menu.h" />
     <ClInclude Include="MovingProjectile.h" />
-    <ClInclude Include="Mysql.h" />
     <ClInclude Include="Option.h" />
     <ClInclude Include="OptionPopUp.h" />
     <ClInclude Include="Over.h" />
@@ -204,9 +201,7 @@
     <ClInclude Include="Weapon.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Bird.cpp" />
     <ClCompile Include="CMng.cpp" />
-    <ClCompile Include="Collider.cpp" />
     <ClCompile Include="DXUTsound.cpp" />
     <ClCompile Include="DeviceFont.cpp" />
     <ClCompile Include="EffectManager.cpp" />
@@ -223,7 +218,6 @@
     <ClCompile Include="Map.cpp" />
     <ClCompile Include="Menu.cpp" />
     <ClCompile Include="MovingProjectile.cpp" />
-    <ClCompile Include="Mysql.cpp" />
     <ClCompile Include="OptionPopUp.cpp" />
     <ClCompile Include="Over.cpp" />
     <ClCompile Include="Player.cpp" />

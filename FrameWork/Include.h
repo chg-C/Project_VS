@@ -63,16 +63,11 @@
 #include "Key.h"
 #include "Sound.h"
 
-#include "Bird.h"
 #include "Player.h"
 #include "Camera.h"
-#include "Collider.h"
 
 #include "GameManager.h"
 #include "UIManager.h"
-// 데이타 베이스///////////////////
-#include "Mysql.h"
-
 /* ---------------------------------------------------
 ///////////////// 사용자 추가 파일 ///////////////////
 
