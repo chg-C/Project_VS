@@ -5,16 +5,16 @@
 using std::vector;
 
 
-struct SpriteData
+struct AnimationClip
 {
-	SpriteData() 
+	AnimationClip() 
 	{
 	}
-	SpriteData(const SpriteData& other)
+	AnimationClip(const AnimationClip& other)
 	{
 		sprite = new Sprite2(*other.sprite);
 
-		willCollide = other.willCollide;
+		hasCollision = other.hasCollision;
 
 		width = other.width;
 		height = other.height;
@@ -22,7 +22,7 @@ struct SpriteData
 
 		nextAnimDelay = other.nextAnimDelay;
 	}
-	~SpriteData()
+	~AnimationClip()
 	{
 		if (sprite != nullptr)
 		{
@@ -31,7 +31,7 @@ struct SpriteData
 		}
 	}
 
-	bool willCollide;
+	bool hasCollision;
 
 	float width;
 	float height;
@@ -65,7 +65,7 @@ private:
 	int currentIndex;
 
 	float currentTime;
-	vector<SpriteData*> sprites;
+	vector<AnimationClip*> sprites;
 public:
 	void Init();
 	void Update(float speed = 1);
@@ -76,11 +76,11 @@ public:
 		currentTime = 0;
 	}
 
-	void Push(SpriteData* data)
+	void Push(AnimationClip* data)
 	{
 		sprites.push_back(data);
 	}
 
 	bool IsEnd() { return currentIndex >= sprites.size()-1; }
-	const SpriteData* GetCurrentSpriteData() { return sprites[currentIndex]; }
+	const AnimationClip* GetCurrentSpriteData() { return sprites[currentIndex]; }
 };

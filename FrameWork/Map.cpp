@@ -2,7 +2,7 @@
 #include "CustomDefine.h"
 
 Map::Map()
-	:bg_width(1024), bg_height(1024)
+	:bg_width(1024), bg_height(1024), map(nullptr)
 {
 	m_Stage = 1;
 }
@@ -14,11 +14,18 @@ Map::~Map()
 
 void Map::Init(const char* fileName)
 {
+	if (map != nullptr)
+	{
+		SAFE_DELETE(map);
+	}
+
+	map = new Sprite2();
+
 	char FileName[256];
 	
 	sprintf_s(FileName, fileName);
 
-	map.Create(FileName, false, 0);
+	map->Create(FileName, false, 0);
 	/*for (int i = 0; i < 4; ++i)
 	{
 		map[i].Create(FileName, false, 0);
@@ -82,5 +89,5 @@ void Map::Draw()
 void Map::DrawMapBlock(float x, float y)
 {
 	//Camera 대신 자체 Scroll 값 사용
-	map.RenderStretch(x+scrollX, y+scrollY, bg_width * 2, bg_height * 2, 1, 1, 0xffffffff, false, 0, PIVOT_CENTER);
+	map->RenderStretch(x+scrollX, y+scrollY, bg_width * 2, bg_height * 2, 1, 1, 0xffffffff, false, 0, PIVOT_CENTER);
 }

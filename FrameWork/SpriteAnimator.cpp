@@ -36,7 +36,7 @@ void SpriteAnimator::Update(float speed)
     animations[currentKey]->Update(speed);
 }
 
-const SpriteData* SpriteAnimator::GetCurrentSpriteData()
+const AnimationClip* SpriteAnimator::GetCurrentSpriteData()
 {
     return animations[currentKey]->GetCurrentSpriteData();
 }

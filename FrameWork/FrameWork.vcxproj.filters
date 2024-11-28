@@ -96,6 +96,8 @@
     </Filter>
     <Filter Include="소스 파일\UI\UIElement">
       <UniqueIdentifier>{39baa81c-4f6e-4ede-b0dc-1a8ebd100b84}</UniqueIdentifier>
+    <Filter Include="Custom\Game\Objects\Projectile">
+      <UniqueIdentifier>{8274ce8c-9733-4b7e-8d15-e8a70b6e596b}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -207,9 +209,6 @@
     <ClInclude Include="Player.h">
       <Filter>Custom\Game\Objects\Character</Filter>
     </ClInclude>
-    <ClInclude Include="Projectile.h">
-      <Filter>Custom\Game\Objects\Effect</Filter>
-    </ClInclude>
     <ClInclude Include="SpriteEffect.h">
       <Filter>Custom\Game\Objects\Effect</Filter>
     </ClInclude>
@@ -255,9 +254,6 @@
     <ClInclude Include="Player.h">
       <Filter>Custom\Game\Objects\Character</Filter>
     </ClInclude>
-    <ClInclude Include="Projectile.h">
-      <Filter>Custom\Game\Objects\Effect</Filter>
-    </ClInclude>
     <ClInclude Include="SpriteEffect.h">
       <Filter>Custom\Game\Objects\Effect</Filter>
     </ClInclude>
@@ -288,29 +284,32 @@
     <ClInclude Include="Option.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
+    <ClInclude Include="CustomInclude.h">
+      <Filter>Custom\CustomDefine</Filter>
+    </ClInclude>
     <ClInclude Include="ResourceManager.h">
+      <Filter>Custom</Filter>
+    </ClInclude>
+    <ClInclude Include="Projectile.h">
+      <Filter>Custom\Game\Objects\Projectile</Filter>
+    </ClInclude>
+    <ClInclude Include="FieldItemManager.h">
+      <Filter>Custom\Game\GameManager\SubManagers</Filter>
+    </ClInclude>
+    <ClInclude Include="Projectile.h">
+      <Filter>Custom\Game\Objects\Projectile</Filter>
+    </ClInclude>
+    <ClInclude Include="MovingProjectile.h">
+      <Filter>Custom\Game\Objects\Projectile</Filter>
+    </ClInclude>
+    <ClInclude Include="Weapon.h">
+      <Filter>Custom\Game\Objects\Items</Filter>
+    </ClInclude>
+    <ClInclude Include="LoopProjectile.h">
+      <Filter>Custom\Game\Objects\Projectile</Filter>
+    </ClInclude>
+    <ClInclude Include="Score.h">
       <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="UIButton.h">
-      <Filter>소스 파일\UI\UIElement</Filter>
-    </ClInclude>
-    <ClInclude Include="UIPopUp.h">
-      <Filter>소스 파일\UI\PopUP</Filter>
-    </ClInclude>
-    <ClInclude Include="SelectArrow.h">
-      <Filter>소스 파일\UI\UIElement</Filter>
-    </ClInclude>
-    <ClInclude Include="UISprite.h">
-      <Filter>소스 파일\UI</Filter>
-    </ClInclude>
-    <ClInclude Include="Slot.h">
-      <Filter>소스 파일\UI\UIElement</Filter>
-    </ClInclude>
-    <ClInclude Include="UIButton.h">
-      <Filter>소스 파일\UI\UIElement</Filter>
-    </ClInclude>
-    <ClInclude Include="SelectArrow.h">
-      <Filter>소스 파일\UI\UIElement</Filter>
     </ClInclude>
     <ClInclude Include="FmodSoundManager.h">
       <Filter>소스 파일\Sound</Filter>
@@ -395,9 +394,6 @@
     <ClCompile Include="Player.cpp">
       <Filter>Custom\Game\Objects\Character</Filter>
     </ClCompile>
-    <ClCompile Include="Projectile.cpp">
-      <Filter>Custom\Game\Objects\Effect</Filter>
-    </ClCompile>
     <ClCompile Include="EnemyManager.cpp">
       <Filter>Custom\Game\GameManager\SubManagers</Filter>
     </ClCompile>
@@ -427,9 +423,6 @@
     </ClCompile>
     <ClCompile Include="Player.cpp">
       <Filter>Custom\Game\Objects\Character</Filter>
-    </ClCompile>
-    <ClCompile Include="Projectile.cpp">
-      <Filter>Custom\Game\Objects\Effect</Filter>
     </ClCompile>
     <ClCompile Include="EnemyManager.cpp">
       <Filter>Custom\Game\GameManager\SubManagers</Filter>
@@ -476,6 +469,28 @@
     <ClCompile Include="UIButton.cpp">
       <Filter>소스 파일\UI\UIElement</Filter>
     </ClCompile>
+      <Filter>Custom</Filter>
+    </ClCompile>
+    <ClCompile Include="Projectile.cpp">
+      <Filter>Custom\Game\Objects\Projectile</Filter>
+    </ClCompile>
+    <ClCompile Include="Item.cpp">
+      <Filter>Custom\Game\Objects\Items</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerManager.cpp">
+      <Filter>Custom\Game\GameManager\SubManagers</Filter>
+    </ClCompile>
+    <ClCompile Include="Projectile.cpp">
+      <Filter>Custom\Game\Objects\Projectile</Filter>
+    </ClCompile>
+    <ClCompile Include="MovingProjectile.cpp">
+      <Filter>Custom\Game\Objects\Projectile</Filter>
+    </ClCompile>
+    <ClCompile Include="Weapon.cpp">
+      <Filter>Custom\Game\Objects\Items</Filter>
+    </ClCompile>
+    <ClCompile Include="LoopProjectile.cpp">
+      <Filter>Custom\Game\Objects\Projectile</Filter>
     <ClCompile Include="FmodSoundManager.cpp">
       <Filter>소스 파일\Sound</Filter>
     </ClCompile>

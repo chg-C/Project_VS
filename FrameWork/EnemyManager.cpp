@@ -1,7 +1,11 @@
 #include "Include.h"
 
+#include "PlayerManager.h"
 #include "EnemyManager.h"
 #include "TextEffect.h"
+#include "Weapon.h"
+
+#include "Score.h"
 
 #include "ResourceManager.h"
 
@@ -16,6 +20,8 @@ EnemyManager::~EnemyManager()
 
 void EnemyManager::Init()
 {
+	flagA = true;
+
 	float w = (SCREEN_WITH / 2) * 1.1f;
 	float h = (SCREEN_HEIGHT / 2) * 1.1f;
 
@@ -51,6 +57,8 @@ void EnemyManager::Update()
 		{
 			SAFE_DELETE(*iter);
 			iter = enemies.erase(iter);
+
+			Score::GetInstance().AddKillCount(1);
 
 			continue;
 		}
@@ -90,11 +98,36 @@ void EnemyManager::Spawn()
 			float r1 = 1 + ((rand() % 250) / 1000.0f);
 			float r2 = 1 + ((rand() % 250) / 1000.0f);
 
-			Enemy* enemy = new Enemy(ResourceManager::GetInstance().GetEnemyData(rand()%2), posX + (iter.x * r1), posY + (iter.y * r2), randomScale);
+			int enemyIdx = ID_ENEMY_BEGIN + 1 + (rand() % 2);
+
+			Enemy* enemy = new Enemy(ResourceManager::GetInstance().GetEnemyData(enemyIdx), posX + (iter.x * r1), posY + (iter.y * r2), randomScale);
 			enemy->Init();
 			enemies.push_back(enemy);
 		}
 	}
+}
+
+Enemy* EnemyManager::Temp_SpawnBoss()
+{
+	if (flagA)
+	{
+		flagA = false;
+		return SpawnSpecficEnemy(0, 500, ResourceManager::GetInstance().GetEnemyData(ID_ENEMY_MANTIS));
+	}
+	else
+		return nullptr;
+}
+
+Enemy* EnemyManager::SpawnSpecficEnemy(float x, float y, EnemyData* data)
+{
+	float posX = -Camera::GetInstance().GetCamX();
+	float posY = -Camera::GetInstance().GetCamY();
+
+	Enemy* enemy = new Enemy(data, posX + x, posY + y, 1);
+	enemy->Init();
+	enemies.push_back(enemy);
+
+	return enemy;
 }
 
 void EnemyManager::Sort(float x, float y)
@@ -113,11 +146,11 @@ void EnemyManager::Sort(float x, float y)
 			return distA < distB;
 		});
 }
-void EnemyManager::CheckCollision(Player* player)
+void EnemyManager::CheckCollision(PlayerManager* player)
 {
 	D3DXVECTOR2 velocity;
 	D3DXVECTOR2 enemyPos;
-	D3DXVECTOR2 playerPos = player->GetPos();
+	D3DXVECTOR2 playerPos = player->GetPlayerPos();
 	bool kb = false;
 	float knockbackPower = 10;
 	char dmgText[6] = "";
@@ -125,7 +158,7 @@ void EnemyManager::CheckCollision(Player* player)
 	{
 		enemyPos = iter->GetPos();
 
-		if (Camera::GetInstance().IsOutOfScreen(enemyPos.x, enemyPos.y, 500))
+		if (Camera::GetInstance().IsOutOfScreen(enemyPos.x, enemyPos.y, 500)) //플레이 화면 바깥으로 너무 멀리 갔다면 반대 방향으로
 		{
 			iter->Move(velocity.x, velocity.y);
 
@@ -156,35 +189,38 @@ void EnemyManager::CheckCollision(Player* player)
 		{
 			kb = false;
 			//플레이어 소유 투사체와 충돌 체크
-			for (auto& proj : player->projectiles)
+			for (auto& weapon : player->GetWeapons())
 			{
-				if (!proj->finished && proj->CanCollide(iter))
+				for (auto& proj : weapon->GetProjectiles())
 				{
-					if (IsColliding(proj->GetCollider(), iter->GetCollider()))
+					if (!proj->finished && proj->CanCollide(iter))
 					{
-						iter->Damage(proj->GetDamage());
-						proj->collidedList.push_back(Collided(500, iter));
-						//
-						if (Option::GetInstance().WillDamageEffect())
+						if (IsColliding(proj->GetCollider(), iter->GetCollider()))
 						{
-							sprintf_s(dmgText, "%d", (int)proj->GetDamage());
-							TextEffect* te = new TextEffect(iter->GetPos().x, iter->GetPos().y, 1, dmgText, 0.5f);
-							GameManager::GetInstance().RegisterEffect(te);
-						}
-						//
-						kb = true;
+							iter->Damage(proj->GetDamage());
+							proj->Collide(iter);
+							//
+							if (Option::GetInstance().WillDamageEffect())
+							{
+								sprintf_s(dmgText, "%d", (int)proj->GetDamage());
+								TextEffect* te = new TextEffect(iter->GetPos().x, iter->GetPos().y, 1, dmgText, 0.5f);
+								GameManager::GetInstance().RegisterEffect(te);
+							}
+							//
+							kb = true;
 
-						velocity.x = iter->GetPos().x - playerPos.x;
-						velocity.y = iter->GetPos().y - playerPos.y;
-						D3DXVec2Normalize(&velocity, &velocity);
-						velocity *= knockbackPower;
+							velocity.x = iter->GetPos().x - playerPos.x;
+							velocity.y = iter->GetPos().y - playerPos.y;
+							D3DXVec2Normalize(&velocity, &velocity);
+							velocity *= knockbackPower;
+						}
 					}
 				}
 			}
 			//넉백중이 아니라면 캐릭터 간 충돌 체크
 			if (!kb)
 			{
-				velocity = CheckEnemyCollision(player, iter);
+				velocity = CheckEnemyCollision(player->GetPlayer(), iter);
 			}
 			//마지막으로 이동 처리
 			iter->Move(velocity.x, velocity.y);
@@ -204,7 +240,6 @@ D3DXVECTOR2 EnemyManager::CheckEnemyCollision(Player* player, Enemy* enemy)
 		//그냥 밀어버리기
 		direction = enemy->GetPos() - player->GetPos();
 		D3DXVec2Normalize(&direction, &direction);
-		direction *= 2;
 		velocity = direction;
 
 		knockback = true;

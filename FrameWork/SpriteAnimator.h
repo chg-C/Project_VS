@@ -41,5 +41,5 @@ public:
 		}
 	}
 
-	const SpriteData* GetCurrentSpriteData();
+	const AnimationClip* GetCurrentSpriteData();
 };

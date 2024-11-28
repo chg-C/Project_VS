@@ -1,14 +1,15 @@
 #include "Include.h"
 #include "Projectile.h"
 
-Projectile::Projectile(SpriteAnimation* sprites, float x, float y, int dir, float scale)
-	: SpriteEffect(sprites, x, y, scale), dir(dir), damage(8)
+Projectile::Projectile(SpriteAnimation* sprites, float x, float y, int dir, float damage, float cooldown, float scale)
+	: SpriteEffect(sprites, x, y, scale), dir(dir), damage(damage), cooldown(cooldown)
 {
 	this->sprites = new SpriteAnimation(*sprites);
 }
 
 Projectile::~Projectile()
 {
+	collidedList.clear();
 }
 
 void Projectile::Init()
@@ -42,12 +43,20 @@ void Projectile::Draw()
 
 bool Projectile::CanCollide(Enemy* enemy)
 {
+	if (!sprites->GetCurrentSpriteData()->hasCollision)
+		return false;
+
 	for (auto& iter : collidedList)
 	{
 		if (iter.enemy == enemy)
 			return false;
 	}
 	return true;
+}
+
+void Projectile::Collide(Enemy* enemy)
+{
+	collidedList.push_back(Collided(cooldown, enemy));
 }
 
 float Projectile::GetDamage()

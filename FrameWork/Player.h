@@ -16,23 +16,20 @@ class Player : public Character
 	float moveSpeed;
 	float armor;
 
-	bool moving;
-
 	int dir = 1;
-
-	SpriteAnimation* attackEffectTemplate;
 
 	DWORD playerColor;
 	int alpha = 0xff;
 
-	float attackCooldown;
-
 	Sprite2* squareSprite;
+
+	char name[64];
 public :
 	Player(PlayerData* data);
 	~Player();
 
-	std::list<Projectile*> projectiles;
+	int GetDirection() const { return dir; }
+	virtual void SetVelocity(D3DXVECTOR2 velocity);
 
 	virtual void Init();
 	virtual void Update();
@@ -42,4 +39,6 @@ public :
 
 	virtual void Move(float x, float y);
 	virtual void Damage(float dmg);
+
+	const char* GetName() { return name; }
 };

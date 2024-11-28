@@ -154,7 +154,9 @@
     <ClInclude Include="CMng.h" />
     <ClInclude Include="Collider.h" />
     <ClInclude Include="CustomDefine.h" />
+    <ClInclude Include="CustomInclude.h" />
     <ClInclude Include="Define.h" />
+    <ClInclude Include="FieldItemManager.h" />
     <ClInclude Include="DXUTsound.h" />
     <ClInclude Include="DeviceFont.h" />
     <ClInclude Include="Effect.h" />
@@ -168,8 +170,10 @@
     <ClInclude Include="Item.h" />
     <ClInclude Include="key.h" />
     <ClInclude Include="Logo.h" />
+    <ClInclude Include="LoopProjectile.h" />
     <ClInclude Include="Map.h" />
     <ClInclude Include="Menu.h" />
+    <ClInclude Include="MovingProjectile.h" />
     <ClInclude Include="Mysql.h" />
     <ClInclude Include="Option.h" />
     <ClInclude Include="OptionPopUp.h" />
@@ -180,6 +184,7 @@
     <ClInclude Include="Projectile.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="ResourceManager.h" />
+    <ClInclude Include="Score.h" />
     <ClInclude Include="Singleton.h" />
     <ClInclude Include="SelectArrow.h" />
     <ClInclude Include="Slot.h" />
@@ -196,6 +201,7 @@
     <ClInclude Include="UIManager.h" />
     <ClInclude Include="UIPopUp.h" />
     <ClInclude Include="UISprite.h" />
+    <ClInclude Include="Weapon.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Bird.cpp" />
@@ -209,15 +215,19 @@
     <ClCompile Include="FmodSoundManager.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="GameManager.cpp" />
+    <ClCompile Include="Item.cpp" />
     <ClCompile Include="key.cpp" />
     <ClCompile Include="Logo.cpp" />
+    <ClCompile Include="LoopProjectile.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="Map.cpp" />
     <ClCompile Include="Menu.cpp" />
+    <ClCompile Include="MovingProjectile.cpp" />
     <ClCompile Include="Mysql.cpp" />
     <ClCompile Include="OptionPopUp.cpp" />
     <ClCompile Include="Over.cpp" />
     <ClCompile Include="Player.cpp" />
+    <ClCompile Include="PlayerManager.cpp" />
     <ClCompile Include="PowerPopUp.cpp" />
     <ClCompile Include="Projectile.cpp" />
     <ClCompile Include="ResourceManager.cpp" />
@@ -234,6 +244,7 @@
     <ClCompile Include="UIButton.cpp" />
     <ClCompile Include="UIPopUp.cpp" />
     <ClCompile Include="UISprite.cpp" />
+    <ClCompile Include="Weapon.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="FrameWork.rc" />

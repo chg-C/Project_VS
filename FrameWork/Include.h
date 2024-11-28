@@ -15,9 +15,9 @@
 
 // 데이타 베이스///////////////////
 //#include <my_global.h>
-#include <winsock2.h>
-#include <mysql.h>
-#pragma comment(lib, "libmySQL.lib")
+//#include <winsock2.h>
+//#include <mysql.h>
+//#pragma comment(lib, "libmySQL.lib")
 
 //////////////////////////////////
 
