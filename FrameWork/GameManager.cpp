@@ -94,6 +94,7 @@ void GameManager::Update()
 			if (playerManager->IsPlaying())
 			{
 				timeFlew += TIME;
+				Score::GetInstance().SetTimeFlew(timeFlew);
 
 				if (temp_Boss != nullptr)
 				{
@@ -189,14 +190,14 @@ void GameManager::Draw()
 			dv_font.DrawString(debug, 15, 300);
 
 			dv_font.DrawString("채찍 아이템 획득(5)", 15, 350);
-			dv_font.DrawString("마늘 아이템 획득(6)", 15, 365);
-			dv_font.DrawString("지팡이 아이템 획득(7)", 15, 380);
+			dv_font.DrawString("마늘 아이템 획득(6)", 15, 380);
+			dv_font.DrawString("지팡이 아이템 획득(7)", 15, 400);
 
 			dv_font.DrawString("보스 생성하기(0)", 15, 450);
 		}
 
 		dv_font.DrawString("F1 - 디버그 키 표시하기", 15, 500);
-		dv_font.DrawString("WASD 혹은 방향키 - 이동", 15, 550, 0xffffffff);
+		dv_font.DrawString("WASD 혹은 방향키 - 이동", 15, 550, 16, 8, 500, 0xffffffff);
 	}
 	else
 	{

@@ -1,6 +1,7 @@
 #ifndef __Game_H__
 #define __Game_H__
 
+#include"SoundInterface.h"
 class Game : public Chap
 {
 public:
@@ -13,6 +14,10 @@ public:
 	virtual void Draw();
 
 	virtual void OnMessage(MSG* msg);
+
+	virtual void OnSwitched();
+private:
+	SoundInterface sound;
 };
 
 #endif

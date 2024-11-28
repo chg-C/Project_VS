@@ -22,6 +22,7 @@ void Game::Init()
 	GameManager::GetInstance().Init();
 	// 데이타 베이스///////////////////
 	//sql.Init();
+	//sound.
 }
 
 void Game::Draw()
@@ -67,4 +68,9 @@ void Game::Update(double frame)
 }
 void Game::OnMessage( MSG* msg )
 {
+}
+
+void Game::OnSwitched()
+{
+	//sound.BackGroundSoundPlay("GameStage1");
 }
