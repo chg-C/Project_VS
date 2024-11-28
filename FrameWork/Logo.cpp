@@ -55,7 +55,7 @@ void Logo::Update(double frame)
 	alpha += speed * frame / factor;
 
 	if(alpha >= 254) {
-		 g_Mng.n_Chap = MENU;
+		g_Mng.SwitchChapter(MENU);
 	}	
 }
 

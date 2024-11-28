@@ -123,13 +123,13 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPTSTR lpCmdL
 			while( GetTickCount64() > next_game_tick && loops < MAX_FRAMESKIP) 
 			{
 				interpolation = float(GetTickCount64() + SKIP_TICKS - next_game_tick ) / float( SKIP_TICKS );
-				/*if(GameManager::GetInstance().IsPause() == false) */g_Mng.chap[g_Mng.n_Chap]->Update(interpolation);
+				/*if(GameManager::GetInstance().IsPause() == false) */g_Mng.GetCurrentChapter()->Update(interpolation);
 				//if(b == false)
 				//{
 				//	aa = interpolation;
 				//	b = true;
 				//}
-				g_Mng.chap[g_Mng.n_Chap]->OnMessage(&msg);
+				g_Mng.GetCurrentChapter()->OnMessage(&msg);
 				next_game_tick += SKIP_TICKS;
 				loops++;
 			}
@@ -140,7 +140,7 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPTSTR lpCmdL
 			dv_font.Device9->Clear(0, NULL, D3DCLEAR_TARGET, D3DCOLOR_XRGB(255, 255, 255), 0, 0);
 
 
-			g_Mng.chap[g_Mng.n_Chap]->Draw();
+			g_Mng.GetCurrentChapter()->Draw();
 
 			dv_font.Device9->EndScene();
 			dv_font.Device9->Present(NULL, NULL, NULL, NULL);

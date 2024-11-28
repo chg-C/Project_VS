@@ -270,8 +270,6 @@ void Key::Update()
 	{
 		if(GetTickCount64() - KeyTime1 > 10)
 		{
-			bird.x -= 1.5f;
-			bird.dir = 1;
 			KeyTime1 = GetTickCount64();
 		}
 	}
@@ -281,8 +279,6 @@ void Key::Update()
 
 		if(GetTickCount64() - KeyTime1 > 10)
 		{
-			bird.x += 1.5f;
-			bird.dir = -1;
 			KeyTime1 = GetTickCount64();
 		}
 		
@@ -293,7 +289,6 @@ void Key::Update()
 	{
 		if(GetTickCount64() - KeyTime3 > 10)
 		{	
-			bird.y -= 1.5f;
 			KeyTime3 = GetTickCount64();
 		}
 		
@@ -304,8 +299,6 @@ void Key::Update()
 
 		if(GetTickCount64() - KeyTime3 > 10)
 		{
-			
-			bird.y += 1.5f;
 			KeyTime3 = GetTickCount64();
 		}
 		
