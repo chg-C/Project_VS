@@ -191,6 +191,8 @@ void GameManager::Draw()
 			dv_font.DrawString("Ã¤Âï ¾ÆÀÌÅÛ È¹µæ(5)", 15, 350);
 			dv_font.DrawString("¸¶´Ã ¾ÆÀÌÅÛ È¹µæ(6)", 15, 365);
 			dv_font.DrawString("ÁöÆÎÀÌ ¾ÆÀÌÅÛ È¹µæ(7)", 15, 380);
+
+			dv_font.DrawString("º¸½º »ý¼ºÇÏ±â(0)", 15, 450);
 		}
 
 		dv_font.DrawString("F1 - µð¹ö±× Å° Ç¥½ÃÇÏ±â", 15, 500);
@@ -198,7 +200,7 @@ void GameManager::Draw()
 	}
 	else
 	{
-		gameOver->DrawStretch(0, 0, SCREEN_WITH, SCREEN_HEIGHT, 0x66ffffff, false);
+		gameOver->DrawStretch(0, 0, SCREEN_WITH, SCREEN_HEIGHT, 0x88ffffff, false);
 		dv_font.DrawString("GAME OVER", 420, 300, 25, 12, 500, 0xffff0000);
 	}
 }
