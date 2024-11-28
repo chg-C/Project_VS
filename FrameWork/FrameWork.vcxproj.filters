@@ -312,6 +312,12 @@
     <ClInclude Include="SelectArrow.h">
       <Filter>소스 파일\UI\UIElement</Filter>
     </ClInclude>
+    <ClInclude Include="FmodSoundManager.h">
+      <Filter>소스 파일\Sound</Filter>
+    </ClInclude>
+    <ClInclude Include="SoundInterface.h">
+      <Filter>소스 파일\Sound</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="key.cpp">
@@ -450,9 +456,6 @@
       <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="UIButton.cpp">
-      <Filter>소스 파일\UI</Filter>
-    </ClCompile>
-    <ClCompile Include="UIButton.cpp">
       <Filter>소스 파일\UI\UIElement</Filter>
     </ClCompile>
     <ClCompile Include="UIPopUp.cpp">
@@ -469,6 +472,15 @@
     </ClCompile>
     <ClCompile Include="SelectArrow.cpp">
       <Filter>소스 파일\UI\UIElement</Filter>
+    </ClCompile>
+    <ClCompile Include="UIButton.cpp">
+      <Filter>소스 파일\UI\UIElement</Filter>
+    </ClCompile>
+    <ClCompile Include="FmodSoundManager.cpp">
+      <Filter>소스 파일\Sound</Filter>
+    </ClCompile>
+    <ClCompile Include="SoundInterface.cpp">
+      <Filter>소스 파일\Sound</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

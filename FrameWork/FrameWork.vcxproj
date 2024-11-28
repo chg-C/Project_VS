@@ -161,6 +161,7 @@
     <ClInclude Include="EffectManager.h" />
     <ClInclude Include="Enemy.h" />
     <ClInclude Include="EnemyManager.h" />
+    <ClInclude Include="FmodSoundManager.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="GameManager.h" />
     <ClInclude Include="Include.h" />
@@ -183,6 +184,7 @@
     <ClInclude Include="SelectArrow.h" />
     <ClInclude Include="Slot.h" />
     <ClInclude Include="Sound.h" />
+    <ClInclude Include="SoundInterface.h" />
     <ClInclude Include="Sprite.h" />
     <ClInclude Include="Sprite2.h" />
     <ClInclude Include="SpriteAnimation.h" />
@@ -204,6 +206,7 @@
     <ClCompile Include="EffectManager.cpp" />
     <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="EnemyManager.cpp" />
+    <ClCompile Include="FmodSoundManager.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="GameManager.cpp" />
     <ClCompile Include="key.cpp" />
@@ -220,6 +223,7 @@
     <ClCompile Include="ResourceManager.cpp" />
     <ClCompile Include="SelectArrow.cpp" />
     <ClCompile Include="Sound.cpp" />
+    <ClCompile Include="SoundInterface.cpp" />
     <ClCompile Include="Sprite.cpp" />
     <ClCompile Include="Sprite2.cpp" />
     <ClCompile Include="SpriteAnimation.cpp" />

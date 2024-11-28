@@ -2,6 +2,7 @@
 #include "UISprite.h"
 #include "SelectArrow.h"
 #include <vector>
+#include "SoundInterface.h"
 class UIButton
 {
 	int buttonId;
@@ -17,6 +18,8 @@ class UIButton
 	UISprite curSprite;
 	SelectArrow selectArrow1;
 	SelectArrow selectArrow2;
+
+	SoundInterface sound;
 
 public:
 	UIButton(int spriteCount, bool _isSelected, bool isToggle = false);

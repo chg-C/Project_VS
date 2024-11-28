@@ -33,6 +33,7 @@ Menu::~Menu()
 
 void Menu::Init()
 {
+	
 	count = 0;
 	alpha = 0;
 	introBG.Create("./resource/Img/lobby/introBG.png", false, D3DCOLOR_XRGB(0, 0, 0));
@@ -40,13 +41,10 @@ void Menu::Init()
 	introillust00.Create("./resource/Img/lobby/illustrations_0.png", false, D3DCOLOR_XRGB(0, 0, 0));
 	introillust01.Create("./resource/Img/lobby/illustrations_1.png", false, D3DCOLOR_XRGB(0, 0, 0));
 	introillust02.Create("./resource/Img/lobby/illustrations_2.png", false, D3DCOLOR_XRGB(0, 0, 0));
-	//UI.menuBtn[0].Init("button_c9");
-	//UI.menuBtn[1].Init("button_c9");
-	//UI.menuBtn[2].Init("button_c9");
-	//UI.menuBtn[3].Init("button_c5");
-	//UI.menuBtn[4].Init("button_c9");
-	//UI.menuBtn[5].Init("button_c9");
-	
+
+
+
+
 	UI.menuBtn[0].Init("button_c9");
 	UI.menuBtn[1].Init("button_c9");
 	UI.menuBtn[2].Init("button_c9");
@@ -56,7 +54,7 @@ void Menu::Init()
 
 	UIManager::GetInstance().SetButtonMap(UI.buttonMap);
 	UIManager::GetInstance().SetButtons(UI.menuBtn);
-
+	sound.BackGroundSoundPlay("MenuBGM");
 	
 }	
 
@@ -344,6 +342,7 @@ void Menu::HandleKeyInput(int direction)
 		}
 
 		if (newIdx >= 0) {
+			sound.EffectSoundPlay("MenuSelect");
 			UIManager::GetInstance().GetButtons()[buttonIdx].SetIsSelected(false);
 			buttonIdx = newIdx;
 			UIManager::GetInstance().GetButtons()[buttonIdx].SetIsSelected(true);
@@ -366,6 +365,7 @@ void Menu::PowerHandle(int direction)
 		}
 
 		if (newIdx > 0 && UIManager::GetInstance().GetSlots()[newIdx] != nullptr) {
+			sound.EffectSoundPlay("MenuSelect");
 			UIManager::GetInstance().GetButtons()[0].SetIsSelected(false);
 			if (buttonIdx > 0) {
 				UIManager::GetInstance().GetSlots()[buttonIdx]->SetSelected(false); // 이전 슬롯 선택 해제
@@ -386,23 +386,22 @@ void Menu::PowerHandle(int direction)
 
 void Menu::PowerInput()
 {
-
-	
-		for (int i = 1; i <= 12; i++)
+	for (int i = 1; i <= 12; i++)
+	{
+		if (buttonIdx == 0)
 		{
-			if (buttonIdx == 0)
+			UIManager::GetInstance().GetSlots()[i]->SetSelected(false);
+			ClosePopUp();
+		}
+		else if(buttonIdx == i)
+		{
+			PowerSlot* powerSlot = dynamic_cast<PowerSlot*>(UIManager::GetInstance().GetSlots()[buttonIdx]);
+			if (powerSlot)
 			{
-				UIManager::GetInstance().GetSlots()[i]->SetSelected(false);
-				ClosePopUp();
-				
-			}
-			else if(buttonIdx == i)
-			{
-				PowerSlot* powerSlot = dynamic_cast<PowerSlot*>(UIManager::GetInstance().GetSlots()[buttonIdx]);
-				if (powerSlot)
-				{
-					powerSlot->Upgrade();
-				}
+				if (powerSlot->Upgrade())
+					sound.EffectSoundPlay("Click");
+
 			}
 		}
+	}
 }

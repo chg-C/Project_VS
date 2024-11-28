@@ -31,6 +31,7 @@ void UIButton::Init(const char* _filename)
 
 void UIButton::Clicked()
 {
+	sound.EffectSoundPlay("Click");
 	if (!isToggle)
 	{
 		if (spriteCount > 2)
@@ -46,6 +47,7 @@ void UIButton::Clicked()
 		{
 			if (spriteIdx == 0)
 			{
+				
 				spriteIdx = 1;
 				curSprite = buttonSprite[spriteIdx];
 			}
@@ -56,6 +58,7 @@ void UIButton::Clicked()
 			}
 		}
 	}
+			
 }
 
 void UIButton::UnSelected()
