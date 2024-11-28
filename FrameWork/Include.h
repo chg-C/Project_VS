@@ -15,9 +15,9 @@
 
 // 데이타 베이스///////////////////
 //#include <my_global.h>
-#include <winsock2.h>
-#include <mysql.h>
-#pragma comment(lib, "libmySQL.lib")
+//#include <winsock2.h>
+//#include <mysql.h>
+//#pragma comment(lib, "libmySQL.lib")
 
 //////////////////////////////////
 
@@ -63,16 +63,11 @@
 #include "Key.h"
 #include "Sound.h"
 
-#include "Bird.h"
 #include "Player.h"
 #include "Camera.h"
-#include "Collider.h"
 
 #include "GameManager.h"
 #include "UIManager.h"
-// 데이타 베이스///////////////////
-#include "Mysql.h"
-
 /* ---------------------------------------------------
 ///////////////// 사용자 추가 파일 ///////////////////
 

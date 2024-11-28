@@ -3,6 +3,10 @@
 #include "Include.h"
 #include "Singleton.h"
 
+class Effect;
+
+class Enemy;
+class PlayerManager;
 class EnemyManager;
 class EffectManager;
 
@@ -20,19 +24,27 @@ private:
 	bool doCollision;//충돌 처리 여부
 	float timeFlew; //게임 시작후 경과한 시간
 	
-
 	//무한 스크롤 맵
 	Map* map;
-	//플레이어
-	Player* player;
+	//플레이어 관리
+	PlayerManager* playerManager;
+	//Player* player;
 	//적 객체 관리
 	EnemyManager* enemyManager;
 	//기본 이펙트 관리
 	EffectManager* effectManager;
 	//게임 오버 스크린
 	Sprite2* gameOver;
+	//UI 컴퍼넌트
+	Sprite2* skull;
+	Sprite2* coin;
+
+	//Temp
+	Enemy* temp_Boss;
+
+	bool gameClearing;
+	bool gameClear;
 private:
-	void GameReset(void);
 	void Init();
 	void Update();
 	void Draw();
@@ -40,13 +52,14 @@ private:
 public:
 	bool m_GameStart;
 public:
+	void GameReset(void);
 	void Pause() { pause = true; }
 	void Resume() { pause = false; }
 	bool IsPause() { return pause; }
 	bool ToggleCollision() { return (doCollision = !doCollision); }
 	bool ToggleSpawn() { return (respawn = !respawn); }
+	Enemy* FindClosestEnemy();
 public:
 	void RegisterEffect(Effect* effect);
-	const Player* GetPlayer() const { return player; }
 	bool showDebug;
 };

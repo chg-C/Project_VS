@@ -14,7 +14,7 @@ public:
 	}
 	~Sprite2();
 public:
-	bool Create(const char* filename, bool bUseTransparency, D3DCOLOR TransparencyColor);
+	bool Create(const char* filename, bool bUseTransparency, D3DCOLOR TransparencyColor = 0);
 
 	void DrawStretch(float x, float y, float width, float height, DWORD color=0xffffffff, bool useCam = true, float rotate=0, RenderPivot pivot = PIVOT_LEFTTOP);
 	void DrawStretchWithScale(float x, float y, float width, float height, float scaleX, float scaleY, DWORD color = 0xffffffff, bool useCam = true, float rotate = 0, RenderPivot pivot = PIVOT_LEFTTOP);

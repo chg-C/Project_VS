@@ -12,7 +12,7 @@ SpriteAnimation::SpriteAnimation(const SpriteAnimation& other)
 {
 	for (auto& iter : other.sprites)
 	{
-		SpriteData* spriteCopied = new SpriteData(*iter);
+		AnimationClip* spriteCopied = new AnimationClip(*iter);
 		sprites.push_back(spriteCopied);
 	}
 }

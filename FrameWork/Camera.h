@@ -31,6 +31,7 @@ public:
 	void SetCamY(float y) { camY = y; }
 	float GetCamX() { return camX; }
 	float GetCamY() { return camY; }
+	D3DXVECTOR2 GetCamPos() { return D3DXVECTOR2(camX, camY); }
 
 	/// <summary>
 	/// 해당 좌표의 객체가 화면 밖으로 나갔는지 여부 확인
