@@ -30,10 +30,6 @@ void UIButton::Init(const char* _filename)
 		// 생성한 파일 이름을 사용하여 버튼 이미지를 생성합니다.
 		buttonSprite[i].Create(filename, false, D3DCOLOR_XRGB(0, 0, 0));
 	}
-	//if (!isToggle)
-	//	curSprite = buttonSprite[spriteIdx];
-	//else
-	//	curSprite = buttonSprite[toggleValue];
 	sound.EffectSoundRegister("./resource/Sound/Click.mp3", "Click");
 }
 
@@ -48,13 +44,6 @@ void UIButton::Clicked()
 			isClicked = true;           // 클릭 상태 활성화
 		}
 	}
-	//else if (isToggle)
-	//{
-	//	if (spriteCount > 1)
-	//	{
-	//		spriteIdx = toggleValue;
-	//	}
-	//}
 	sound.EffectSoundPlay("Click");
 			
 }

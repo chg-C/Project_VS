@@ -19,6 +19,7 @@ class Menu : public Chap
 	int curPopUpIdx;
 	int buttonIdx;
 	bool isPopUpOpen;
+	bool wasReturnPressed = false;
 	std::string test[12];
 
 	int testX[4] = {50,80,110,140};

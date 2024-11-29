@@ -112,7 +112,7 @@ void Menu::Draw()
 
 void Menu::OnMessage(MSG* msg)
 {
-	static bool wasReturnPressed = false; // VK_RETURN 이전 상태
+	//static bool wasReturnPressed = false; // VK_RETURN 이전 상태
 	switch (msg->message)
 	{
 		case WM_KEYDOWN:
@@ -199,26 +199,13 @@ void Menu::OnMessage(MSG* msg)
 				}
 				wasReturnPressed = true;
 				break;
-			case 'a':
-				FmodSoundManager::GetInstance().EffectVolumDown();
-				break;
-			case 's':
-				FmodSoundManager::GetInstance().BGVolumDown();
-				break;
-			case'q':
-				FmodSoundManager::GetInstance().EffectVolumUp();
-				break;
-			case 'w':
-				FmodSoundManager::GetInstance().BGVolumUp();
 			}
-			
 			break;
 		case WM_KEYUP:  // 키를 뗐을 때 처리
 			if (msg->wParam == VK_RETURN)
 			{
 				if (wasReturnPressed)
 				{	
-					//UIManager::GetInstance().GetButtons()[buttonIdx].SetClicked(false);
 					switch (curPopUpIdx)
 					{
 					case 0:
@@ -283,8 +270,9 @@ void Menu::MenuInput()
 		{
 			if (UIManager::GetInstance().GetButtons()[i].GetIsSelected())
 			{
-				if (buttonIdx == 0)
+				if (buttonIdx == 0 && GetTickCount() - key.KeyTime > 500)
 				{
+					key.KeyTime = GetTickCount();
 					OpenPopUp(1);
 					UIManager::GetInstance().SetButtonMap(*curPopUp->GetButtonMap());
 					UIManager::GetInstance().SetButtons(*curPopUp->GetButtons());
@@ -292,6 +280,7 @@ void Menu::MenuInput()
 				}
 				else if (buttonIdx == 1&&GetTickCount()-key.KeyTime>500)
 				{
+					buttonIdx = 0;
 					key.KeyTime = GetTickCount();
 					g_Mng.SwitchChapter(GAME);
 				}
@@ -444,6 +433,11 @@ void Menu::PowerInput()
 
 void Menu::OnSwitched()
 {
+	UIManager::GetInstance().SetButtonMap(UI.buttonMap);
+	UIManager::GetInstance().SetButtons(UI.menuBtn);
+	AllButtonActivated(true);
+	isPopUpOpen = false;
+	curPopUpIdx = 0;
 	key.KeyTime = GetTickCount();
 	sound.BackGroundSoundPlay("MenuBGM");
 }
