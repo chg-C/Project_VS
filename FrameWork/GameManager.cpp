@@ -91,9 +91,7 @@ void GameManager::Init()
 }
 
 void GameManager::Update()
-{
-	Time::GetInstance().UpdateTime(1);
-	
+{	
 	if (currentState != nullptr)
 	{
 		currentState->Update();

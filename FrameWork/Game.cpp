@@ -50,6 +50,7 @@ void Game::Draw()
 // Chap, 재정의 함수 호출
 void Game::Update(double frame)
 {
+	Time::GetInstance().UpdateTime(1);
 	//static int a = 0;
 	//if(a == 0) 
 	//{
@@ -66,7 +67,7 @@ void Game::Update(double frame)
 		//coll.Update();
 		//// 입 맛에 맞게
 		//map.Update(130);
-		if(!UIManager::GetInstance().GetPopUp(1)->GetIsOpen())
+		if(!UIManager::GetInstance().GetPopUp(1)->GetIsOpen() && !GameManager::GetInstance().IsPause())
 			GameManager::GetInstance().Update();
 		// 데이타 베이스///////////////////
 		// 입 맛에 맞게 (여기선 안쓰임..프레임 값이 필요 할때만.. 그냥 방법만...)
@@ -117,9 +118,6 @@ void Game::OnMessage( MSG* msg )
 				}
 			}
 			wasReturnPressed = true;
-
-
-
 		}
 		break;
 	case WM_KEYUP:
@@ -139,6 +137,8 @@ void Game::OnMessage( MSG* msg )
 
 void Game::HandleKeyInput(int direction)
 {
+	if (!UIManager::GetInstance().GetPopUp(1)->GetIsOpen())
+		return;
 	if (!UIManager::GetInstance().GetButtons()[uiIdx].GetActivated())
 		return;
 	if (UIManager::GetInstance().GetButtonMap().count(uiIdx) > 0 && GetTickCount64() - key.KeyTime > 100) {
@@ -219,4 +219,5 @@ void Game::OptionInput()
 void Game::OnSwitched()
 {
 	sound.BackGroundSoundPlay("InGameBGM");
+	Time::GetInstance().UpdateTime(1);
 }
