@@ -151,12 +151,10 @@
     <ClInclude Include="Chap.h" />
     <ClInclude Include="Character.h" />
     <ClInclude Include="CMng.h" />
-    <ClInclude Include="CreditsPopUp.h" />
     <ClInclude Include="CustomDefine.h" />
     <ClInclude Include="CustomInclude.h" />
     <ClInclude Include="Define.h" />
     <ClInclude Include="FieldItemManager.h" />
-    <ClInclude Include="DXUTsound.h" />
     <ClInclude Include="DeviceFont.h" />
     <ClInclude Include="Effect.h" />
     <ClInclude Include="EffectManager.h" />
@@ -165,6 +163,11 @@
     <ClInclude Include="FmodSoundManager.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="GameManager.h" />
+    <ClInclude Include="GameState.h" />
+    <ClInclude Include="GameStateInclude.h" />
+    <ClInclude Include="GameState_Clear.h" />
+    <ClInclude Include="GameState_GameOver.h" />
+    <ClInclude Include="GameState_LevelUp.h" />
     <ClInclude Include="Include.h" />
     <ClInclude Include="Item.h" />
     <ClInclude Include="key.h" />
@@ -177,7 +180,6 @@
     <ClInclude Include="OptionPopUp.h" />
     <ClInclude Include="Over.h" />
     <ClInclude Include="Player.h" />
-    <ClInclude Include="Power.h" />
     <ClInclude Include="PowerPopUp.h" />
     <ClInclude Include="PlayerManager.h" />
     <ClInclude Include="Projectile.h" />
@@ -204,8 +206,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CMng.cpp" />
-    <ClCompile Include="CreditsPopUp.cpp" />
-    <ClCompile Include="DXUTsound.cpp" />
     <ClCompile Include="DeviceFont.cpp" />
     <ClCompile Include="EffectManager.cpp" />
     <ClCompile Include="Enemy.cpp" />
@@ -213,6 +213,9 @@
     <ClCompile Include="FmodSoundManager.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="GameManager.cpp" />
+    <ClCompile Include="GameState_Clear.cpp" />
+    <ClCompile Include="GameState_GameOver.cpp" />
+    <ClCompile Include="GameState_LevelUp.cpp" />
     <ClCompile Include="Item.cpp" />
     <ClCompile Include="key.cpp" />
     <ClCompile Include="Logo.cpp" />

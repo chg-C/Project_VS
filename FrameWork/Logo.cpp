@@ -87,7 +87,6 @@ void Logo::OnMessage( MSG* msg )
 	switch(msg->message)
 	{
 	case WM_LBUTTONDOWN :
-
 		break;
 	}
 

@@ -19,9 +19,6 @@
     <ClCompile Include="SelectArrow.cpp">
       <Filter>UI\Elements</Filter>
     </ClCompile>
-    <ClCompile Include="DXUTsound.cpp">
-      <Filter>Sound</Filter>
-    </ClCompile>
     <ClCompile Include="FmodSoundManager.cpp">
       <Filter>Sound</Filter>
     </ClCompile>
@@ -115,8 +112,14 @@
     <ClCompile Include="Weapon.cpp">
       <Filter>2. GameManager\Objects\Item</Filter>
     </ClCompile>
-    <ClCompile Include="CreditsPopUp.cpp">
-      <Filter>UI\Popup</Filter>
+    <ClCompile Include="GameState_LevelUp.cpp">
+      <Filter>2. GameManager\GameManager States</Filter>
+    </ClCompile>
+    <ClCompile Include="GameState_GameOver.cpp">
+      <Filter>2. GameManager\GameManager States</Filter>
+    </ClCompile>
+    <ClCompile Include="GameState_Clear.cpp">
+      <Filter>2. GameManager\GameManager States</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -143,9 +146,6 @@
     </ClInclude>
     <ClInclude Include="Slot.h">
       <Filter>UI\Elements</Filter>
-    </ClInclude>
-    <ClInclude Include="DXUTsound.h">
-      <Filter>Sound</Filter>
     </ClInclude>
     <ClInclude Include="FmodSoundManager.h">
       <Filter>Sound</Filter>
@@ -279,11 +279,20 @@
     <ClInclude Include="Weapon.h">
       <Filter>2. GameManager\Objects\Item</Filter>
     </ClInclude>
-    <ClInclude Include="Power.h">
-      <Filter>Globals</Filter>
+    <ClInclude Include="GameState_LevelUp.h">
+      <Filter>2. GameManager\GameManager States</Filter>
     </ClInclude>
-    <ClInclude Include="CreditsPopUp.h">
-      <Filter>UI\Popup</Filter>
+    <ClInclude Include="GameState_GameOver.h">
+      <Filter>2. GameManager\GameManager States</Filter>
+    </ClInclude>
+    <ClInclude Include="GameState_Clear.h">
+      <Filter>2. GameManager\GameManager States</Filter>
+    </ClInclude>
+    <ClInclude Include="GameState.h">
+      <Filter>2. GameManager\GameManager States\Base</Filter>
+    </ClInclude>
+    <ClInclude Include="GameStateInclude.h">
+      <Filter>2. GameManager\GameManager States\Base</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -346,6 +355,12 @@
     </Filter>
     <Filter Include="2. GameManager\Objects\Item">
       <UniqueIdentifier>{e11b3b6e-a1d1-4d35-af57-409d50d37ecb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="2. GameManager\GameManager States">
+      <UniqueIdentifier>{1340d36d-ee5c-4a1b-9141-4e4a0188f974}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="2. GameManager\GameManager States\Base">
+      <UniqueIdentifier>{4cbb6026-b3f6-43bf-bb22-778b25555584}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

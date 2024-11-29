@@ -3,7 +3,7 @@
 #include "PlayerManager.h"
 
 PlayerManager::PlayerManager()
-	:player(nullptr), squareSprite(nullptr), tmpIdx(ID_PLAYER_BEGIN+1)
+	:player(nullptr), squareSprite(nullptr), tmpIdx(ID_PLAYER_BEGIN+1), keyDelay(0)
 {
 }
 
@@ -80,76 +80,25 @@ void PlayerManager::Update()
 			}
 			weapons.clear();
 
-			Weapon* w = new Weapon(ResourceManager::GetInstance().GetWeaponData(data->defaultWeaponID), player);
-			w->Init();
-			weapons.push_back(w);
+			EarnWeapon(ResourceManager::GetInstance().GetWeaponData(data->defaultWeaponID));
 		}
 		if (KeyDown('5') && keyDelay <= 0)
 		{
 			keyDelay = 1;
 
-			bool haveWhip = false;
-			for (auto& iter : weapons)
-			{
-				if (iter->GetWeaponID() == ID_WEAPON_WHIP)
-				{
-					iter->LevelUp();
-					haveWhip = true;
-					break;
-				}
-			}
-
-			if (!haveWhip)
-			{
-				Weapon* w = new Weapon(ResourceManager::GetInstance().GetWeaponData(ID_WEAPON_WHIP), player);
-				w->Init();
-				weapons.push_back(w);
-			}
+			EarnWeapon(ResourceManager::GetInstance().GetWeaponData(ID_WEAPON_WHIP));
 		}
 		if (KeyDown('6') && keyDelay <= 0)
 		{
 			keyDelay = 1;
 
-			bool haveGarlic = false;
-			for (auto& iter : weapons)
-			{
-				if (iter->GetWeaponID() == ID_WEAPON_GARLIC)
-				{
-					iter->LevelUp();
-					haveGarlic = true;
-					break;
-				}
-			}
-
-			if (!haveGarlic)
-			{
-				Weapon* w = new Weapon(ResourceManager::GetInstance().GetWeaponData(ID_WEAPON_GARLIC), player);
-				w->Init();
-				weapons.push_back(w);
-			}
+			EarnWeapon(ResourceManager::GetInstance().GetWeaponData(ID_WEAPON_GARLIC));
 		}
 		if (KeyDown('7') && keyDelay <= 0)
 		{
 			keyDelay = 1;
 
-			bool haveWand = false;
-
-			for (auto& iter : weapons)
-			{
-				if (iter->GetWeaponID() == ID_WEAPON_MAGICWAND)
-				{
-					iter->LevelUp();
-					haveWand = true;
-					break;
-				}
-			}
-
-			if (!haveWand)
-			{
-				Weapon* w = new Weapon(ResourceManager::GetInstance().GetWeaponData(ID_WEAPON_MAGICWAND), player);
-				w->Init();
-				weapons.push_back(w);
-			}
+			EarnWeapon(ResourceManager::GetInstance().GetWeaponData(ID_WEAPON_MAGICWAND));
 		}
 
 		player->SetVelocity(velocity);
@@ -167,13 +116,6 @@ void PlayerManager::Update()
 
 void PlayerManager::Draw()
 {
-	//XP
-	squareSprite->DrawStretch(0, 0, SCREEN_WITH, 30, 0xff111111, false);
-	float xpGauge = 50;
-	squareSprite->DrawStretch(0, 0, xpGauge, 30, 0xff1111ff, false);
-
-
-	//
 	player->Draw();
 
 	DrawInventory();
@@ -230,7 +172,25 @@ std::list<Weapon*>& PlayerManager::GetWeapons()
 //TEMP
 void PlayerManager::EarnWeapon(WeaponData* data)
 {
-	
+	bool haveOne = false;
+
+	for (auto& iter : weapons)
+	{
+		if (iter->GetWeaponID() == data->weaponID)
+		{
+			haveOne = true;
+			iter->LevelUp();
+
+			break;
+		}
+	}
+
+	if (!haveOne)
+	{
+		Weapon* w = new Weapon(data, player);
+		w->Init();
+		weapons.push_back(w);
+	}
 }
 //
 //std::list<Projectile*>& PlayerManager::GetProjectiles()
