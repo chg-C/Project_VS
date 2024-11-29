@@ -10,6 +10,8 @@ class PlayerManager;
 class EnemyManager;
 class EffectManager;
 
+class GameState;
+
 class GameManager : public Singleton<GameManager>
 {
 	friend class Singleton<GameManager>;
@@ -33,17 +35,26 @@ private:
 	EnemyManager* enemyManager;
 	//기본 이펙트 관리
 	EffectManager* effectManager;
-	//게임 오버 스크린
-	Sprite2* gameOver;
 	//UI 컴퍼넌트
 	Sprite2* skull;
 	Sprite2* coin;
+	Sprite2* squareSprite;
 
+	//Temp
+	GameState* currentState;
 	//Temp
 	Enemy* temp_Boss;
 
 	bool gameClearing;
 	bool gameClear;
+
+	//Temp - Level
+	int currentLevel;
+
+	int currentXP;
+	int nextLevelXP;
+
+	bool onLevelUp;
 private:
 	void Init();
 	void Update();
@@ -59,6 +70,8 @@ public:
 	bool ToggleCollision() { return (doCollision = !doCollision); }
 	bool ToggleSpawn() { return (respawn = !respawn); }
 	Enemy* FindClosestEnemy();
+
+	void EarnXP(int xp);
 public:
 	void RegisterEffect(Effect* effect);
 	bool showDebug;

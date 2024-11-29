@@ -6,9 +6,12 @@
 #include "EffectManager.h"
 #include "Score.h"
 
+#include "GameStateInclude.h"
+
 
 GameManager::GameManager(void)
-	:map(nullptr), playerManager(nullptr), enemyManager(nullptr), effectManager(nullptr), gameOver(nullptr), timeFlew(0), pause(false), respawn(true), doCollision(true)
+	:map(nullptr), playerManager(nullptr), enemyManager(nullptr), effectManager(nullptr), timeFlew(0), pause(false), respawn(true), doCollision(true),
+	currentXP(0), nextLevelXP(5), currentLevel(1), onLevelUp(false), currentState(nullptr)
 {
 	m_GameStart = true;
 	showDebug = true;
@@ -18,6 +21,24 @@ GameManager::~GameManager(void)
 {
 	Delete();
 }
+void GameManager::Delete()
+{
+	//	sound.g_pSoundManager->drr  
+	SAFE_DELETE(map);
+
+	SAFE_DELETE(playerManager);
+	SAFE_DELETE(enemyManager);
+	SAFE_DELETE(effectManager);
+
+	SAFE_DELETE(currentState);
+
+	SAFE_DELETE(skull);
+	SAFE_DELETE(coin);
+	SAFE_DELETE(squareSprite);
+
+
+	temp_Boss = nullptr;
+}
 
 void GameManager::Init()
 {
@@ -26,7 +47,6 @@ void GameManager::Init()
 	playerManager = new PlayerManager();
 	enemyManager = new EnemyManager();
 	effectManager = new EffectManager();
-	gameOver = new Sprite2();
 
 	map->Init("./resource/Img/Game/map/map_bg.png");
 	
@@ -44,8 +64,6 @@ void GameManager::Init()
 
 	float scale = 1;
 
-	gameOver->Create("./resource/Img/lobby/introBG.png", false, D3DCOLOR_XRGB(0, 0, 0));
-	
 	Time::GetInstance().InitTime();
 	Option::GetInstance().Init();
 	Score::GetInstance().Reset();
@@ -56,83 +74,77 @@ void GameManager::Init()
 	skull = new Sprite2();
 	skull->Create("./resource/Img/Etc/SkullToken.png", false);
 	coin = new Sprite2();
-	coin->Create("./resource/Img/Etc/coin-spin-gold_01.png", false);
+	coin->Create("./resource/Img/Etc/coin-spin-gold_01.png", false); 
+	squareSprite = new Sprite2();
+	squareSprite->Create("./resource/Img/Etc/Square.png", false);
 
 	temp_Boss = nullptr;
 	gameClearing = gameClear = false;
+
+	currentXP = 0;
+	nextLevelXP = 5;
+	currentLevel = 1;
+
+	onLevelUp = false;
+
+	currentState = nullptr;
 }
 
 void GameManager::Update()
 {
 	Time::GetInstance().UpdateTime(1);
-	if (gameClearing)
+	
+	if (currentState != nullptr)
 	{
-		if (temp_Boss != nullptr)
-			temp_Boss->Update();
-
-		if (temp_Boss->GetState() == CS_DEAD)
-		{
-			gameClear = true;
-			if (GetAsyncKeyState(VK_RETURN) & 0x8000)
-			{
-				key.KeyTime = GetTickCount64();
-				g_Mng.SwitchChapter(OVER);
-			}
-		}
+		currentState->Update();
 	}
 	else
 	{
-		if (!pause)
+		map->Update();
+
+		if (KeyDown('0'))
 		{
-			//if(게임 종료시) {g_Mng.n_Chap = OVER; Camera::GetInstance().SetCamX(0); Camera::GetInstance().SetCamY(0);}
-			map->Update();
+			timeFlew = 900;
+		}
+		if (playerManager->IsPlaying())
+		{
+			timeFlew += TIME;
+			Score::GetInstance().SetTimeFlew(timeFlew);
 
-			if (KeyDown('0'))
+			if (temp_Boss != nullptr)
 			{
-				timeFlew = 900;
-			}
-			if (playerManager->IsPlaying())
-			{
-				timeFlew += TIME;
-				Score::GetInstance().SetTimeFlew(timeFlew);
-
-				if (temp_Boss != nullptr)
+				if (!temp_Boss->IsAlive())
 				{
-					if (!temp_Boss->IsAlive())
-					{
-						gameClearing = true;
-					}
+					currentState = new GameState_Clear(temp_Boss);
 				}
-				else
-				{
-					if (timeFlew >= 900)
-					{
-						temp_Boss = enemyManager->Temp_SpawnBoss();
-					}
-				}
-
-				playerManager->Update();
-
-				if (respawn)
-					enemyManager->Spawn();
-
-				D3DXVECTOR2 playerPos = playerManager->GetPlayerPos();
-				enemyManager->Sort(playerPos.x, playerPos.y);
-				enemyManager->Update();
-
-				if (doCollision)
-					enemyManager->CheckCollision(playerManager);
-
-				effectManager->Update();
 			}
 			else
 			{
-				//Game Over 상황
-				if (GetAsyncKeyState(VK_RETURN) & 0x8000)
+				if (timeFlew >= 900)
 				{
-					key.KeyTime = GetTickCount64();
-					g_Mng.SwitchChapter(OVER);
+					temp_Boss = enemyManager->Temp_SpawnBoss();
 				}
+			}
+
+			playerManager->Update();
+
+			if (respawn)
+				enemyManager->Spawn();
+
+			D3DXVECTOR2 playerPos = playerManager->GetPlayerPos();
+			enemyManager->Sort(playerPos.x, playerPos.y);
+			enemyManager->Update();
+
+			if (doCollision)
+				enemyManager->CheckCollision(playerManager);
+
+			effectManager->Update();
+		}
+		else
+		{
+			if (playerManager->GetPlayer()->GetState() == CS_DEAD)
+			{
+				currentState = new GameState_GameOver();
 			}
 		}
 	}
@@ -144,21 +156,28 @@ void GameManager::Draw()
 	playerManager->Draw();
 	effectManager->Draw();
 
-	if (gameClear)
-	{
-		gameOver->DrawStretch(0, 0, SCREEN_WITH, SCREEN_HEIGHT, 0x66ffffff, false);
-		dv_font.DrawString("GAME CLEAR!", 420, 300, 25, 12, 500, 0xffffffff);
-	}
-	else if (playerManager->IsPlaying())
-	{
-		if (IsPause())
-		{
-			dv_font.DrawString("ON PAUSE", 420, 300, 0xffff0000);
-		}
+	//XP
+	squareSprite->DrawStretch(0, 0, SCREEN_WITH, 30, 0xff111111, false);
+	float p = (currentXP / (float)nextLevelXP);
+	if (p > 1)
+		p = 1;
+	float xpGauge = SCREEN_WITH * p;
+	squareSprite->DrawStretch(0, 0, xpGauge, 30, 0xff1111ff, false);
 
+	char level[24] = "";
+	sprintf_s(level, "LV %d", currentLevel);
+	int len = strlen(level);
+	dv_font.DrawString(level, SCREEN_WITH - 50 - (12 * len), 10, 16, 12);
+
+	if (currentState != nullptr)
+	{
+		currentState->Draw();
+	}
+	else
+	{
 		int minute = timeFlew / 60;
 		int second = ((int)timeFlew) % 60;
-		
+
 		char data[16] = {};
 		sprintf_s(data, "%d:%02d", minute, second);
 		int len = strlen(data) / 2;
@@ -199,27 +218,6 @@ void GameManager::Draw()
 		dv_font.DrawString("F1 - 디버그 키 표시하기", 15, 500);
 		dv_font.DrawString("WASD 혹은 방향키 - 이동", 15, 550, 16, 8, 500, 0xffffffff);
 	}
-	else
-	{
-		gameOver->DrawStretch(0, 0, SCREEN_WITH, SCREEN_HEIGHT, 0x88ffffff, false);
-		dv_font.DrawString("GAME OVER", 420, 300, 25, 12, 500, 0xffff0000);
-	}
-}
-
-void GameManager::Delete()
-{
-	//	sound.g_pSoundManager->drr  
-	SAFE_DELETE(map);
-
-	SAFE_DELETE(playerManager);
-	SAFE_DELETE(enemyManager);
-	SAFE_DELETE(effectManager);
-
-	SAFE_DELETE(gameOver);
-
-	SAFE_DELETE(skull);
-	SAFE_DELETE(coin);
-	temp_Boss = nullptr;
 }
 
 Enemy* GameManager::FindClosestEnemy()
@@ -228,6 +226,21 @@ Enemy* GameManager::FindClosestEnemy()
 		return nullptr;
 	else
 		return enemyManager->FindFirstEnemy();
+}
+
+void GameManager::EarnXP(int xp)
+{
+	currentXP += xp;
+
+	if (currentXP >= nextLevelXP)
+	{
+		++currentLevel;
+
+		currentXP = 0;
+		nextLevelXP += currentLevel * 15;
+
+		onLevelUp = true;
+	}
 }
 
 void GameManager::RegisterEffect(Effect* effect)
