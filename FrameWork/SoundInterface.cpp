@@ -71,5 +71,5 @@ void SoundInterface::Effectmute(bool isMute)
 
 void SoundInterface::BGMute(bool isMute)
 {
-	FmodSoundManager::GetInstance().BGSetVolum(isMute);
+	FmodSoundManager::GetInstance().BGMute(isMute);
 }

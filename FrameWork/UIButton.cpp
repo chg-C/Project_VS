@@ -30,10 +30,10 @@ void UIButton::Init(const char* _filename)
 		// 생성한 파일 이름을 사용하여 버튼 이미지를 생성합니다.
 		buttonSprite[i].Create(filename, false, D3DCOLOR_XRGB(0, 0, 0));
 	}
-	if (!isToggle)
-		curSprite = buttonSprite[spriteIdx];
-	else
-		curSprite = buttonSprite[toggleValue];
+	//if (!isToggle)
+	//	curSprite = buttonSprite[spriteIdx];
+	//else
+	//	curSprite = buttonSprite[toggleValue];
 	sound.EffectSoundRegister("./resource/Sound/Click.mp3", "Click");
 }
 
@@ -87,8 +87,9 @@ void UIButton::ButtonRender(float x, float y, float radian, float sx, float sy, 
 	if (isActivated)
 	{
 		if (isToggle)
-			spriteIdx = toggleValue;
-		curSprite = buttonSprite[spriteIdx];
+			curSprite = buttonSprite[toggleValue];
+		else
+			curSprite = buttonSprite[spriteIdx];
 		curSprite.UIRender(x,y,radian,sx,sy,pivotMode,setColor);
 		selectArrow1.Render(x - 20 - (sx / 2), y - 5, 0, 1, 1);
 		selectArrow2.Render(x + 20 + (sx / 2), y - 5, 0, -1, 1);

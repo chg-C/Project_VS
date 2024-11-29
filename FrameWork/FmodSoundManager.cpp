@@ -57,6 +57,7 @@ void FmodSoundManager::BGPlay(int _SoundNum)
 	auto Find = m_SoundList.find(_SoundNum);
 
 	m_pSystem->playSound(FMOD_CHANNEL_REUSE, Find->second, 0, &m_pBGChannel);
+	BGMute(Option::GetInstance().IsBGMMuted());
 }
 
 /// <summary>
@@ -99,6 +100,14 @@ void FmodSoundManager::BGSetVolum(int volum)
 		m_bgVolum = 1;
 	else
 		m_bgVolum = volum;
+	m_pBGChannel->setVolume(m_bgVolum);
+}
+void FmodSoundManager::BGMute(bool isMute)
+{
+	if (isMute)
+		m_bgVolum = 0;
+	else
+		m_bgVolum = 1;
 	m_pBGChannel->setVolume(m_bgVolum);
 }
 

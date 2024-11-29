@@ -57,4 +57,5 @@ public:
     bool IsBGMMuted() const { return options.isBGMMuted; }
     bool IsSoundMuted() const { return options.isSoundMuted; }
     bool WillDamageEffect() const { return options.showDamageEffect; }
+
 };

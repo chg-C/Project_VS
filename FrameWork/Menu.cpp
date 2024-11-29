@@ -1,7 +1,7 @@
 #include "Include.h"
 static DWORD KeyTime = GetTickCount();
 
-Menu::Menu():optionBtn(3,false), startBtn(3, true), collectBtn(3, false),powerupBtn(3,false), achievementsBtn(3, false),creditsBtn(3,false)
+Menu::Menu():optionBtn(3,true), startBtn(3, false), collectBtn(3, false),powerupBtn(3,false), achievementsBtn(3, false),creditsBtn(3,false)
 {
 	isPopUpOpen = false;
 	curPopUpIdx = 0;
@@ -14,7 +14,7 @@ Menu::Menu():optionBtn(3,false), startBtn(3, true), collectBtn(3, false),powerup
 		{5,{2,4,3,-1}}//credits : 왼쪽 없음 오른쪽 없음
 	};
 
-	buttonIdx = 1;
+	buttonIdx = 0;
 	UI.menuBtn.push_back(optionBtn);		//buttonIdx 0
 	UI.menuBtn.push_back(startBtn);			//buttonIdx 1
 	UI.menuBtn.push_back(collectBtn);		//buttonIdx 2
@@ -54,7 +54,7 @@ void Menu::Init()
 
 	sound.BackGroundSoundRegister("./resource/Sound/MenuBGM.mp3", "MenuBGM");
 	sound.EffectSoundRegister("./resource/Sound/MenuSelection.mp3", "MenuSelect");
-	//sound.BackGroundSoundPlay("MenuBGM");
+
 }	
 
 // Chap, 재정의 함수 호출
@@ -84,6 +84,8 @@ void Menu::Draw()
 	else if (UIManager::GetInstance().GetPopUp(1)->GetIsOpen())
 	{
 		UIManager::GetInstance().GetButtons()[1].SetToggleValue(Option::GetInstance().IsSoundMuted());
+		UIManager::GetInstance().GetButtons()[2].SetToggleValue(Option::GetInstance().IsBGMMuted());
+		UIManager::GetInstance().GetButtons()[3].SetToggleValue(!Option::GetInstance().WillDamageEffect());
 		curPopUp->Draw();
 		curPopUp->RenderElement();
 	}
@@ -197,11 +199,6 @@ void Menu::OnMessage(MSG* msg)
 				}
 				wasReturnPressed = true;
 				break;
-			case VK_ESCAPE:
-				for (int i = 1; i <= 12; i++)
-					UIManager::GetInstance().GetSlots()[i]->SetSelected(false);
-					ClosePopUp();
-				break;
 			case 'a':
 				FmodSoundManager::GetInstance().EffectVolumDown();
 				break;
@@ -276,15 +273,15 @@ void Menu::ClosePopUp()
 			curPopUpIdx = 0;
 		}
 	}
-	buttonIdx = 1;
 }
 
 void Menu::MenuInput()
 {
-	if (UIManager::GetInstance().GetButtons()[buttonIdx].GetActivated())
+	if (!UIManager::GetInstance().GetButtons()[buttonIdx].GetActivated())
+		return;
 		for (int i = 0; i < UIManager::GetInstance().GetButtons().size(); i++)
 		{
-			if (UIManager::GetInstance().GetButtons()[i].GetActivated() && UIManager::GetInstance().GetButtons()[i].GetIsSelected())
+			if (UIManager::GetInstance().GetButtons()[i].GetIsSelected())
 			{
 				if (buttonIdx == 0)
 				{
@@ -293,8 +290,9 @@ void Menu::MenuInput()
 					UIManager::GetInstance().SetButtons(*curPopUp->GetButtons());
 					break;
 				}
-				else if (buttonIdx == 1)
+				else if (buttonIdx == 1&&GetTickCount()-key.KeyTime>500)
 				{
+					key.KeyTime = GetTickCount();
 					g_Mng.SwitchChapter(GAME);
 				}
 				else if (buttonIdx == 3)
@@ -311,7 +309,6 @@ void Menu::MenuInput()
 
 void Menu::OptionInput()
 {
-	if (UIManager::GetInstance().GetButtons()[buttonIdx].GetActivated())
 		for (int i = 0; i < UIManager::GetInstance().GetButtons().size(); i++)
 		{
 			if (UIManager::GetInstance().GetButtons()[i].GetActivated() && UIManager::GetInstance().GetButtons()[i].GetIsSelected())
@@ -335,11 +332,29 @@ void Menu::OptionInput()
 				else if (buttonIdx == 2)
 				{
 					UIManager::GetInstance().GetButtons()[buttonIdx].Clicked();
+					if (Option::GetInstance().IsBGMMuted())
+					{
+						Option::GetInstance().UnmuteBGM();
+						sound.BGMute(Option::GetInstance().IsBGMMuted());
+					}
+					else
+					{
+						Option::GetInstance().MuteBGM();
+						sound.BGMute(Option::GetInstance().IsBGMMuted());
+					}
 					
 				}
 				else if (buttonIdx == 3)
 				{
 					UIManager::GetInstance().GetButtons()[buttonIdx].Clicked();
+					if (Option::GetInstance().WillDamageEffect())
+					{
+						Option::GetInstance().DeactiveDamageEffect();
+					}
+					else
+					{
+						Option::GetInstance().ActiveDamageEffect();
+					}
 				}
 			}
 		}
@@ -424,4 +439,11 @@ void Menu::PowerInput()
 			}
 		}
 	}
+}
+
+
+void Menu::OnSwitched()
+{
+	key.KeyTime = GetTickCount();
+	sound.BackGroundSoundPlay("MenuBGM");
 }

@@ -77,6 +77,8 @@ public:
 
 	void BGSetVolum(int volum);
 
+	void BGMute(bool isMute);
+
 	void EffectVolumDown();
 	void EffectVolumUp();
 	void EffectSetVolum(int volum);

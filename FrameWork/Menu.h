@@ -67,5 +67,7 @@ public:
 	void HandleKeyInput(int direction);
 
 	void PowerHandle(int direction);
+
+	virtual void OnSwitched();
 };
 #endif
