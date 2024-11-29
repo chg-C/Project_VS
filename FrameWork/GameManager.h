@@ -10,6 +10,7 @@ class PlayerManager;
 class EnemyManager;
 class EffectManager;
 
+struct WeaponData;
 class GameState;
 
 class GameManager : public Singleton<GameManager>
@@ -45,16 +46,11 @@ private:
 	//Temp
 	Enemy* temp_Boss;
 
-	bool gameClearing;
-	bool gameClear;
-
 	//Temp - Level
 	int currentLevel;
 
 	int currentXP;
 	int nextLevelXP;
-
-	bool onLevelUp;
 private:
 	void Init();
 	void Update();
@@ -72,6 +68,9 @@ public:
 	Enemy* FindClosestEnemy();
 
 	void EarnXP(int xp);
+
+	void TempEarnWeapon(WeaponData* data);
+	void TempExitState();
 public:
 	void RegisterEffect(Effect* effect);
 	bool showDebug;

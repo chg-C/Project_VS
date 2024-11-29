@@ -82,24 +82,6 @@ void PlayerManager::Update()
 
 			EarnWeapon(ResourceManager::GetInstance().GetWeaponData(data->defaultWeaponID));
 		}
-		if (KeyDown('5') && keyDelay <= 0)
-		{
-			keyDelay = 1;
-
-			EarnWeapon(ResourceManager::GetInstance().GetWeaponData(ID_WEAPON_WHIP));
-		}
-		if (KeyDown('6') && keyDelay <= 0)
-		{
-			keyDelay = 1;
-
-			EarnWeapon(ResourceManager::GetInstance().GetWeaponData(ID_WEAPON_GARLIC));
-		}
-		if (KeyDown('7') && keyDelay <= 0)
-		{
-			keyDelay = 1;
-
-			EarnWeapon(ResourceManager::GetInstance().GetWeaponData(ID_WEAPON_MAGICWAND));
-		}
 
 		player->SetVelocity(velocity);
 	}
