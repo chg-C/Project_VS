@@ -1,6 +1,6 @@
 #include "Include.h"
 #include "PowerPopUp.h"
-
+#include "Power.h"
 PowerPopUp::PowerPopUp():backBtn(3,true)
 {
 	id = 2;

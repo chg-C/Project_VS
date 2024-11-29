@@ -7,6 +7,7 @@
 #include <unordered_map>
 #include"OptionPopUp.h"
 #include"PowerPopUp.h"
+#include"CreditsPopUp.h"
 #include"SoundInterface.h"
 struct MenuUI
 {

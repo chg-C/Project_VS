@@ -1,5 +1,5 @@
 #pragma once
-#include "Include.h"
+//#include "Include.h"
 #include "Singleton.h"
 #include <map>
 #include <functional>
@@ -9,7 +9,7 @@ class UIManager:public Singleton<UIManager>
 	friend class Singleton<UIManager>;
 public:
 	UIManager() {}
-	~UIManager() {}
+	~UIManager() { }
 private:
 	int popupCount=0;
 	bool isButton;
@@ -24,6 +24,7 @@ public:
 	{
 		new OptionPopUp;
 		new PowerPopUp;
+		new CreditsPopUp;
 	}
 
 	void RegisterPopUp(int id, UIPopUp* popUp)

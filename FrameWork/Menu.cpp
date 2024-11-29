@@ -105,7 +105,11 @@ void Menu::Draw()
 		dv_font.DrawString(test[9].c_str(), testX[1], testY[2], 20, 10, 200);
 		dv_font.DrawString(test[10].c_str(), testX[2], testY[2], 20, 10, 200);
 		dv_font.DrawString(test[11].c_str(), testX[3], testY[2], 20, 10, 200);
-
+	}
+	else if (UIManager::GetInstance().GetPopUp(3)->GetIsOpen())
+	{
+		curPopUp->Draw();
+		curPopUp->RenderElement();
 	}
 	
 }
@@ -220,6 +224,10 @@ void Menu::OnMessage(MSG* msg)
 						PowerInput();
 						wasReturnPressed = false;
 						break;
+					case 3:
+						ClosePopUp();
+						wasReturnPressed = false;
+						break;
 					}
 				}
 			}
@@ -291,6 +299,13 @@ void Menu::MenuInput()
 					UIManager::GetInstance().SetButtons(*curPopUp->GetButtons());
 					UIManager::GetInstance().SetButtonMap(*curPopUp->GetButtonMap());
 					UIManager::GetInstance().SetSlots(*curPopUp->GetSlots());
+				}
+				else if (buttonIdx == 5)
+				{
+					OpenPopUp(3);
+					buttonIdx = 0;
+					UIManager::GetInstance().SetButtons(*curPopUp->GetButtons());
+					UIManager::GetInstance().SetButtonMap(*curPopUp->GetButtonMap());
 				}
 			}
 		}

@@ -151,6 +151,7 @@
     <ClInclude Include="Chap.h" />
     <ClInclude Include="Character.h" />
     <ClInclude Include="CMng.h" />
+    <ClInclude Include="CreditsPopUp.h" />
     <ClInclude Include="CustomDefine.h" />
     <ClInclude Include="CustomInclude.h" />
     <ClInclude Include="Define.h" />
@@ -180,6 +181,7 @@
     <ClInclude Include="OptionPopUp.h" />
     <ClInclude Include="Over.h" />
     <ClInclude Include="Player.h" />
+    <ClInclude Include="Power.h" />
     <ClInclude Include="PowerPopUp.h" />
     <ClInclude Include="PlayerManager.h" />
     <ClInclude Include="Projectile.h" />
@@ -206,6 +208,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CMng.cpp" />
+    <ClCompile Include="CreditsPopUp.cpp" />
     <ClCompile Include="DeviceFont.cpp" />
     <ClCompile Include="EffectManager.cpp" />
     <ClCompile Include="Enemy.cpp" />
