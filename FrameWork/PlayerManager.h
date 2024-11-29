@@ -9,9 +9,6 @@ public:
 	PlayerManager();
 	~PlayerManager();
 private:
-	int nextLevelXP;
-	int currentXP;
-
 	Player* player;
 	std::list<Weapon*> weapons;
 
@@ -36,6 +33,5 @@ public:
 	const char* GetPlayerName();
 
 	std::list<Weapon*>& GetWeapons();
-
 	void EarnWeapon(WeaponData* data);
 };
