@@ -76,7 +76,7 @@ void GameManager::Update()
 			if (GetAsyncKeyState(VK_RETURN) & 0x8000)
 			{
 				key.KeyTime = GetTickCount64();
-				g_Mng.n_Chap = OVER;
+				g_Mng.SwitchChapter(OVER);
 			}
 		}
 	}
@@ -130,7 +130,7 @@ void GameManager::Update()
 				if (GetAsyncKeyState(VK_RETURN) & 0x8000)
 				{
 					key.KeyTime = GetTickCount64();
-					g_Mng.n_Chap = OVER;
+					g_Mng.SwitchChapter(OVER);
 				}
 			}
 		}

@@ -11,6 +11,8 @@ public :
 	virtual void Update(double frame) = 0;
 	virtual void Draw() = 0;
 	virtual void OnMessage(MSG* msg) = 0;
+
+	virtual void OnSwitched() {}
 };
 
 #endif
