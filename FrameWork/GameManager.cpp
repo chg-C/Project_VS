@@ -11,7 +11,7 @@
 
 GameManager::GameManager(void)
 	:map(nullptr), playerManager(nullptr), enemyManager(nullptr), effectManager(nullptr), timeFlew(0), pause(false), respawn(true), doCollision(true),
-	currentXP(0), nextLevelXP(5), currentLevel(1), onLevelUp(false), currentState(nullptr)
+	currentXP(0), nextLevelXP(5), currentLevel(1), currentState(nullptr)
 {
 	m_GameStart = true;
 	showDebug = true;
@@ -79,13 +79,10 @@ void GameManager::Init()
 	squareSprite->Create("./resource/Img/Etc/Square.png", false);
 
 	temp_Boss = nullptr;
-	gameClearing = gameClear = false;
 
 	currentXP = 0;
 	nextLevelXP = 5;
 	currentLevel = 1;
-
-	onLevelUp = false;
 
 	currentState = nullptr;
 }
@@ -137,6 +134,17 @@ void GameManager::Update()
 				enemyManager->CheckCollision(playerManager);
 
 			effectManager->Update();
+
+
+			if (currentXP >= nextLevelXP)
+			{
+				++currentLevel;
+
+				currentXP -= nextLevelXP;
+				nextLevelXP += currentLevel * 15;
+
+				currentState = new GameState_LevelUp();
+			}
 		}
 		else
 		{
@@ -200,15 +208,12 @@ void GameManager::Draw()
 			dv_font.DrawString(debug, 15, 150);
 			sprintf_s(debug, "Àû »ý¼ºÁß(2): %s", respawn ? "TRUE" : "FALSE");
 			dv_font.DrawString(debug, 15, 165);
-			sprintf_s(debug, "´ë¹ÌÁö ¼ýÀÚ Ãâ·Â(3): %s", Option::GetInstance().WillDamageEffect() ? "TRUE" : "FALSE");
-			dv_font.DrawString(debug, 15, 180);
 
 			sprintf_s(debug, "ÇöÀç Ä³¸¯ÅÍ(4): %s", playerManager->GetPlayerName());
-			dv_font.DrawString(debug, 15, 300);
+			dv_font.DrawString(debug, 15, 250);
 
-			dv_font.DrawString("Ã¤Âï ¾ÆÀÌÅÛ È¹µæ(5)", 15, 350);
-			dv_font.DrawString("¸¶´Ã ¾ÆÀÌÅÛ È¹µæ(6)", 15, 380);
-			dv_font.DrawString("ÁöÆÎÀÌ ¾ÆÀÌÅÛ È¹µæ(7)", 15, 400);
+			sprintf_s(debug, "°æÇèÄ¡ %d È¹µæ (8)", 3 * currentLevel);
+			dv_font.DrawString(debug, 15, 350);
 
 			dv_font.DrawString("º¸½º »ý¼ºÇÏ±â(0)", 15, 450);
 		}
@@ -228,17 +233,17 @@ Enemy* GameManager::FindClosestEnemy()
 
 void GameManager::EarnXP(int xp)
 {
-	currentXP += xp;
+	currentXP += xp*currentLevel;
+}
 
-	if (currentXP >= nextLevelXP)
-	{
-		++currentLevel;
+void GameManager::TempEarnWeapon(WeaponData* data)
+{
+	playerManager->EarnWeapon(data);
+}
 
-		currentXP = 0;
-		nextLevelXP += currentLevel * 15;
-
-		onLevelUp = true;
-	}
+void GameManager::TempExitState()
+{
+	SAFE_DELETE(currentState);
 }
 
 void GameManager::RegisterEffect(Effect* effect)
