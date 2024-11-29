@@ -295,7 +295,7 @@ void Menu::MenuInput()
 				}
 				else if (buttonIdx == 1)
 				{
-					g_Mng.n_Chap = GAME;
+					g_Mng.SwitchChapter(GAME);
 				}
 				else if (buttonIdx == 3)
 				{

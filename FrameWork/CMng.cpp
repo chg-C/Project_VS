@@ -10,3 +10,9 @@ CMng::CMng()
 CMng::~CMng()
 {
 }
+
+void CMng::SwitchChapter(int id)
+{
+	n_Chap = id;
+	GetCurrentChapter()->OnSwitched();
+}
