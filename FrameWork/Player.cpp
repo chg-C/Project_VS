@@ -1,82 +1,165 @@
 #include "Include.h"
 
 
-Player player;
-
-
-Player::Player()
+Player::Player(PlayerData* data)
+	: Character(0, 0, 1.5f), playerColor(0xffffffff), moveSpeed(1.5f), armor(0), damaging(false), dmgTime(0), squareSprite(nullptr), name("")
 {
-	pos.x = 700;
-	pos.y = 300;
-	gravity = 5.75f;
-	grounded = false;
+	pos.x = 0;
+	pos.y = 0;
 
+	maxHP = currentHP = 100;
+
+	int animatorID = 0;
+	if (data != nullptr)
+	{
+		animatorID = data->animatorID;
+		strcpy(name, data->playerName);
+		maxHP = data->maxHealth;
+		currentHP = maxHP;
+		moveSpeed = data->moveSpeed;
+		armor = data->defense;
+	}
+	
+	animator = ResourceManager::GetInstance().GetAnimator(animatorID);
 }
 
 Player::~Player()
 {
+	SAFE_DELETE(squareSprite);	
 }
 
 void Player::Init()
 {
-
-	char FileName[256];
-	
-
-	sprintf_s(FileName, "./resource/Img/7.png");
-	playerimg.Create(FileName,false,D3DCOLOR_XRGB(0,0,0));
-	D3DXGetImageInfoFromFile(FileName, &imagesinfo);
-
-	m_rc.left = pos.x;
-	m_rc.top = pos.y;
-	m_rc.right = pos.x+imagesinfo.Width+10;
-	m_rc.bottom = pos.y+imagesinfo.Height+30;
-
+	char FileName[256] = {};
+	sprintf_s(FileName, "./resource/Img/Etc/Square.png");
+	squareSprite = new Sprite2();
+	squareSprite->Create(FileName, false, D3DCOLOR_XRGB(0, 0, 0));
 }
 
 void Player::Update()
 {
-	if(GetTickCount() - m_PlayerTime > 10)
+	dmgTime -= TIME;
+
+	if (damaging && dmgTime <= 0)
 	{
-		if(!grounded) pos.y += gravity;
+		playerColor |= 0xffff;
+		damaging = false;
+	}
+	if (IsAlive())
+	{
+		//if (attackCooldown <= 0)
+		//{
+		//	attackCooldown = 1;
+		//	Projectile* proj = new Projectile(attackEffectTemplate, pos.x + (100 * dir), pos.y, dir, 0.5f);
+		//	proj->Init();
+		//	projectiles.push_back(proj);
+		//}
 
-		if (m_rc.left < coll.m_rc.right && coll.m_rc.left < m_rc.right && m_rc.top < coll.m_rc.bottom && coll.m_rc.top < m_rc.bottom) grounded = true;
+	}
+	else if(currentState == CS_DYING)
+	{
+		alpha -= 5;
+		playerColor &= (alpha<<24);
 
-		m_rc.left = pos.x;
-		m_rc.top = pos.y;
-		m_rc.right = pos.x + imagesinfo.Width + 10;
-		m_rc.bottom = pos.y + imagesinfo.Height + 30;
+		if (alpha <= 0)
+			currentState = CS_DEAD;
+	}
+	
 
-		m_PlayerTime = GetTickCount();
+	pos += velocity;
+
+	//카메라 - 위치 동기화
+	Camera::GetInstance().SetCamX(-pos.x);
+	Camera::GetInstance().SetCamY(-pos.y);
+	//
+
+	switch (currentState)
+	{
+	case CS_IDLE:
+	case CS_DYING:
+	case CS_DEAD:
+		animator->ChangeAnimation((int)CS_IDLE);
+		break;
+	case CS_MOVE:
+		animator->ChangeAnimation((int)CS_MOVE);
+		break;
+	}
+
+	animator->Update(moveSpeed);
+	size.x = animator->GetCurrentSpriteData()->width * scale;
+	size.y = animator->GetCurrentSpriteData()->height * scale;
+}
+void Player::SetVelocity(D3DXVECTOR2 velocity)
+{
+	if (!IsAlive())
+		return;
+
+	this->velocity = velocity * moveSpeed;
+	if (D3DXVec2Length(&velocity) > 0)
+	{
+		currentState = CS_MOVE;
+	}
+	else
+	{
+		currentState = CS_IDLE;
+	}
+
+	if (velocity.x > 0)
+	{
+		dir = 1;
+	}
+	else if (velocity.x < 0)
+	{
+		dir = -1;
 	}
 }
 
 void Player::Draw()
 {
-	if (Gmanager.m_GameStart == true)
-	{
-		playerimg.Render(pos.x, pos.y, 0, 2, 2);
-		dv_font.DrawString("『 ", m_rc.left, m_rc.top, D3DCOLOR_ARGB(255, 0, 255, 0));
-		dv_font.DrawString(" 』", m_rc.right, m_rc.bottom, D3DCOLOR_ARGB(255, 0, 255, 0));
-
-	}
-
+	animator->GetCurrentSpriteData()->sprite->RenderStretch(pos.x, pos.y, size.x, size.y, dir * 1, 1, playerColor);
+	DrawHealthBar();
 }
 
-/*
+void Player::DrawHealthBar()
+{
+	//배경
+	squareSprite->RenderStretch(pos.x, pos.y + 40, 50, 5, 1, 1, 0x88000000);
 
-	기본 충돌처리
+	float per = 50 * (currentHP / maxHP);
+	if (per < 0) per = 0;
+	//체력
+	squareSprite->RenderStretch((pos.x + ((per/2)-25)), pos.y + 40, per, 5, 1, 1, 0xffff0000);
+	//squareSprite->RenderStretch()
+}
 
-	= 사각형 출동 판정 처리
-	플레이어기의 충돌 판정 좌표를 (ML, MT) ~ (MR, MB), 탄의 충돌 판정 좌표를 (BL, BT) ~ (BR, BB)라고 해보자.
-	(ML, MT), (BL, BT)는 각각의 사각형의 왼쪽 위 좌표이고 (MR. MB), (BR, BB)는 사각형의 오른쪽 아래 좌표이다.
-	이 경우, 플레이어기에 탄의 충돌 조건은 다음과 같다.
-	* ML < BR && BL < MR && MT < BB && BT < MB
+void Player::Move(float x, float y)
+{
+	
+	pos.x += x;
+	pos.y += y;
+}
 
-	= 원을 이용한 충돌 판정 처리
-	원을 이용한 충돌 판정 처리는 다음과 같다.
-	플레이어기의 중심좌표를 (MX, MY), 탄의 중심좌표를 (BX, BY)라고 하고, 플레이어기의 충돌 판정 반경을 MR,
-	탄의 충돌 판정 반경을 BR이라고 하자. 이때 플레이어기와 탄의 충돌 조건은 아래와 같다.
-	* (MX-BX)*(MX-BX) + (MY-BY)*(MY-BY) < (MR+BR)*(MR+BR)
+void Player::Damage(float dmg)
+{
+	//if (invTime > 0)
+	//	return;
+	if (IsAlive())
+	{
+		float dmgResult = dmg - armor;
+		if (dmgResult < 0) dmgResult = 0;
+		currentHP -= dmgResult;
 
-*/
+		if (currentHP <= 0)
+		{
+			currentState = CS_DYING;
+
+			velocity.x = 0;
+			velocity.y = 0;
+		}
+
+		damaging = true;
+		playerColor &= 0xffff0000;
+
+		dmgTime = 0.15f;
+	}
+}

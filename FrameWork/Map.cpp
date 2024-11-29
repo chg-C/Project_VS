@@ -1,9 +1,8 @@
 #include "Include.h"
-
-Map map;
-
+#include "CustomDefine.h"
 
 Map::Map()
+	:bg_width(1024), bg_height(1024), map(nullptr)
 {
 	m_Stage = 1;
 }
@@ -12,54 +11,83 @@ Map::~Map()
 {
 }
 
-void Map::Init()
+
+void Map::Init(const char* fileName)
 {
-	int i,j;
+	if (map != nullptr)
+	{
+		SAFE_DELETE(map);
+	}
+
+	map = new Sprite2();
+
 	char FileName[256];
 	
-	for(i = 0; i<6; i++ )
-	{
-		sprintf_s(FileName, "./resource/Img/map1/BG_Hades_1/BG_Hades_%04d.tga", i + 1);
-		m_MapImg1_1[i].Create( FileName ,false,D3DCOLOR_XRGB(0,0,0));
-		
-	}
+	sprintf_s(FileName, fileName);
 
-	j = 1;
-	for(i = 0; i<45; i++ )
+	map->Create(FileName, false, 0);
+	/*for (int i = 0; i < 4; ++i)
 	{
-		sprintf_s(FileName, "./resource/Img/map1/BG_Hades_2/BG_Hades_0002_%06d.tga", j);
-		m_MapImg1_2[i].Create(FileName, false, D3DCOLOR_XRGB(0, 0, 0));
-		j+=2;
-		
-	}
+		map[i].Create(FileName, false, 0);
+	}*/
+
+	bg_width = MAPSIZE_X;
+	bg_height = MAPSIZE_Y;
 
 }
 
-void Map::Update(double frame)
+void Map::Update()
 {
-	if(GetTickCount64() - m_MapImg1_1_ani1 > frame)
+	//Map Scroll
+	float x = Camera::GetInstance().GetCamX();
+	float y = Camera::GetInstance().GetCamY();
+	
+	while(abs(x) > MAPSIZE_X)
 	{
-		if(m_Stage==1)
+		if (x > MAPSIZE_X)
 		{
-			m_MapImg1_1_ani1Count++;
-			if(m_MapImg1_1_ani1Count > 44) m_MapImg1_1_ani1Count = 0;
+			x -= MAPSIZE_X * 2;
 		}
-
-		m_MapImg1_1_ani1 = GetTickCount64();
+		if (x < -MAPSIZE_X)
+		{
+			x += MAPSIZE_X * 2;
+		}
 	}
-}
+	while (abs(y) > MAPSIZE_Y)
+	{
+		if (y > MAPSIZE_Y)
+		{
+			y -= MAPSIZE_Y * 2;
+		}
+		if (y < -MAPSIZE_Y)
+		{
+			y += MAPSIZE_Y * 2;
+		}
+	}
 
+	scrollX = x;
+	scrollY = y;
+}
 void Map::Draw()
 {
-	if(m_Stage==1)
-	{
-		m_MapImg1_1[0].Render(0, 0, 0, 1, 1);
-		m_MapImg1_1[1].Render(0, 0, 0, 1, 1);
-		m_MapImg1_1[3].Render(270, 70, 0, 1, 1);
-		m_MapImg1_2[m_MapImg1_1_ani1Count].Render(0, 0, 0, 1.5, 1.5);
-		m_MapImg1_1[2].Render(190, 0, 0, 1, 1);
-		m_MapImg1_1[4].Render(900, 0, 0, 1, 1);
-		m_MapImg1_1[5].Render(0, 0, 0, 1, 1);
+	//map.Draw(0, 0);
+	DrawMapBlock(0, 0);
 
-	}
+	//상하좌우 스크롤
+	DrawMapBlock(-MAPSIZE_X * 2, 0);
+	DrawMapBlock(MAPSIZE_X * 2, 0);
+	DrawMapBlock(0, MAPSIZE_Y*2);
+	DrawMapBlock(0, -MAPSIZE_Y*2);
+
+	//대각선 스크롤
+	DrawMapBlock(-MAPSIZE_X * 2, MAPSIZE_Y * 2);
+	DrawMapBlock(-MAPSIZE_X * 2, -MAPSIZE_Y * 2);
+	DrawMapBlock(MAPSIZE_X * 2, MAPSIZE_Y * 2);
+	DrawMapBlock(MAPSIZE_X * 2, -MAPSIZE_Y * 2);
+}
+
+void Map::DrawMapBlock(float x, float y)
+{
+	//Camera 대신 자체 Scroll 값 사용
+	map->RenderStretch(x+scrollX, y+scrollY, bg_width * 2, bg_height * 2, 1, 1, 0xffffffff, false, 0, PIVOT_CENTER);
 }

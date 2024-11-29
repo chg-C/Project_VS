@@ -1,168 +1,380 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="소스 파일">
-      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
-      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
-    </Filter>
-    <Filter Include="헤더 파일">
-      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
-      <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
-    </Filter>
-    <Filter Include="리소스 파일">
-      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
-      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
-    </Filter>
-    <Filter Include="D3D Core">
-      <UniqueIdentifier>{7a9ad97c-09d8-4716-a30f-b6d891dc555c}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="D3D Core\코어 헤더파일">
-      <UniqueIdentifier>{9de5f299-b97a-4cbc-8b76-fa4257b5fed2}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="D3D Core\코어 소스">
-      <UniqueIdentifier>{6658b04b-ad02-4972-bbd6-56610a7d0b17}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="소스 파일\Sound">
-      <UniqueIdentifier>{61d52f9b-efee-4445-a052-f6c4ab5227fc}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="소스 파일\GameManager">
-      <UniqueIdentifier>{cebaf1a7-eceb-4a76-b89b-546059c9a4bf}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="소스 파일\Mysql">
-      <UniqueIdentifier>{8f36a8e7-495b-493c-9a78-ed4359633356}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="소스 파일\새">
-      <UniqueIdentifier>{195466a1-5be7-4fc6-af06-908793889477}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="소스 파일\콜라이더">
-      <UniqueIdentifier>{12a0cf25-2be5-4e1d-ad05-c2a84868a263}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="소스 파일\플레이어1">
-      <UniqueIdentifier>{f8c8a3c6-05dd-4a47-a445-8abeecaf107f}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="소스 파일\플레이어2">
-      <UniqueIdentifier>{d3a3e326-2847-465b-9737-da3607ab746a}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="소스 파일\Map">
-      <UniqueIdentifier>{cec1e42a-12c0-4cf8-9cca-8fc295a432ae}</UniqueIdentifier>
-    </Filter>
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="Define.h">
-      <Filter>D3D Core\코어 헤더파일</Filter>
-    </ClInclude>
-    <ClInclude Include="Game.h">
-      <Filter>D3D Core\코어 헤더파일</Filter>
-    </ClInclude>
-    <ClInclude Include="key.h">
-      <Filter>D3D Core\코어 헤더파일</Filter>
-    </ClInclude>
-    <ClInclude Include="Sprite.h">
-      <Filter>D3D Core\코어 헤더파일</Filter>
-    </ClInclude>
-    <ClInclude Include="Chap.h">
-      <Filter>D3D Core\코어 헤더파일</Filter>
-    </ClInclude>
-    <ClInclude Include="CMng.h">
-      <Filter>D3D Core\코어 헤더파일</Filter>
-    </ClInclude>
-    <ClInclude Include="Logo.h">
-      <Filter>D3D Core\코어 헤더파일</Filter>
-    </ClInclude>
-    <ClInclude Include="Menu.h">
-      <Filter>D3D Core\코어 헤더파일</Filter>
-    </ClInclude>
-    <ClInclude Include="Over.h">
-      <Filter>D3D Core\코어 헤더파일</Filter>
-    </ClInclude>
-    <ClInclude Include="DXUTsound.h">
-      <Filter>D3D Core\코어 헤더파일</Filter>
-    </ClInclude>
-    <ClInclude Include="Sound.h">
-      <Filter>소스 파일\Sound</Filter>
-    </ClInclude>
-    <ClInclude Include="GameManager.h">
-      <Filter>소스 파일\GameManager</Filter>
-    </ClInclude>
-    <ClInclude Include="DeviceFont.h">
-      <Filter>D3D Core\코어 헤더파일</Filter>
-    </ClInclude>
-    <ClInclude Include="Mysql.h">
-      <Filter>소스 파일\Mysql</Filter>
-    </ClInclude>
-    <ClInclude Include="Include.h">
-      <Filter>D3D Core\코어 헤더파일</Filter>
-    </ClInclude>
-    <ClInclude Include="Bird.h">
-      <Filter>소스 파일\새</Filter>
-    </ClInclude>
-    <ClInclude Include="Collider.h">
-      <Filter>소스 파일\콜라이더</Filter>
-    </ClInclude>
-    <ClInclude Include="Player.h">
-      <Filter>소스 파일\플레이어1</Filter>
-    </ClInclude>
-    <ClInclude Include="Player2.h">
-      <Filter>소스 파일\플레이어2</Filter>
-    </ClInclude>
-    <ClInclude Include="Map.h">
-      <Filter>소스 파일\Map</Filter>
-    </ClInclude>
-  </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="key.cpp">
-      <Filter>D3D Core\코어 소스</Filter>
+    <ClCompile Include="UIButton.cpp">
+      <Filter>UI\Elements</Filter>
     </ClCompile>
-    <ClCompile Include="Sprite.cpp">
-      <Filter>D3D Core\코어 소스</Filter>
+    <ClCompile Include="UISprite.cpp">
+      <Filter>UI\Elements</Filter>
     </ClCompile>
-    <ClCompile Include="CMng.cpp">
-      <Filter>D3D Core\코어 소스</Filter>
+    <ClCompile Include="UIPopUp.cpp">
+      <Filter>UI\Popup</Filter>
     </ClCompile>
-    <ClCompile Include="Menu.cpp">
-      <Filter>D3D Core\코어 소스</Filter>
+    <ClCompile Include="OptionPopUp.cpp">
+      <Filter>UI\Popup</Filter>
     </ClCompile>
-    <ClCompile Include="Over.cpp">
-      <Filter>D3D Core\코어 소스</Filter>
+    <ClCompile Include="PowerPopUp.cpp">
+      <Filter>UI\Popup</Filter>
     </ClCompile>
-    <ClCompile Include="Logo.cpp">
-      <Filter>D3D Core\코어 소스</Filter>
+    <ClCompile Include="SelectArrow.cpp">
+      <Filter>UI\Elements</Filter>
     </ClCompile>
-    <ClCompile Include="DXUTsound.cpp">
-      <Filter>D3D Core\코어 소스</Filter>
+    <ClCompile Include="FmodSoundManager.cpp">
+      <Filter>Sound</Filter>
     </ClCompile>
     <ClCompile Include="Sound.cpp">
-      <Filter>소스 파일\Sound</Filter>
+      <Filter>Sound</Filter>
     </ClCompile>
-    <ClCompile Include="GameManager.cpp">
-      <Filter>소스 파일\GameManager</Filter>
-    </ClCompile>
-    <ClCompile Include="DeviceFont.cpp">
-      <Filter>D3D Core\코어 소스</Filter>
-    </ClCompile>
-    <ClCompile Include="Mysql.cpp">
-      <Filter>소스 파일\Mysql</Filter>
-    </ClCompile>
-    <ClCompile Include="Game.cpp">
-      <Filter>D3D Core\코어 소스</Filter>
+    <ClCompile Include="SoundInterface.cpp">
+      <Filter>Sound</Filter>
     </ClCompile>
     <ClCompile Include="Main.cpp">
-      <Filter>D3D Core\코어 소스</Filter>
+      <Filter>0. Main</Filter>
     </ClCompile>
-    <ClCompile Include="Bird.cpp">
-      <Filter>소스 파일\새</Filter>
+    <ClCompile Include="Game.cpp">
+      <Filter>1. Chapter</Filter>
     </ClCompile>
-    <ClCompile Include="Collider.cpp">
-      <Filter>소스 파일\콜라이더</Filter>
+    <ClCompile Include="CMng.cpp">
+      <Filter>1. Chapter\Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="Menu.cpp">
+      <Filter>1. Chapter</Filter>
+    </ClCompile>
+    <ClCompile Include="Logo.cpp">
+      <Filter>1. Chapter</Filter>
+    </ClCompile>
+    <ClCompile Include="Over.cpp">
+      <Filter>1. Chapter</Filter>
+    </ClCompile>
+    <ClCompile Include="DeviceFont.cpp">
+      <Filter>Grahpics</Filter>
+    </ClCompile>
+    <ClCompile Include="Sprite.cpp">
+      <Filter>Grahpics</Filter>
+    </ClCompile>
+    <ClCompile Include="Sprite2.cpp">
+      <Filter>Grahpics</Filter>
+    </ClCompile>
+    <ClCompile Include="Time.cpp">
+      <Filter>Globals</Filter>
+    </ClCompile>
+    <ClCompile Include="ResourceManager.cpp">
+      <Filter>Globals</Filter>
+    </ClCompile>
+    <ClCompile Include="key.cpp">
+      <Filter>Globals</Filter>
+    </ClCompile>
+    <ClCompile Include="GameManager.cpp">
+      <Filter>2. GameManager</Filter>
+    </ClCompile>
+    <ClCompile Include="EffectManager.cpp">
+      <Filter>2. GameManager\SubManagers</Filter>
+    </ClCompile>
+    <ClCompile Include="EnemyManager.cpp">
+      <Filter>2. GameManager\SubManagers</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerManager.cpp">
+      <Filter>2. GameManager\SubManagers</Filter>
+    </ClCompile>
+    <ClCompile Include="SpriteAnimation.cpp">
+      <Filter>Grahpics</Filter>
+    </ClCompile>
+    <ClCompile Include="SpriteAnimator.cpp">
+      <Filter>Grahpics</Filter>
+    </ClCompile>
+    <ClCompile Include="Enemy.cpp">
+      <Filter>2. GameManager\Objects\Character</Filter>
     </ClCompile>
     <ClCompile Include="Player.cpp">
-      <Filter>소스 파일\플레이어1</Filter>
-    </ClCompile>
-    <ClCompile Include="Player2.cpp">
-      <Filter>소스 파일\플레이어2</Filter>
+      <Filter>2. GameManager\Objects\Character</Filter>
     </ClCompile>
     <ClCompile Include="Map.cpp">
-      <Filter>소스 파일\Map</Filter>
+      <Filter>2. GameManager\Objects\Map</Filter>
     </ClCompile>
+    <ClCompile Include="LoopProjectile.cpp">
+      <Filter>2. GameManager\Objects\Effect</Filter>
+    </ClCompile>
+    <ClCompile Include="MovingProjectile.cpp">
+      <Filter>2. GameManager\Objects\Effect</Filter>
+    </ClCompile>
+    <ClCompile Include="Projectile.cpp">
+      <Filter>2. GameManager\Objects\Effect</Filter>
+    </ClCompile>
+    <ClCompile Include="SpriteEffect.cpp">
+      <Filter>2. GameManager\Objects\Effect</Filter>
+    </ClCompile>
+    <ClCompile Include="TextEffect.cpp">
+      <Filter>2. GameManager\Objects\Effect</Filter>
+    </ClCompile>
+    <ClCompile Include="Item.cpp">
+      <Filter>2. GameManager\Objects\Item</Filter>
+    </ClCompile>
+    <ClCompile Include="Weapon.cpp">
+      <Filter>2. GameManager\Objects\Item</Filter>
+    </ClCompile>
+    <ClCompile Include="GameState_LevelUp.cpp">
+      <Filter>2. GameManager\GameManager States</Filter>
+    </ClCompile>
+    <ClCompile Include="GameState_GameOver.cpp">
+      <Filter>2. GameManager\GameManager States</Filter>
+    </ClCompile>
+    <ClCompile Include="GameState_Clear.cpp">
+      <Filter>2. GameManager\GameManager States</Filter>
+    </ClCompile>
+    <ClCompile Include="CreditsPopUp.cpp">
+      <Filter>UI\Popup</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="UIManager.h">
+      <Filter>UI\Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="UIButton.h">
+      <Filter>UI\Elements</Filter>
+    </ClInclude>
+    <ClInclude Include="UISprite.h">
+      <Filter>UI\Elements</Filter>
+    </ClInclude>
+    <ClInclude Include="UIPopUp.h">
+      <Filter>UI\Popup</Filter>
+    </ClInclude>
+    <ClInclude Include="OptionPopUp.h">
+      <Filter>UI\Popup</Filter>
+    </ClInclude>
+    <ClInclude Include="PowerPopUp.h">
+      <Filter>UI\Popup</Filter>
+    </ClInclude>
+    <ClInclude Include="SelectArrow.h">
+      <Filter>UI\Elements</Filter>
+    </ClInclude>
+    <ClInclude Include="Slot.h">
+      <Filter>UI\Elements</Filter>
+    </ClInclude>
+    <ClInclude Include="FmodSoundManager.h">
+      <Filter>Sound</Filter>
+    </ClInclude>
+    <ClInclude Include="Sound.h">
+      <Filter>Sound</Filter>
+    </ClInclude>
+    <ClInclude Include="SoundInterface.h">
+      <Filter>Sound</Filter>
+    </ClInclude>
+    <ClInclude Include="Chap.h">
+      <Filter>1. Chapter</Filter>
+    </ClInclude>
+    <ClInclude Include="Game.h">
+      <Filter>1. Chapter</Filter>
+    </ClInclude>
+    <ClInclude Include="CMng.h">
+      <Filter>1. Chapter\Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="Menu.h">
+      <Filter>1. Chapter</Filter>
+    </ClInclude>
+    <ClInclude Include="Logo.h">
+      <Filter>1. Chapter</Filter>
+    </ClInclude>
+    <ClInclude Include="Over.h">
+      <Filter>1. Chapter</Filter>
+    </ClInclude>
+    <ClInclude Include="DeviceFont.h">
+      <Filter>Grahpics</Filter>
+    </ClInclude>
+    <ClInclude Include="Sprite.h">
+      <Filter>Grahpics</Filter>
+    </ClInclude>
+    <ClInclude Include="Sprite2.h">
+      <Filter>Grahpics</Filter>
+    </ClInclude>
+    <ClInclude Include="Time.h">
+      <Filter>Globals</Filter>
+    </ClInclude>
+    <ClInclude Include="Camera.h">
+      <Filter>Globals</Filter>
+    </ClInclude>
+    <ClInclude Include="ResourceManager.h">
+      <Filter>Globals</Filter>
+    </ClInclude>
+    <ClInclude Include="Option.h">
+      <Filter>Globals</Filter>
+    </ClInclude>
+    <ClInclude Include="resource.h">
+      <Filter>리소스</Filter>
+    </ClInclude>
+    <ClInclude Include="Score.h">
+      <Filter>Globals</Filter>
+    </ClInclude>
+    <ClInclude Include="Singleton.h">
+      <Filter>Globals\Patterns</Filter>
+    </ClInclude>
+    <ClInclude Include="Define.h">
+      <Filter>Globals\Include</Filter>
+    </ClInclude>
+    <ClInclude Include="Include.h">
+      <Filter>Globals\Include</Filter>
+    </ClInclude>
+    <ClInclude Include="CustomDefine.h">
+      <Filter>Globals\Include</Filter>
+    </ClInclude>
+    <ClInclude Include="CustomInclude.h">
+      <Filter>Globals\Include</Filter>
+    </ClInclude>
+    <ClInclude Include="Cache.h">
+      <Filter>Globals\Patterns</Filter>
+    </ClInclude>
+    <ClInclude Include="key.h">
+      <Filter>Globals</Filter>
+    </ClInclude>
+    <ClInclude Include="GameManager.h">
+      <Filter>2. GameManager</Filter>
+    </ClInclude>
+    <ClInclude Include="EffectManager.h">
+      <Filter>2. GameManager\SubManagers</Filter>
+    </ClInclude>
+    <ClInclude Include="EnemyManager.h">
+      <Filter>2. GameManager\SubManagers</Filter>
+    </ClInclude>
+    <ClInclude Include="FieldItemManager.h">
+      <Filter>2. GameManager\SubManagers</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerManager.h">
+      <Filter>2. GameManager\SubManagers</Filter>
+    </ClInclude>
+    <ClInclude Include="SpriteAnimation.h">
+      <Filter>Grahpics</Filter>
+    </ClInclude>
+    <ClInclude Include="SpriteAnimator.h">
+      <Filter>Grahpics</Filter>
+    </ClInclude>
+    <ClInclude Include="Character.h">
+      <Filter>2. GameManager\Objects\Character</Filter>
+    </ClInclude>
+    <ClInclude Include="Enemy.h">
+      <Filter>2. GameManager\Objects\Character</Filter>
+    </ClInclude>
+    <ClInclude Include="Player.h">
+      <Filter>2. GameManager\Objects\Character</Filter>
+    </ClInclude>
+    <ClInclude Include="Map.h">
+      <Filter>2. GameManager\Objects\Map</Filter>
+    </ClInclude>
+    <ClInclude Include="Effect.h">
+      <Filter>2. GameManager\Objects\Effect</Filter>
+    </ClInclude>
+    <ClInclude Include="LoopProjectile.h">
+      <Filter>2. GameManager\Objects\Effect</Filter>
+    </ClInclude>
+    <ClInclude Include="MovingProjectile.h">
+      <Filter>2. GameManager\Objects\Effect</Filter>
+    </ClInclude>
+    <ClInclude Include="Projectile.h">
+      <Filter>2. GameManager\Objects\Effect</Filter>
+    </ClInclude>
+    <ClInclude Include="SpriteEffect.h">
+      <Filter>2. GameManager\Objects\Effect</Filter>
+    </ClInclude>
+    <ClInclude Include="TextEffect.h">
+      <Filter>2. GameManager\Objects\Effect</Filter>
+    </ClInclude>
+    <ClInclude Include="Item.h">
+      <Filter>2. GameManager\Objects\Item</Filter>
+    </ClInclude>
+    <ClInclude Include="Weapon.h">
+      <Filter>2. GameManager\Objects\Item</Filter>
+    </ClInclude>
+    <ClInclude Include="GameState_LevelUp.h">
+      <Filter>2. GameManager\GameManager States</Filter>
+    </ClInclude>
+    <ClInclude Include="GameState_GameOver.h">
+      <Filter>2. GameManager\GameManager States</Filter>
+    </ClInclude>
+    <ClInclude Include="GameState_Clear.h">
+      <Filter>2. GameManager\GameManager States</Filter>
+    </ClInclude>
+    <ClInclude Include="GameState.h">
+      <Filter>2. GameManager\GameManager States\Base</Filter>
+    </ClInclude>
+    <ClInclude Include="GameStateInclude.h">
+      <Filter>2. GameManager\GameManager States\Base</Filter>
+    </ClInclude>
+    <ClInclude Include="CreditsPopUp.h">
+      <Filter>UI\Popup</Filter>
+    </ClInclude>
+    <ClInclude Include="Power.h">
+      <Filter>Globals</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="UI">
+      <UniqueIdentifier>{a33feb0a-d5c3-49c3-9b8a-799cfcdf05a0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="UI\Elements">
+      <UniqueIdentifier>{bf28d125-789c-4d98-b407-d062d92d9b41}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="UI\Manager">
+      <UniqueIdentifier>{4987af21-f5cf-487e-9a01-3ab394fd7d8f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="UI\Popup">
+      <UniqueIdentifier>{16d5047d-a63d-44eb-9e30-5f82d9612f7c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sound">
+      <UniqueIdentifier>{81d5bc15-77af-4f4c-b1ef-d018c0b4f8aa}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="0. Main">
+      <UniqueIdentifier>{ab96cc48-0cbd-41a7-9b40-ff8e33eb86af}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="1. Chapter">
+      <UniqueIdentifier>{f466c0ae-af32-475b-9dc2-c16c6e9281ec}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="1. Chapter\Manager">
+      <UniqueIdentifier>{35afa416-edf8-4909-a82a-2823a11a8abe}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Grahpics">
+      <UniqueIdentifier>{56b782e6-edd4-46a6-9dea-65383ee7fe9d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Globals">
+      <UniqueIdentifier>{8b7b0214-d147-482b-b6f1-cb263961160d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="2. GameManager">
+      <UniqueIdentifier>{64e7adcd-75e7-4206-a58f-2cc8f17ba2d0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="리소스">
+      <UniqueIdentifier>{74569ae2-bc0c-4019-9c60-2e4b93e12190}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Globals\Patterns">
+      <UniqueIdentifier>{5a556de2-7660-4059-b996-e680ea4b2f93}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Globals\Include">
+      <UniqueIdentifier>{0d929411-326e-4e15-b421-51d1aad7eaf2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="2. GameManager\SubManagers">
+      <UniqueIdentifier>{91538c12-82cd-4b5b-9727-9bfa0afe432a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="2. GameManager\Objects">
+      <UniqueIdentifier>{5e62d011-c2b2-4411-a324-3fac93501242}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="2. GameManager\Objects\Character">
+      <UniqueIdentifier>{17edd959-a729-4aed-a3fd-a65bf90313f3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="2. GameManager\Objects\Map">
+      <UniqueIdentifier>{01609d26-76a1-432e-b60f-703a98b272ae}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="2. GameManager\Objects\Effect">
+      <UniqueIdentifier>{5ce9eb12-76ab-4d05-b33b-bbcb6416aa93}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="2. GameManager\Objects\Item">
+      <UniqueIdentifier>{e11b3b6e-a1d1-4d35-af57-409d50d37ecb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="2. GameManager\GameManager States">
+      <UniqueIdentifier>{1340d36d-ee5c-4a1b-9141-4e4a0188f974}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="2. GameManager\GameManager States\Base">
+      <UniqueIdentifier>{4cbb6026-b3f6-43bf-bb22-778b25555584}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="FrameWork.rc">
+      <Filter>리소스</Filter>
+    </ResourceCompile>
   </ItemGroup>
 </Project>

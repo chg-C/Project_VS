@@ -15,9 +15,9 @@
 
 // 데이타 베이스///////////////////
 //#include <my_global.h>
-#include <winsock2.h>
-#include <mysql.h>
-#pragma comment(lib, "libmySQL.lib")
+//#include <winsock2.h>
+//#include <mysql.h>
+//#pragma comment(lib, "libmySQL.lib")
 
 //////////////////////////////////
 
@@ -31,8 +31,6 @@
 
 #include <d3d9.h>
 #include <d3dx9.h>
-#include <dsound.h>
-#include "DXUTsound.h"
 
 #include <list>
 
@@ -63,15 +61,11 @@
 #include "Key.h"
 #include "Sound.h"
 
-#include "Bird.h"
 #include "Player.h"
-#include "Player2.h"
-#include "Collider.h"
+#include "Camera.h"
 
 #include "GameManager.h"
-// 데이타 베이스///////////////////
-#include "Mysql.h"
-
+#include "UIManager.h"
 /* ---------------------------------------------------
 ///////////////// 사용자 추가 파일 ///////////////////
 
@@ -89,3 +83,11 @@ inline int KeyUp	( int vk )
 { 
 	return ( (GetAsyncKeyState(vk) & 0x8000) ? 0:1 ); 
 }
+
+////
+#include "Time.h"
+#include "Option.h"
+
+#include "Character.h"
+#include "Enemy.h"
+#include "Projectile.h"

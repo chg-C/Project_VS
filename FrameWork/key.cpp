@@ -22,6 +22,7 @@ void Key::Update()
 		if(GetTickCount64() - KeyTime > 200)
 		{
 			KeyTime = GetTickCount64();
+			GameManager::GetInstance().ToggleCollision();
 		}
 	}
 
@@ -30,6 +31,7 @@ void Key::Update()
 		if(GetTickCount64() - KeyTime > 200)
 		{
 			KeyTime = GetTickCount64();
+			GameManager::GetInstance().ToggleSpawn();
 		}
 		
 	}
@@ -38,8 +40,8 @@ void Key::Update()
 	{
 		if(GetTickCount64() - KeyTime > 200)
 		{
-			Gmanager.m_Collision = true;
 			KeyTime = GetTickCount64();
+
 		}
 		
 	}
@@ -50,14 +52,12 @@ void Key::Update()
 		{
 			KeyTime = GetTickCount64();
 		}
-		
 	}
 
 	if(KeyDown('5'))
 	{
 		if(GetTickCount64() - KeyTime > 200)
 		{
-			Gmanager.Respawn = true;
 			KeyTime = GetTickCount64();
 		}
 	
@@ -67,7 +67,6 @@ void Key::Update()
 	{
 		if(GetTickCount64() - KeyTime > 200)
 		{
-			Gmanager.myList.clear();
 			KeyTime = GetTickCount64();
 		}
 	}
@@ -92,7 +91,8 @@ void Key::Update()
 	{
 		if(GetTickCount64() - KeyTime > 200)
 		{
-
+			KeyTime = GetTickCount64();
+			GameManager::GetInstance().EarnXP(3);
 		}
 		
 	}
@@ -128,6 +128,7 @@ void Key::Update()
 		if(GetTickCount64() - KeyTime > 200)
 		{	
 			KeyTime = GetTickCount64();
+			GameManager::GetInstance().showDebug = !GameManager::GetInstance().showDebug;
 		}
 	
 	}
@@ -262,8 +263,6 @@ void Key::Update()
 	{
 		if(GetTickCount64() - KeyTime1 > 10)
 		{
-			bird.x -= 1.5f;
-			bird.dir = 1;
 			KeyTime1 = GetTickCount64();
 		}
 	}
@@ -273,8 +272,6 @@ void Key::Update()
 
 		if(GetTickCount64() - KeyTime1 > 10)
 		{
-			bird.x += 1.5f;
-			bird.dir = -1;
 			KeyTime1 = GetTickCount64();
 		}
 		
@@ -285,7 +282,6 @@ void Key::Update()
 	{
 		if(GetTickCount64() - KeyTime3 > 10)
 		{	
-			bird.y -= 1.5f;
 			KeyTime3 = GetTickCount64();
 		}
 		
@@ -296,8 +292,6 @@ void Key::Update()
 
 		if(GetTickCount64() - KeyTime3 > 10)
 		{
-			
-			bird.y += 1.5f;
 			KeyTime3 = GetTickCount64();
 		}
 		

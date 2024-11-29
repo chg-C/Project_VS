@@ -1,42 +1,77 @@
 #pragma once
+
 #include "Include.h"
-struct SysTem
-{
-	int m_Save1;
-	int m_Save2;
+#include "Singleton.h"
 
-};
+class Effect;
 
-class GameManager
+class Enemy;
+class PlayerManager;
+class EnemyManager;
+class EffectManager;
+
+struct WeaponData;
+class GameState;
+
+class GameManager : public Singleton<GameManager>
 {
-	Sprite Menuimg[2];
-public:
+	friend class Singleton<GameManager>;
+	friend class Game;
+private:
 	GameManager(void);
 	~GameManager(void);
-
-	FILE *fp;
-	SysTem m_SysTem;
-
-	bool m_Pause;
-	int m_GameSpeed;
+private:
+	//게임 상태 변수들 
+	bool pause;	    //일시정지 상태
+	bool respawn;	//적 리스폰 여부
+	bool doCollision;//충돌 처리 여부
+	float timeFlew; //게임 시작후 경과한 시간
 	
-	DWORD GameTime;
-	bool m_GameStart;
+	//무한 스크롤 맵
+	Map* map;
+	//플레이어 관리
+	PlayerManager* playerManager;
+	//Player* player;
+	//적 객체 관리
+	EnemyManager* enemyManager;
+	//기본 이펙트 관리
+	EffectManager* effectManager;
+	//UI 컴퍼넌트
+	Sprite2* skull;
+	Sprite2* coin;
+	Sprite2* squareSprite;
 
-	bool m_Collision;
+	//Temp
+	GameState* currentState;
+	//Temp
+	Enemy* temp_Boss;
 
-	std::list<Player2*>	myList;
-	bool Respawn;
+	//Temp - Level
+	int currentLevel;
 
-
-	void GameReset(void);
+	int currentXP;
+	int nextLevelXP;
+private:
 	void Init();
 	void Update();
 	void Draw();
-	void Save();
 	void Delete();
-	
-	
-};
+public:
+	bool m_GameStart;
+public:
+	void GameReset(void);
+	void Pause() { pause = true; }
+	void Resume() { pause = false; }
+	bool IsPause() { return pause; }
+	bool ToggleCollision() { return (doCollision = !doCollision); }
+	bool ToggleSpawn() { return (respawn = !respawn); }
+	Enemy* FindClosestEnemy();
 
-extern GameManager Gmanager;
+	void EarnXP(int xp);
+
+	void TempEarnWeapon(WeaponData* data);
+	void TempExitState();
+public:
+	void RegisterEffect(Effect* effect);
+	bool showDebug;
+};

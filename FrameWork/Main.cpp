@@ -70,9 +70,9 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPTSTR lpCmdL
 
 
 	dv_font.Create(g_hWnd) ;
-	sound.g_pSoundManager = new CSoundManager();
-	sound.g_pSoundManager->Initialize(g_hWnd, DSSCL_PRIORITY);
-	sound.g_pSoundManager->SetPrimaryBufferFormat(2,22050,16);
+	//sound.g_pSoundManager = new CSoundManager();
+	//sound.g_pSoundManager->Initialize(g_hWnd, DSSCL_PRIORITY);
+	//sound.g_pSoundManager->SetPrimaryBufferFormat(2,22050,16);
 	
 	//g_SoundManager.Initialize(g_hWnd, DSSCL_PRIORITY);
 	//g_SoundManager.SetPrimaryBufferFormat(2,22050,16);
@@ -94,6 +94,8 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPTSTR lpCmdL
 
 	for(int i=0; i<TOTALCHAP; i++)
 		g_Mng.chap[i]->Init();
+
+	UIManager::GetInstance().Init();
 
 	while( msg.message != WM_QUIT )
 	{
@@ -121,13 +123,13 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPTSTR lpCmdL
 			while( GetTickCount64() > next_game_tick && loops < MAX_FRAMESKIP) 
 			{
 				interpolation = float(GetTickCount64() + SKIP_TICKS - next_game_tick ) / float( SKIP_TICKS );
-				if(Gmanager.m_Pause == false) g_Mng.chap[g_Mng.n_Chap]->Update(interpolation);
+				/*if(GameManager::GetInstance().IsPause() == false) */g_Mng.GetCurrentChapter()->Update(interpolation);
 				//if(b == false)
 				//{
 				//	aa = interpolation;
 				//	b = true;
 				//}
-				g_Mng.chap[g_Mng.n_Chap]->OnMessage(&msg);
+				g_Mng.GetCurrentChapter()->OnMessage(&msg);
 				next_game_tick += SKIP_TICKS;
 				loops++;
 			}
@@ -138,7 +140,7 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPTSTR lpCmdL
 			dv_font.Device9->Clear(0, NULL, D3DCLEAR_TARGET, D3DCOLOR_XRGB(255, 255, 255), 0, 0);
 
 
-			g_Mng.chap[g_Mng.n_Chap]->Draw();
+			g_Mng.GetCurrentChapter()->Draw();
 
 			dv_font.Device9->EndScene();
 			dv_font.Device9->Present(NULL, NULL, NULL, NULL);
@@ -165,10 +167,16 @@ LRESULT CALLBACK WndProc( HWND g_hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam )
 		 // 문자열 위치 가져옴...
 		 if (strstr(buffer, "p") != NULL)
 		 {
-
 			 if (GetTickCount64() - key.KeyTime > 200)
 			 {
-				 Gmanager.m_Pause = !Gmanager.m_Pause;
+				 if (GameManager::GetInstance().IsPause())
+				 {
+					 GameManager::GetInstance().Resume();
+				 }
+				 else
+				 {
+					 GameManager::GetInstance().Pause();
+				 }
 
 				 key.KeyTime = GetTickCount64();
 			 }
@@ -176,7 +184,7 @@ LRESULT CALLBACK WndProc( HWND g_hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam )
 		 else if (strstr(buffer, "s") != NULL) 
 		 {
 			 // 데이타 베이스 저장
-			 sql.save();
+			 //sql.save();
 		 }
 
         ZeroMemory( &buffer, sizeof(buffer) );

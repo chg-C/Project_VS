@@ -10,6 +10,7 @@ g_DeviceFont::g_DeviceFont(void)
 
 g_DeviceFont::~g_DeviceFont(void)
 {
+	Fonts->Release();
 }
 
 bool g_DeviceFont::Create( HWND g_hWnd )
@@ -38,9 +39,9 @@ bool g_DeviceFont::Create( HWND g_hWnd )
 	D3DXCreateSprite( Device9 , &Sprite ) ;
 
 	ZeroMemory( &fdesc , sizeof(fdesc) ) ;
-	fdesc.Height = 25 ;
-	fdesc.Width = 12 ;
-	fdesc.Weight = 500 ;
+	fdesc.Height = fontHeight ;
+	fdesc.Width = fontWidth ;
+	fdesc.Weight = fontWeight ;
 	fdesc.Italic = FALSE ;
 	fdesc.CharSet = DEFAULT_CHARSET ;
 	//fdesc.FaceName[LF_FACESIZE];
@@ -53,15 +54,54 @@ bool g_DeviceFont::Create( HWND g_hWnd )
 
 }
 
-bool g_DeviceFont::DrawString( const char* msg , int x , int y , D3DCOLOR color)
+bool g_DeviceFont::DrawString( const char* msg , int x , int y ,int _fontHeight,int _Width,int _fontWeight, D3DCOLOR color)
 {
-	RECT rect = { x , y , fdesc.Width*strlen(msg) , fdesc.Height } ;
+	//fontHeight = _fontHeight;
+	//fontWidth = _Width;
+	//fontWeight = _fontWeight;
 
-	Sprite->Begin( D3DXSPRITE_ALPHABLEND ) ;
-	//Fonts->DrawText( Sprite , msg , strlen( msg ) , &rect , DT_NOCLIP , D3DCOLOR_XRGB(255,0,255) ) ;
-	//Fonts->DrawText(Sprite, msg, strlen(msg), &rect, DT_NOCLIP, color(원하는 칼러 전달 시));
-	Fonts->DrawText( Sprite , msg , strlen( msg ) , &rect , DT_NOCLIP , color) ;
-	Sprite->End() ;
-	
+	//RECT rect = { x , y , fdesc.Width*strlen(msg) , fdesc.Height } ;
+
+	//Sprite->Begin( D3DXSPRITE_ALPHABLEND ) ;
+	////Fonts->DrawText( Sprite , msg , strlen( msg ) , &rect , DT_NOCLIP , D3DCOLOR_XRGB(255,0,255) ) ;
+	////Fonts->DrawText(Sprite, msg, strlen(msg), &rect, DT_NOCLIP, color(원하는 칼러 전달 시));
+	//Fonts->DrawText( Sprite , msg , strlen( msg ) , &rect , DT_NOCLIP , color) ;
+	//Sprite->End() ;
+	//
+	//return true;
+		// 글꼴 설정 변경
+	fontHeight = _fontHeight;
+	fontWidth = _Width;
+	fontWeight = _fontWeight;
+
+	// 기존 폰트 객체 해제
+	if (Fonts) {
+		Fonts->Release();
+		Fonts = nullptr;
+	}
+
+	// fdesc 구조체 업데이트
+	ZeroMemory(&fdesc, sizeof(fdesc));
+	fdesc.Height = fontHeight;
+	fdesc.Width = fontWidth;
+	fdesc.Weight = fontWeight;
+	fdesc.Italic = FALSE;
+	fdesc.CharSet = DEFAULT_CHARSET;
+	strcpy(fdesc.FaceName, "타이포_쌍문동 B");
+
+	// 새 글꼴 생성
+	HRESULT hr = D3DXCreateFontIndirect(Device9, &fdesc, &Fonts);
+	if (FAILED(hr)) {
+		return false; // 글꼴 생성 실패
+	}
+
+	// 문자열 출력 영역 설정
+	RECT rect = { x, y, x + 1000, y + fdesc.Height };
+
+	// 텍스트 렌더링
+	Sprite->Begin(D3DXSPRITE_ALPHABLEND);
+	Fonts->DrawText(Sprite, msg, -1, &rect, DT_NOCLIP, color);
+	Sprite->End();
+
 	return true;
 }
